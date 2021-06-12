@@ -5,13 +5,13 @@ import { GenderUser } from './users/users.schema';
 import { Role } from 'src/models/users/users.schema';
 import { UsersModule } from './users/users.module';
 import { Module } from '@nestjs/common';
-import { ItemsModule } from './items/items.module';
+// import { ItemsModule } from './items/items.module';
 import { InitUserDTO, UserDTO } from './users/dto/user-dto';
 import { SeoHomeModule } from './seo-home/seo-home.module';
 import { Schema as MongooseSchema } from 'mongoose';
 
 @Module({
-    imports: [ItemsModule, UsersModule, SeoHomeModule],
+    imports: [UsersModule, SeoHomeModule],
 })
 export class ModelsModule {
     constructor(private usersService: UsersService, private seoHomeService: SeoHomeService) {
