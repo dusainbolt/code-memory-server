@@ -1,55 +1,43 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Gender, Role, UserStatus } from './dto/user-enum';
+// import { Gender, Role, UserStatus } from './dto/user-enum';
 
-export enum Role {
-  USER = 'user',
-  ADMIN = 'admin',
-}
-
-export enum StatusUser {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  PAUSE = 'pause',
-  BLOCK = 'block',
-}
-
-export enum GenderUser {
-  MALE = 'male',
-  FEMALE = 'female',
-}
 @Schema({ timestamps: true })
-export class User {
-  @Prop({ unique: true, required: true })
-  email: string;
+export class UserModel {
+    @Prop({ unique: true, required: true })
+    email: string;
 
-  @Prop({ required: true })
-  firstName: string;
+    @Prop({ required: true })
+    firstName: string;
 
-  @Prop({ required: true })
-  lastName: string;
+    @Prop({ required: true })
+    lastName: string;
 
-  @Prop()
-  avatar: string;
+    @Prop()
+    avatar: string;
 
-  @Prop({ unique: true, required: true })
-  password: string;
+    @Prop({ unique: true, required: true })
+    password: string;
 
-  @Prop()
-  phone: string;
+    @Prop()
+    phone: string;
 
-  @Prop()
-  gender: GenderUser;
+    @Prop()
+    gender: Gender;
 
-  @Prop()
-  facebook: string;
+    @Prop()
+    facebook: string;
 
-  @Prop({ default: [Role.USER] })
-  roles: Role[];
+    @Prop({ default: Role.USER })
+    role: Role;
 
-  @Prop({ default: StatusUser.ACTIVE })
-  status: StatusUser;
+    @Prop({ default: UserStatus.ACTIVE })
+    status: UserStatus;
 }
 
-export type UserDocument = User & Document;
+export type UserDocument = UserModel & Document;
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const USER_NAME = 'User';
+
+export const UserSchema = SchemaFactory.createForClass(UserModel);

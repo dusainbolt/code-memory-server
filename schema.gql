@@ -2,8 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""The gender of user"""
+enum Gender {
+  FEMALE @deprecated(reason: "This is female")
+  MALE @deprecated(reason: "This is male")
+  OTHER @deprecated(reason: "This is ...")
+}
+
+input LoginInput {
+  credential: String!
+  password: String!
+}
+
+type LoginOutput {
+  token: String!
+  user: User!
+}
+
+type Mutation {
+  login(input: LoginInput!): LoginOutput!
+}
+
 type Query {
   seoHome: SeoHomeDTO!
+}
+
+"""The role of user"""
+enum Role {
+  ADMIN @deprecated(reason: "This is admin")
+  USER @deprecated(reason: "This is user")
 }
 
 type SeoContact {
@@ -68,4 +95,26 @@ input SeoSocialInput {
   skype: String!
   twitter: String!
   youtube: String!
+}
+
+type User {
+  avatar: String!
+  email: String!
+  facebook: String!
+  firstName: String!
+  gender: Gender!
+  id: ID!
+  lastName: String!
+  password: String!
+  phone: String!
+  role: Role!
+  status: UserStatus!
+}
+
+"""The status of user"""
+enum UserStatus {
+  ACTIVE @deprecated(reason: "This is active")
+  BLOCK @deprecated(reason: "This is block")
+  INACTIVE @deprecated(reason: "This is inactive")
+  PAUSE @deprecated(reason: "This is pause")
 }

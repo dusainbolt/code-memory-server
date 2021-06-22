@@ -1,48 +1,50 @@
 import { lengthMessage } from './../../../common/valid_message';
 import { IsEmail, Length, MaxLength } from 'class-validator';
-import { GenderUser, StatusUser } from './../users.schema';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
-import { Role } from '../users.schema';
 import { Schema as MongooseSchema } from 'mongoose';
+import { Gender, Role, UserStatus } from './user-enum';
 
 @ObjectType()
-export class UserDTO {
+export class User {
     @Field(() => ID)
-    readonly id?: MongooseSchema.Types.ObjectId;
+    id?: MongooseSchema.Types.ObjectId;
 
     @Field()
-    readonly email: string;
+    email: string;
 
     @Field()
-    readonly firstName: string;
+    firstName: string;
 
     @Field()
-    readonly lastName: string;
+    password: string;
 
     @Field()
-    readonly avatar: string;
+    lastName: string;
 
     @Field()
-    readonly phone: string;
+    avatar: string;
 
     @Field()
-    readonly facebook: string;
+    phone: string;
 
     @Field()
-    readonly gender: GenderUser;
+    facebook: string;
 
-    @Field()
-    readonly roles: Role[];
+    @Field(() => Gender)
+    gender: Gender;
 
-    @Field()
-    readonly status: StatusUser;
+    @Field(() => Role)
+    role: Role;
+
+    @Field(() => UserStatus)
+    status: UserStatus;
     // @Field(() => [Item])
     // @Field()
     // items: MongooseSchema.Types.ObjectId[] | Item[];
 }
 
 @InputType()
-export class InitUserDTO {
+export class InitUser {
     @IsEmail()
     email: string;
 
@@ -65,10 +67,8 @@ export class InitUserDTO {
     facebook: string;
 
     @Field()
-    gender: string;
+    gender: Gender;
 
-    @MaxLength(20, {
-        each: true,
-    })
-    roles: Role[];
+    @Field()
+    role: Role;
 }

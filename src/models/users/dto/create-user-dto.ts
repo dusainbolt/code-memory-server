@@ -4,17 +4,17 @@ import { InputType, Field } from '@nestjs/graphql';
 import { lengthMessage } from 'src/common/valid_message';
 
 @InputType()
-export class CreateUserDTO {
+export class CreateUser {
     @Field()
     @IsEmail()
     email: string;
 
     @Field()
-    @Length(1, 25, {message: lengthMessage})
+    @Length(1, 25, { message: lengthMessage })
     firstName: string;
 
     @Field()
-    @Length(1, 25, {message: lengthMessage})
+    @Length(1, 25, { message: lengthMessage })
     lastName: string;
 
     @Field()
