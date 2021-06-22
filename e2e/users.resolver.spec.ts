@@ -1,4 +1,4 @@
-// import { CreateUserDTO } from './../src/models/users/dto/create-user-dto';
+// import { CreateUser } from './../src/models/users/dto/create-user-dto';
 // import { UsersModule } from './../src/models/users/users.module';
 // import { ConfigModule } from '@nestjs/config';
 // import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -37,7 +37,7 @@
 //     const userName = `dutest_${random}`;
 //     const email = `test${random}@gmail.com`;
 
-//     const user: CreateUserDTO = {
+//     const user: CreateUser = {
 //         firstName: 'Du',
 //         lastName: 'Le',
 //         fullName: 'Le Huy Du',
