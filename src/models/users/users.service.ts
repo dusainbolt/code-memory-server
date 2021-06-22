@@ -8,10 +8,17 @@ import { UserDocument, USER_NAME } from './users.schema';
 import { Model } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import { User } from './dto/user-dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EVENT_INIT_DATA_BY_USER } from '../models.module';
+import { EVENT_ITEM } from '../items/items.listener';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel(USER_NAME) public userModel: Model<UserDocument>, private configService: ConfigService) {}
+    constructor(
+        @InjectModel(USER_NAME) public userModel: Model<UserDocument>,
+        private configService: ConfigService,
+        private eventEmitter: EventEmitter2
+    ) {}
 
     createToken({ id, email, firstName, lastName, role }: User) {
         const secret = this.configService.get('JWT_SECRET');
@@ -34,6 +41,11 @@ export class UsersService {
     }
 
     // async list(): Promise<User[]> {
+    //     return this.userModel.find();
+    // }
+
+    // async initDataByUser(): Promise<User[]> {
+    //     this.eventEmitter.emit(EVENT_ITEM.CREATE, {});
     //     return this.userModel.find();
     // }
 

@@ -1,7 +1,8 @@
+import { ModelsModule } from './../models.module';
 import { Logger } from '@nestjs/common';
 import { LoginInput, LoginOutput } from './dto/login-user-dto';
 import { UsersService } from './users.service';
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { User } from './dto/user-dto';
 @Resolver(() => User)
 export class UsersResolver {
@@ -13,6 +14,11 @@ export class UsersResolver {
     // async createUser(@Args('input') input: CreateUser): Promise<User> {
     //     // this.logger.debug(`createUser => input: ${JSON.stringify(input)}`);
     //     return this.usersService.create(input);
+    // }
+
+    // @Query(() => [User])
+    // async userInitData(): Promise<User[]> {
+    //     return this.usersService.initDataByUser();
     // }
 
     @Mutation(returns => LoginOutput)
