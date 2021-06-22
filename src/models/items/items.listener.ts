@@ -16,6 +16,6 @@ export class ItemsListener {
 
     @OnEvent(EVENT_ITEM.CREATE)
     handleOrderCreatedEvent(event: ItemDTO) {
-        this.appLogger.verbose("ITEM_CREATE_EVENT");
+        this.appLogger.verbose('ITEM_CREATE_EVENT');
     }
 }
