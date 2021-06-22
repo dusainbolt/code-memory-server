@@ -2,33 +2,119 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateItemDTO {
-  description: String
-  price: Int!
-  title: String!
+"""The gender of user"""
+enum Gender {
+  FEMALE @deprecated(reason: "This is female")
+  MALE @deprecated(reason: "This is male")
+  OTHER @deprecated(reason: "This is ...")
 }
 
-type ItemDTO {
-  description: String!
-  email: String!
-  id: ID!
-  price: Int!
-  title: String!
+input LoginInput {
+  credential: String!
+  password: String!
 }
 
-input ItemUpdateDTO {
-  description: String
-  price: Int!
-  title: String!
+type LoginOutput {
+  token: String!
+  user: User!
 }
 
 type Mutation {
-  createItem(input: CreateItemDTO!): ItemDTO!
-  deleteItem(id: String!): ItemDTO!
-  updateItem(id: String!, input: ItemUpdateDTO!): ItemDTO!
+  login(input: LoginInput!): LoginOutput!
 }
 
 type Query {
-  hello: String!
-  items: [ItemDTO!]!
+  seoHome: SeoHomeDTO!
+}
+
+"""The role of user"""
+enum Role {
+  ADMIN @deprecated(reason: "This is admin")
+  USER @deprecated(reason: "This is user")
+}
+
+type SeoContact {
+  address: String!
+  email: String!
+  phone: String!
+}
+
+input SeoContactInput {
+  address: String!
+  email: String!
+  phone: String!
+}
+
+type SeoHomeDTO {
+  appName: String!
+  author: String!
+  contact: SeoContact!
+  id: ID!
+  keyWord: String!
+  meta: SeoMeta!
+  owner: String!
+  publisher: String!
+  social: SeoSocial!
+}
+
+type SeoMeta {
+  description: String!
+  domain: String!
+  facebookPageId: String!
+  imageUrl: String!
+  jsonType: String!
+  logoHeight: Float!
+  logoUrl: String!
+  logoWidth: Float!
+  title: String!
+}
+
+input SeoMetaInput {
+  description: String!
+  domain: String!
+  facebookPageId: String!
+  imageUrl: String!
+  jsonType: String!
+  logoHeight: Float!
+  logoUrl: String!
+  logoWidth: Float!
+  title: String!
+}
+
+type SeoSocial {
+  facebook: String!
+  facebookPage: String!
+  skype: String!
+  twitter: String!
+  youtube: String!
+}
+
+input SeoSocialInput {
+  facebook: String!
+  facebookPage: String!
+  skype: String!
+  twitter: String!
+  youtube: String!
+}
+
+type User {
+  avatar: String!
+  email: String!
+  facebook: String!
+  firstName: String!
+  gender: Gender!
+  id: ID!
+  lastName: String!
+  password: String!
+  phone: String!
+  role: Role!
+  status: UserStatus!
+}
+
+"""The status of user"""
+enum UserStatus {
+  ACTIVE @deprecated(reason: "This is active")
+  BLOCK @deprecated(reason: "This is block")
+  INACTIVE @deprecated(reason: "This is inactive")
+  PAUSE @deprecated(reason: "This is pause")
 }

@@ -1,7 +1,7 @@
-import { Role } from "../users.schema";
+import { Role } from './user-enum';
 
 export class UserHashToken {
-    _id: string;
+    id: string;
 
     fullName: string;
 
@@ -9,5 +9,5 @@ export class UserHashToken {
 
     email: string;
 
-    roles: Role[];
+    role: Role;
 }
