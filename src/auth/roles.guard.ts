@@ -2,7 +2,7 @@ import { AuthService } from './auth.service';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Injectable, CanActivate, ExecutionContext, SetMetadata } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from 'src/models/users/users.schema';
+import { Role } from 'src/models/users/dto/user-enum';
 
 export const ROLES_KEY = 'roles';
 export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);

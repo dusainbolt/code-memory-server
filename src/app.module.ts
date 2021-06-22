@@ -40,7 +40,7 @@ import { HashModule } from './hash/hash.module';
         ScheduleModule.forRoot(),
         PluginModule,
         ModelsModule,
-        TasksModule,
+        // TasksModule,
         LogsModule,
         AuthModule,
         HashModule,

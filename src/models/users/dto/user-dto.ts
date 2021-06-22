@@ -1,73 +1,74 @@
 import { lengthMessage } from './../../../common/valid_message';
 import { IsEmail, Length, MaxLength } from 'class-validator';
-import { GenderUser, StatusUser } from './../users.schema';
-import { Field, ObjectType, ID, Int, InputType } from '@nestjs/graphql';
-import { Role } from '../users.schema';
+import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
+import { Schema as MongooseSchema } from 'mongoose';
+import { Gender, Role, UserStatus } from './user-enum';
 
 @ObjectType()
-export class UserDTO {
-  @Field(() => ID)
-  readonly id?: string;
+export class User {
+    @Field(() => ID)
+    id?: MongooseSchema.Types.ObjectId;
 
-  @Field()
-  readonly email: string;
+    @Field()
+    email: string;
 
-  @Field()
-  readonly firstName: string;
+    @Field()
+    firstName: string;
 
-  @Field()
-  readonly lastName: string;
+    @Field()
+    password: string;
 
-  @Field()
-  readonly avatar: string;
+    @Field()
+    lastName: string;
 
-  @Field()
-  readonly phone: string;
+    @Field()
+    avatar: string;
 
-  @Field()
-  readonly facebook: string;
+    @Field()
+    phone: string;
 
-  @Field()
-  readonly gender: GenderUser;
+    @Field()
+    facebook: string;
 
-  @Field()
-  readonly roles: Role[];
+    @Field(() => Gender)
+    gender: Gender;
 
-  @Field()
-  readonly status: StatusUser;
-  // @Field(() => [Item])
-  // @Field()
-  // items: MongooseSchema.Types.ObjectId[] | Item[];
+    @Field(() => Role)
+    role: Role;
+
+    @Field(() => UserStatus)
+    status: UserStatus;
+    // @Field(() => [Item])
+    // @Field()
+    // items: MongooseSchema.Types.ObjectId[] | Item[];
 }
 
 @InputType()
-export class InitUserDTO {
-  @IsEmail()
-  email: string;
+export class InitUser {
+    @IsEmail()
+    email: string;
 
-  @Length(1, 25, { message: lengthMessage })
-  firstName: string;
+    @Length(1, 25, { message: lengthMessage })
+    firstName: string;
 
-  @Length(1, 25, { message: lengthMessage })
-  lastName: string;
+    @Length(1, 25, { message: lengthMessage })
+    lastName: string;
 
-  @Field()
-  avatar: string;
+    @Field()
+    avatar: string;
 
-  @Field()
-  password: string;
+    @Field()
+    password: string;
 
-  @Field()
-  phone: string;
+    @Field()
+    phone: string;
 
-  @Field()
-  facebook: string;
+    @Field()
+    facebook: string;
 
-  @Field()
-  gender: string;
+    @Field()
+    gender: Gender;
 
-  @MaxLength(20, {
-    each: true,
-  })
-  roles: Role[];
+    @Field()
+    role: Role;
 }
