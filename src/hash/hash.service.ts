@@ -4,14 +4,14 @@ import * as CryptoJS from 'crypto-js';
 
 @Injectable()
 export class HashService {
-    constructor(private configService: ConfigService) {}
+    constructor(private configService: ConfigService) { }
 
     hashCryptoAES(data: object | string): string {
-        return CryptoJS.AES.encrypt(JSON.stringify(data), this.configService.get('API_KEY')).toString();
+        return CryptoJS.AES.encrypt(JSON.stringify(data), this.configService.get('APP_KEY')).toString();
     }
 
     unHashCryptoAES(hash: string): any {
-        const bytes = CryptoJS.AES.decrypt(hash, this.configService.get('API_KEY'));
+        const bytes = CryptoJS.AES.decrypt(hash, this.configService.get('APP_KEY'));
         return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     }
 

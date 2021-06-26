@@ -8,7 +8,7 @@ import { User } from './dto/user-dto';
 export class UsersResolver {
     private readonly logger = new Logger(UsersResolver.name);
 
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     // @Mutation(returns => User)
     // async createUser(@Args('input') input: CreateUser): Promise<User> {

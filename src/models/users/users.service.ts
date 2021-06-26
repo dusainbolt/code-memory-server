@@ -11,6 +11,7 @@ import { User } from './dto/user-dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { EVENT_INIT_DATA_BY_USER } from '../models.module';
 import { EVENT_ITEM } from '../items/items.listener';
+import { MSG_LOGIN_ERROR } from 'src/common/valid_message';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +19,7 @@ export class UsersService {
         @InjectModel(USER_NAME) public userModel: Model<UserDocument>,
         private configService: ConfigService,
         private eventEmitter: EventEmitter2
-    ) {}
+    ) { }
 
     createToken({ id, email, firstName, lastName, role }: User) {
         const secret = this.configService.get('JWT_SECRET');
@@ -35,7 +36,7 @@ export class UsersService {
     async login(LoginInput: LoginInput): Promise<LoginOutput> {
         let user = await this.findOne(LoginInput.credential);
         if (!user) {
-            throw new AuthenticationError('Username or password is incorrect');
+            throw new AuthenticationError(MSG_LOGIN_ERROR);
         }
         return { user, token: this.createToken(user) };
     }
