@@ -2,6 +2,40 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Blog {
+  content: [BlogContent!]!
+  createBy: String!
+  createdAt: String!
+  id: ID!
+  slug: String!
+  title: String!
+  updatedAt: String!
+}
+
+type BlogContent {
+  data: String!
+  language: String!
+  type: BlogContentType!
+}
+
+input BlogContentInput {
+  data: String!
+  language: String!
+  type: BlogContentType!
+}
+
+"""The BlogContentType."""
+enum BlogContentType {
+  CODE @deprecated(reason: "This is type of content code")
+  NORMAL @deprecated(reason: "This is type of content normal html normal")
+}
+
+input CreateBlogInput {
+  content: [BlogContentInput!]!
+  createBy: String!
+  title: String!
+}
+
 """The gender of user"""
 enum Gender {
   FEMALE @deprecated(reason: "This is female")
@@ -20,6 +54,7 @@ type LoginOutput {
 }
 
 type Mutation {
+  createBlog(input: CreateBlogInput!): Blog!
   login(input: LoginInput!): LoginOutput!
 }
 
@@ -100,6 +135,7 @@ input SeoSocialInput {
 
 type User {
   avatar: String!
+  createdAt: String!
   email: String!
   facebook: String!
   firstName: String!
@@ -110,6 +146,7 @@ type User {
   phone: String!
   role: Role!
   status: UserStatus!
+  updatedAt: String!
 }
 
 """The status of user"""

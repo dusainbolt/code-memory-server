@@ -6,69 +6,72 @@ import { Gender, Role, UserStatus } from './user-enum';
 
 @ObjectType()
 export class User {
-    @Field(() => ID)
-    id?: MongooseSchema.Types.ObjectId;
+  @Field(() => ID)
+  id?: MongooseSchema.Types.ObjectId;
 
-    @Field()
-    email: string;
+  @Field()
+  email: string;
 
-    @Field()
-    firstName: string;
+  @Field()
+  firstName: string;
 
-    @Field()
-    password: string;
+  @Field()
+  password: string;
 
-    @Field()
-    lastName: string;
+  @Field()
+  lastName: string;
 
-    @Field()
-    avatar: string;
+  @Field()
+  avatar: string;
 
-    @Field()
-    phone: string;
+  @Field()
+  phone: string;
 
-    @Field()
-    facebook: string;
+  @Field()
+  facebook: string;
 
-    @Field(() => Gender)
-    gender: Gender;
+  @Field(() => Gender)
+  gender: Gender;
 
-    @Field(() => Role)
-    role: Role;
+  @Field(() => Role)
+  role: Role;
 
-    @Field(() => UserStatus)
-    status: UserStatus;
-    // @Field(() => [Item])
-    // @Field()
-    // items: MongooseSchema.Types.ObjectId[] | Item[];
+  @Field(() => UserStatus)
+  status: UserStatus;
+
+  @Field()
+  createdAt?: string;
+
+  @Field()
+  updatedAt?: string;
 }
 
 @InputType()
 export class InitUser {
-    @IsEmail()
-    email: string;
+  @IsEmail()
+  email: string;
 
-    @Length(1, 25, { message: lengthMessage })
-    firstName: string;
+  @Length(1, 25, { message: lengthMessage })
+  firstName: string;
 
-    @Length(1, 25, { message: lengthMessage })
-    lastName: string;
+  @Length(1, 25, { message: lengthMessage })
+  lastName: string;
 
-    @Field()
-    avatar: string;
+  @Field()
+  avatar: string;
 
-    @Field()
-    password: string;
+  @Field()
+  password: string;
 
-    @Field()
-    phone: string;
+  @Field()
+  phone: string;
 
-    @Field()
-    facebook: string;
+  @Field()
+  facebook: string;
 
-    @Field()
-    gender: Gender;
+  @Field()
+  gender: Gender;
 
-    @Field()
-    role: Role;
+  @Field()
+  role: Role;
 }
