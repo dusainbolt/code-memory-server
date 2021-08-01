@@ -6,6 +6,7 @@ type Blog {
   content: [BlogContent!]!
   createBy: String!
   createdAt: String!
+  description: String!
   id: ID!
   slug: String!
   title: String!
@@ -33,6 +34,7 @@ enum BlogContentType {
 input CreateBlogInput {
   content: [BlogContentInput!]!
   createBy: String!
+  description: String!
   title: String!
 }
 

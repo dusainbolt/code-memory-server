@@ -12,6 +12,9 @@ export class BlogModel {
   @Prop({ unique: true, required: true })
   slug: string;
 
+  @Prop({ unique: true, required: true })
+  description: string;
+
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME })
   createBy: string;
 

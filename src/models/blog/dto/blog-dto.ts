@@ -29,6 +29,9 @@ export class Blog {
   @Field()
   createBy: string;
 
+  @Field()
+  description: string;
+
   @Field(() => [BlogContent])
   content: BlogContent[];
 

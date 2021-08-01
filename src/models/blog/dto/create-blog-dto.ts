@@ -12,6 +12,9 @@ export class CreateBlogInput {
   @Field()
   createBy: string;
 
+  @Field()
+  description: string;
+
   @Field(() => [BlogContent])
   content: BlogContent[];
 }
