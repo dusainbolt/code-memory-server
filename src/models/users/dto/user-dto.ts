@@ -33,8 +33,8 @@ export class User {
   @Field(() => Gender)
   gender: Gender;
 
-  @Field(() => Role)
-  role: Role;
+  @Field(() => [Role])
+  roles: Role[];
 
   @Field(() => UserStatus)
   status: UserStatus;
@@ -69,9 +69,9 @@ export class InitUser {
   @Field()
   facebook: string;
 
-  @Field()
+  @Field(() => Number)
   gender: Gender;
 
-  @Field()
-  role: Role;
+  @Field(() => [Number])
+  roles: number[];
 }

@@ -16,25 +16,26 @@ type Blog {
 type BlogContent {
   data: String!
   language: String!
-  type: BlogContentType!
+  type: Float!
 }
 
 input BlogContentInput {
   data: String!
   language: String!
-  type: BlogContentType!
-}
-
-"""The BlogContentType."""
-enum BlogContentType {
-  CODE @deprecated(reason: "This is type of content code")
-  NORMAL @deprecated(reason: "This is type of content normal html normal")
+  type: Float!
 }
 
 input CreateBlogInput {
   content: [BlogContentInput!]!
   createBy: String!
   description: String!
+  title: String!
+}
+
+input CreateTagInput {
+  description: String!
+  status: Float!
+  thumbnail: String!
   title: String!
 }
 
@@ -57,6 +58,7 @@ type LoginOutput {
 
 type Mutation {
   createBlog(input: CreateBlogInput!): Blog!
+  createTag(input: CreateTagInput!): Tag!
   login(input: LoginInput!): LoginOutput!
 }
 
@@ -135,6 +137,16 @@ input SeoSocialInput {
   youtube: String!
 }
 
+type Tag {
+  createBy: String!
+  createdAt: String!
+  description: String!
+  id: ID!
+  slug: String!
+  title: String!
+  updatedAt: String!
+}
+
 type User {
   avatar: String!
   createdAt: String!
@@ -146,7 +158,7 @@ type User {
   lastName: String!
   password: String!
   phone: String!
-  role: Role!
+  roles: [Role!]!
   status: UserStatus!
   updatedAt: String!
 }

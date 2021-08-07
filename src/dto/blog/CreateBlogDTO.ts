@@ -1,7 +1,7 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Length } from 'class-validator';
 import { lengthMessage } from 'src/common/valid_message';
-import { BlogContent } from './blog-dto';
+import { BlogContent } from './BlogDTO';
 
 @InputType()
 export class CreateBlogInput {

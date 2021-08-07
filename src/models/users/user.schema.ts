@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Gender, Role, UserStatus } from './dto/user-enum';
-// import { Gender, Role, UserStatus } from './dto/user-enum';
 
 @Schema({ timestamps: true })
 export class UserModel {
@@ -29,8 +28,8 @@ export class UserModel {
   @Prop()
   facebook: string;
 
-  @Prop({ default: Role.USER })
-  role: Role;
+  @Prop({ type: [], default: [Role.USER] })
+  roles: [Role];
 
   @Prop({ default: UserStatus.ACTIVE })
   status: UserStatus;

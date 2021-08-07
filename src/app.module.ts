@@ -1,6 +1,5 @@
 import { PluginModule } from './plugins/plugin.module';
 import { AuthModule } from './auth/auth.module';
-import { TasksModule } from './tasks/tasks.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';

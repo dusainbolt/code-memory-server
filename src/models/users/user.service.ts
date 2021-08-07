@@ -21,9 +21,9 @@ export class UserService {
     private eventEmitter: EventEmitter2
   ) {}
 
-  createToken({ id, email, firstName, lastName, role }: User) {
+  createToken({ id, email, firstName, lastName, roles }: User) {
     const secret = this.configService.get('JWT_SECRET');
-    return jwt.sign({ id, email, firstName, lastName, role }, secret);
+    return jwt.sign({ id, email, firstName, lastName, roles }, secret);
   }
 
   // async create(createUser: CreateUser): Promise<User> {

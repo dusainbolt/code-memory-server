@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { USER_NAME } from '../users/user.schema';
-import { BlogContent } from './dto/blog-dto';
+import { BlogContent } from '../../dto/blog/BlogDTO';
 // import { BlogContent } from './dto/blog-dto';
 
 @Schema({ timestamps: true })
@@ -19,7 +19,7 @@ export class BlogModel {
   createBy: string;
 
   @Prop({
-    type: [{ type: { type: String }, content: { type: String }, language: { type: String } }],
+    type: [{ type: { type: String }, data: { type: String }, language: { type: String } }],
     required: true,
   })
   content: BlogContent[];

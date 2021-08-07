@@ -17,7 +17,7 @@ export class ModelResolver {
       lastName: 'Le',
       avatar: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
       password: '123456',
-      role: Role.ADMIN,
+      roles: [Role.ADMIN],
       gender: Gender.MALE,
       phone: '84328111597',
       facebook: 'https://www.facebook.com/dusainbolt/',

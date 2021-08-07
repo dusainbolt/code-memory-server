@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   validateToken(auth: string) {
-    if (auth.split(' ')[0] !== 'Bearer') {
+    if (auth?.split(' ')[0] !== 'Bearer') {
       throw new UnauthorizedException();
     }
     const token = auth.split(' ')[1];

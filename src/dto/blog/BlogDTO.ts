@@ -1,11 +1,11 @@
 import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
-import { BlogContentType } from './blog-enum';
+import { BlogContentType } from './BlogEnum';
 
 @ObjectType('BlogContent')
 @InputType('BlogContentInput')
 export class BlogContent {
-  @Field(() => BlogContentType)
+  @Field()
   type: BlogContentType;
 
   @Field()
