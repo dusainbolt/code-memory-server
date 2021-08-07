@@ -74,9 +74,14 @@ type Mutation {
   login(input: LoginInput!): LoginOutput!
 }
 
+type OutputSearchTag {
+  dataTags: [Tag!]!
+  total: Int!
+}
+
 type Query {
   initData: String!
-  listTags(input: SearchTagInput!): [Tag!]!
+  listTags(input: SearchTagInput!): OutputSearchTag!
   seoHome: SeoHomeDTO!
 }
 

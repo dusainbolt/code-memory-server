@@ -47,7 +47,6 @@
     "graphql-subscriptions": "1.2.1",
     "graphql-tools": "^7.0.5",
     "mongoose": "^5.12.11",
-    "mongoose-paginate": "^5.0.3",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.6.7",
     "schedule": "^0.5.0"

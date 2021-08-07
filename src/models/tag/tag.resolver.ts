@@ -1,7 +1,7 @@
 import { Args, Context, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { Roles, USER_KEY } from 'src/auth/roles.guard';
 import { CreateTagInput } from 'src/dto/tag/CreateTagDTO';
-import { SearchTagInput } from 'src/dto/tag/SearchTagDTO';
+import { OutputSearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { Role } from '../users/dto/user-enum';
 import { UserHashToken } from '../users/dto/user-hash-token';
@@ -17,8 +17,8 @@ export class TagResolver {
     return this.tagService.create(input, user.id);
   }
 
-  @Query(() => [Tag])
-  async listTags(@Args('input') input: SearchTagInput): Promise<Tag[]> {
+  @Query(() => OutputSearchTag)
+  async listTags(@Args('input') input: SearchTagInput): Promise<OutputSearchTag> {
     return this.tagService.list(input);
   }
 }

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema, FilterQuery } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { TagStatus } from 'src/dto/tag/TagEnum';
 import { USER_NAME } from '../users/user.schema';
 
