@@ -26,12 +26,12 @@ export class UserService {
     return jwt.sign({ id, email, firstName, lastName, roles }, secret);
   }
 
-  // async create(createUser: CreateUser): Promise<User> {
-  //     const createdUser = new this.userModel(createUser);
-  //     const data = await createdUser.save();
-  //     // this.eventEmitter.emit(EVENT_ITEM.CREATE, data);
-  //     return data;
-  // }
+  async create(createUser: CreateUser): Promise<User> {
+    const createdUser = new this.userModel(createUser);
+    const data = await createdUser.save();
+    // this.eventEmitter.emit(EVENT_ITEM.CREATE, data);
+    return data;
+  }
 
   async login(LoginInput: LoginInput): Promise<LoginOutput> {
     let user = await this.findOne(LoginInput.credential);

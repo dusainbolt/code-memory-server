@@ -34,9 +34,20 @@ input CreateBlogInput {
 
 input CreateTagInput {
   description: String!
-  status: Float!
+  status: Int!
   thumbnail: String!
   title: String!
+}
+
+input CreateUser {
+  age: Float!
+  avatar: String!
+  email: String!
+  firstName: String!
+  gender: Float!
+  items: [String!]!
+  lastName: String!
+  password: String!
 }
 
 """The gender of user"""
@@ -59,11 +70,13 @@ type LoginOutput {
 type Mutation {
   createBlog(input: CreateBlogInput!): Blog!
   createTag(input: CreateTagInput!): Tag!
+  createUser(input: CreateUser!): User!
   login(input: LoginInput!): LoginOutput!
 }
 
 type Query {
   initData: String!
+  listTags(input: SearchTagInput!): [Tag!]!
   seoHome: SeoHomeDTO!
 }
 
@@ -71,6 +84,13 @@ type Query {
 enum Role {
   ADMIN @deprecated(reason: "This is admin")
   USER @deprecated(reason: "This is user")
+}
+
+input SearchTagInput {
+  key: String!
+  limit: Int!
+  offset: Int!
+  status: [Int!]!
 }
 
 type SeoContact {

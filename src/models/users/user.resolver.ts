@@ -4,17 +4,18 @@ import { LoginInput, LoginOutput } from './dto/login-user-dto';
 import { UserService } from './user.service';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { User } from './dto/user-dto';
+import { CreateUser } from './dto/create-user-dto';
 @Resolver(() => User)
 export class UserResolver {
   private readonly logger = new Logger(UserResolver.name);
 
   constructor(private readonly userService: UserService) {}
 
-  // @Mutation(returns => User)
-  // async createUser(@Args('input') input: CreateUser): Promise<User> {
-  //     // this.logger.debug(`createUser => input: ${JSON.stringify(input)}`);
-  //     return this.userService.create(input);
-  // }
+  @Mutation(returns => User)
+  async createUser(@Args('input') input: CreateUser): Promise<User> {
+    // this.logger.debug(`createUser => input: ${JSON.stringify(input)}`);
+    return this.userService.create(input);
+  }
 
   // @Query(() => [User])
   // async userInitData(): Promise<User[]> {
