@@ -9,8 +9,6 @@ import { Model } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import { User } from './dto/user-dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { EVENT_INIT_DATA_BY_USER } from '../models.module';
-import { EVENT_ITEM } from '../items/items.listener';
 import { MSG_LOGIN_ERROR } from 'src/common/valid_message';
 
 @Injectable()

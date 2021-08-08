@@ -5,7 +5,10 @@ export const ERROR_VALIDATE = 'CM_ERROR';
 export const ERROR_CODE_HASH = 'CM_ERROR_401';
 
 export const lengthMessage = (args: ValidationArguments) => {
-    return `${ERROR_VALIDATE}_1,${args.constraints[0]},${args.constraints[1]},${args.property}, ${args.value}`;
+  return `${ERROR_VALIDATE}_1,${args.constraints[0]},${args.constraints[1]},${args.property}, ${args.value}`;
 };
 
-export const MSG_LOGIN_ERROR = "MSG_2";
+export const MSG_LOGIN_ERROR = 'MSG_2';
+export const MSG_TAG = {
+  NOT_ALLOW_TYPE: 'MSG_3',
+};

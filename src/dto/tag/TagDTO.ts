@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
+import { User } from 'src/models/users/dto/user-dto';
+import { TagStatus, TagType } from './TagEnum';
 
 @ObjectType()
 export class Tag {
@@ -18,9 +20,19 @@ export class Tag {
   @Field()
   description: string;
 
+  @Field(() => TagStatus)
+  status: TagStatus;
+
+  @Field(() => TagType)
+  tagType: TagType;
+
   @Field()
   createdAt?: string;
 
   @Field()
   updatedAt?: string;
+
+  // Handle ResolveField
+  @Field()
+  userCreate?: User;
 }

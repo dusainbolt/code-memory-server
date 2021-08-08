@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { TagStatus } from 'src/dto/tag/TagEnum';
+import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
 import { USER_NAME } from '../users/user.schema';
 
 @Schema({ timestamps: true })
@@ -11,14 +11,17 @@ export class TagModel {
   @Prop({ unique: true, required: true })
   slug: string;
 
-  @Prop({ required: true })
+  @Prop()
   description: string;
 
-  @Prop({ required: true })
+  @Prop()
   thumbnail: string;
 
   @Prop({ type: Number, enum: TagStatus, required: true })
   status: number;
+
+  @Prop({ type: Number, enum: TagType, required: true, default: TagType.ADDITION })
+  tagType: number;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME, required: true })
   createBy: string;

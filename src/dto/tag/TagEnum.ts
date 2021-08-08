@@ -1,8 +1,8 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum TagStatus {
-  ACTIVE,
   HIDE,
+  ACTIVE,
 }
 
 registerEnumType(TagStatus, {
@@ -14,6 +14,24 @@ registerEnumType(TagStatus, {
     },
     HIDE: {
       deprecationReason: 'This is type of tag hide',
+    },
+  },
+});
+
+export enum TagType {
+  SYSTEM,
+  ADDITION,
+}
+
+registerEnumType(TagType, {
+  name: 'TagType',
+  description: 'The TagType.',
+  valuesMap: {
+    SYSTEM: {
+      deprecationReason: 'This is tag system note special in blog',
+    },
+    ADDITION: {
+      deprecationReason: 'This is tag addition',
     },
   },
 });

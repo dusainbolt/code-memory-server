@@ -6,6 +6,7 @@ import { Plugin } from '@nestjs/graphql';
 import { ApolloServerPlugin, GraphQLRequestListener } from 'apollo-server-plugin-base';
 import { AuthenticationError } from 'apollo-server-errors';
 import { ERROR_CODE_HASH } from 'src/common/valid_message';
+import { LOCAL, NODE_ENV } from 'src/common/contant';
 
 export const DEC_START_REQUEST = 'START_AT:';
 export const DEC_GRAPHQL = 'ACTION:';
@@ -32,11 +33,11 @@ function getDurationRequest(request): Number {
 function getInfoUserRequest(user: UserHashToken): String {
   return user && `${user.firstName} - ${user.lastName}`;
 }
+
 @Plugin()
 export class LoggingPlugin implements ApolloServerPlugin {
   private readonly logger = new Logger(LoggingPlugin.name);
   constructor(private hashService: HashService, private configService: ConfigService) {}
-
   // get user ip with params headers
   getUserIpAddress(req): String {
     const hashLocation = req.headers['x-forwarded-app'];
@@ -60,7 +61,7 @@ export class LoggingPlugin implements ApolloServerPlugin {
     const { req } = service.context;
 
     // Validate & log request if production
-    if (req.headers && this.configService.get('NODE_ENV') !== 'local') {
+    if (req.headers && this.configService.get(NODE_ENV) !== LOCAL) {
       // get time server
       const timeServer = Math.floor(Date.now() / 1000);
       // handle validate
@@ -71,17 +72,21 @@ export class LoggingPlugin implements ApolloServerPlugin {
       this.logger.debug(`${DEC_START_REQUEST} ${timeServer}`);
     }
 
-    // handle write log
-    this.logger.debug(`${DEC_GRAPHQL} ${req.body.query.replace(/\s/g, '')}`);
-
     // Set time request
     service.timeRequest = new Date().getTime();
+
+    if (req.body.operationName === 'IntrospectionQuery') {
+      return;
+    }
+
+    this.logger.debug(`${DEC_GRAPHQL} ${req.body.query}`);
+    this.logger.verbose(JSON.stringify(req.body.variables));
 
     return {
       willSendResponse(requestContext: any) {
         // handle log info when completed request
-        const user: UserHashToken = requestContext.context.req.user;
-        new Logger().debug(`${DEC_END_REQUEST} ${getInfoUserRequest(user) || ''} ${getDurationRequest(requestContext)}ms`);
+        const user: UserHashToken = requestContext.context.user;
+        new Logger().log(`${DEC_END_REQUEST} ${getInfoUserRequest(user) || ''} ${getDurationRequest(requestContext)}ms`);
       },
     };
   }

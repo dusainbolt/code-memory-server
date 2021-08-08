@@ -5,8 +5,9 @@ import { Reflector } from '@nestjs/core';
 import { Role } from 'src/models/users/dto/user-enum';
 
 export const ROLES_KEY = 'roles';
-export const Roles = (roles: Role[]) => SetMetadata(ROLES_KEY, roles);
+export const Roles = (roles: any[]) => SetMetadata(ROLES_KEY, roles);
 export const USER_KEY = 'user';
+export const ROLE_PUBLIC = 'PUBLIC';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -25,6 +26,7 @@ export class RolesGuard implements CanActivate {
     }
 
     ctx[USER_KEY] = this.authService.validateToken(headers.authorization);
+
     // allow any auth with admin
     if (ctx[USER_KEY].roles?.includes(Role.ADMIN)) {
       return true;

@@ -1,7 +1,7 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsEmail, IsEmpty, IsOptional, Length } from 'class-validator';
+import { Length } from 'class-validator';
 import { lengthMessage } from 'src/common/valid_message';
-import { TagStatus } from './TagEnum';
+import { TagStatus, TagType } from './TagEnum';
 
 @InputType()
 export class CreateTagInput {
@@ -14,6 +14,9 @@ export class CreateTagInput {
 
   @Field()
   thumbnail: string;
+
+  @Field({ defaultValue: TagType.ADDITION })
+  tagType: TagType;
 
   @Field(() => Int) // it's very important
   status: TagStatus;

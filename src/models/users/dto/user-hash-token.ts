@@ -9,5 +9,5 @@ export class UserHashToken {
 
   email: string;
 
-  role: Role;
+  roles: Role[];
 }
