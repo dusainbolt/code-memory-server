@@ -2,8 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { USER_NAME } from '../users/user.schema';
 import { BlogContent } from '../../dto/blog/BlogDTO';
-// import { BlogContent } from './dto/blog-dto';
-
 @Schema({ timestamps: true })
 export class BlogModel {
   @Prop({ unique: true, required: true })

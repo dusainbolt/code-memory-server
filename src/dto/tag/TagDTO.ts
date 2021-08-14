@@ -18,6 +18,9 @@ export class Tag {
   createBy: string;
 
   @Field()
+  thumbnail: string;
+
+  @Field()
   description: string;
 
   @Field(() => TagStatus)

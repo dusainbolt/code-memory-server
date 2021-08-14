@@ -98,7 +98,7 @@ input SearchTagInput {
   key: String!
   limit: Int!
   offset: Int!
-  status: [Int!]!
+  status: [TagStatus!]!
 }
 
 type SeoContact {
@@ -173,6 +173,7 @@ type Tag {
   slug: String!
   status: TagStatus!
   tagType: TagType!
+  thumbnail: String!
   title: String!
   updatedAt: String!
   userCreate: User!

@@ -23,5 +23,6 @@ export class LoginOutput {
 @ObjectType()
 export class QueryFindUser {
   email?: QuerySelector<any>;
+  _id?: QuerySelector<any>;
   username?: QuerySelector<any>;
 }

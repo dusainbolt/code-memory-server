@@ -49,6 +49,12 @@ export class User {
   updatedAt?: string;
 }
 
+// @ObjectType()
+// export class UserQueryResult extends User {
+//   @Field(() => ID)
+//   _id?: MongooseSchema.Types.ObjectId;
+// }
+
 @InputType()
 export class InitUser {
   @IsEmail()

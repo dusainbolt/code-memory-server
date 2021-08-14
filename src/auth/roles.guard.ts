@@ -13,7 +13,7 @@ export const ROLE_PUBLIC = 'PUBLIC';
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector, private authService: AuthService) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [context.getHandler(), context.getClass()]);
     if (!requiredRoles) {
       return true;
@@ -25,7 +25,7 @@ export class RolesGuard implements CanActivate {
       return false;
     }
 
-    ctx[USER_KEY] = this.authService.validateToken(headers.authorization);
+    ctx[USER_KEY] = await this.authService.validateToken(headers.authorization);
 
     // allow any auth with admin
     if (ctx[USER_KEY].roles?.includes(Role.ADMIN)) {

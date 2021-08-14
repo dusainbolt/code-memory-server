@@ -1,29 +1,21 @@
 import { AuthenticationError } from 'apollo-server-errors';
-import { ConfigService } from '@nestjs/config';
 import { LoginInput, LoginOutput, QueryFindUser } from './dto/login-user-dto';
 import { CreateUser } from './dto/create-user-dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { UserDocument, USER_NAME } from './user.schema';
 import { Model } from 'mongoose';
-import * as jwt from 'jsonwebtoken';
 import { User } from './dto/user-dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { MSG_SYSTEM } from 'src/common/valid_message';
 import { HashService } from 'src/hash/hash.service';
-
+// import * as mongoose from 'mongoose';
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel(USER_NAME) public userModel: Model<UserDocument>,
-    private configService: ConfigService,
-    private hashService: HashService,
-    private eventEmitter: EventEmitter2
-  ) {}
+  constructor(@InjectModel(USER_NAME) public userModel: Model<UserDocument>, private hashService: HashService, private eventEmitter: EventEmitter2) {}
 
   createToken({ id, email, firstName, lastName, roles }: User) {
-    const secret = this.configService.get('JWT_SECRET');
-    return jwt.sign({ id, email, firstName, lastName, roles }, secret);
+    return this.hashService.signJWT({ id, email, firstName, lastName, roles });
   }
 
   async create(createUser: CreateUser): Promise<User> {
@@ -47,7 +39,7 @@ export class UserService {
   }
 
   async findOne(credential: string): Promise<User> {
-    const query: QueryFindUser = { username: {}, email: {} };
+    const query: QueryFindUser = { username: {}, email: {}, _id: {} };
     query.email.$eq = credential;
     query.username.$eq = credential;
     return this.userModel.findOne({ $or: [{ username: query.username }, { email: query.email }] });

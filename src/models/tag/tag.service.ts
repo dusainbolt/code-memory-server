@@ -6,16 +6,13 @@ import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/Sea
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
 import { convertToSlug, removeEmpty } from 'src/common/functions';
-import { UserHashToken } from '../users/dto/user-hash-token';
-import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
-import { Role } from '../users/dto/user-enum';
-import { MSG_SYSTEM } from 'src/common/valid_message';
+import { User } from '../users/dto/user-dto';
 
 @Injectable()
 export class TagService {
   constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) {}
 
-  async create(createTagInput: CreateTagInput, user: UserHashToken): Promise<Tag> {
+  async create(createTagInput: CreateTagInput, user: User): Promise<Tag> {
     // Convert slug
     const slug = convertToSlug(createTagInput.title);
     // Create Tag

@@ -2,10 +2,13 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import * as CryptoJS from 'crypto-js';
 import * as bcrypt from 'bcrypt';
-
+import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class HashService {
-  constructor(private configService: ConfigService) {}
+  private secret;
+  constructor(private configService: ConfigService) {
+    this.secret = this.configService.get('JWT_SECRET');
+  }
 
   hashCryptoAES(data: object | string): string {
     return CryptoJS.AES.encrypt(JSON.stringify(data), this.configService.get('APP_KEY')).toString();
@@ -27,5 +30,13 @@ export class HashService {
 
   async matchBcrypt(message, hash): Promise<boolean> {
     return await bcrypt.compare(message, hash);
+  }
+
+  signJWT(data: any): string {
+    return jwt.sign(data, this.secret);
+  }
+
+  verifyJWT(token: string) {
+    return jwt.verify(token, this.secret);
   }
 }

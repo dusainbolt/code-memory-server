@@ -8,7 +8,7 @@ export class SearchTagInput {
   @Field()
   key?: string;
 
-  @Field(() => [Int])
+  @Field(() => [TagStatus])
   status?: TagStatus[];
 
   @Field(() => Int)

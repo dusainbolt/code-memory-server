@@ -3,6 +3,7 @@ import { Roles, ROLE_PUBLIC, USER_KEY } from 'src/auth/roles.guard';
 import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
+import { User } from '../users/dto/user-dto';
 import { Role } from '../users/dto/user-enum';
 import { UserHashToken } from '../users/dto/user-hash-token';
 import { USER_NAME } from '../users/user.schema';
@@ -15,7 +16,7 @@ export class TagResolver {
 
   @Roles([Role.ADMIN])
   @Mutation(() => Tag)
-  async createTag(@Args('input') input: CreateTagInput, @Context(USER_KEY) user: UserHashToken): Promise<Tag> {
+  async createTag(@Args('input') input: CreateTagInput, @Context(USER_KEY) user: User): Promise<Tag> {
     return this.tagService.create(input, user);
   }
 
@@ -34,6 +35,7 @@ export class TagResolver {
   @ResolveField()
   async userCreate(@Parent() tagResolve: TagDocument) {
     await tagResolve.populate({ path: 'createBy', model: USER_NAME }).execPopulate();
+    console.log(tagResolve.createBy);
     return tagResolve.createBy;
   }
 }
