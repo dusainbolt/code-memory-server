@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
 import { Roles, ROLE_PUBLIC, USER_KEY } from 'src/auth/roles.guard';
-import { CreateTagInput } from 'src/dto/tag/CreateTagDTO';
+import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { Role } from '../users/dto/user-enum';
@@ -13,17 +13,17 @@ import { TagService } from './tag.service';
 export class TagResolver {
   constructor(private readonly tagService: TagService) {}
 
-  @Roles([Role.USER, Role.ADMIN])
+  @Roles([Role.ADMIN])
   @Mutation(() => Tag)
   async createTag(@Args('input') input: CreateTagInput, @Context(USER_KEY) user: UserHashToken): Promise<Tag> {
     return this.tagService.create(input, user);
   }
 
-  // @Roles([Role.USER, Role.ADMIN])
-  // @Mutation(() => Tag)
-  // async updateTag(@Args('input') input: CreateTagInput, @Context(USER_KEY) user: UserHashToken): Promise<Tag> {
-  //   return this.tagService.create(input, user);
-  // }
+  @Roles([Role.ADMIN])
+  @Mutation(() => Tag)
+  async updateTag(@Args('input') input: UpdateTagInput): Promise<Tag> {
+    return this.tagService.update(input);
+  }
 
   @Roles([ROLE_PUBLIC])
   @Query(() => OutputSearchTag)

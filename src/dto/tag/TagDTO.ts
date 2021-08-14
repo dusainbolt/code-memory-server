@@ -32,7 +32,6 @@ export class Tag {
   @Field()
   updatedAt?: string;
 
-  // Handle ResolveField
   @Field()
   userCreate?: User;
 }

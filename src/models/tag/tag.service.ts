@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, _FilterQuery } from 'mongoose';
-import { CreateTagInput } from 'src/dto/tag/CreateTagDTO';
+import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
 import { convertToSlug, removeEmpty } from 'src/common/functions';
 import { UserHashToken } from '../users/dto/user-hash-token';
-import { TagType } from 'src/dto/tag/TagEnum';
+import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
 import { Role } from '../users/dto/user-enum';
 import { MSG_SYSTEM } from 'src/common/valid_message';
 
@@ -16,10 +16,6 @@ export class TagService {
   constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) {}
 
   async create(createTagInput: CreateTagInput, user: UserHashToken): Promise<Tag> {
-    // Check allow create type
-    if (createTagInput.tagType === TagType.SYSTEM && !user.roles.includes(Role.ADMIN)) {
-      throw new Error(MSG_SYSTEM.TAG_NOT_ALLOW_TYPE);
-    }
     // Convert slug
     const slug = convertToSlug(createTagInput.title);
     // Create Tag
@@ -27,6 +23,16 @@ export class TagService {
     const tagData = await tag.save();
     // Return result
     return tagData;
+  }
+
+  async update(updateTagInput: UpdateTagInput): Promise<Tag> {
+    const tagData = updateTagInput.data;
+    // Convert slug
+    const slug = convertToSlug(tagData.title);
+    // update Tag
+    const tagDataUpdate = await this.tagModel.findByIdAndUpdate(updateTagInput.tagId, { ...tagData, slug });
+    // Return result
+    return tagDataUpdate;
   }
 
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {

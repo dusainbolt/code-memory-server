@@ -35,7 +35,7 @@ input CreateBlogInput {
 input CreateTagInput {
   description: String!
   status: TagStatus!
-  tagType: TagType = ADDITION
+  tagType: TagType = SYSTEM
   thumbnail: String!
   title: String!
 }
@@ -73,6 +73,7 @@ type Mutation {
   createTag(input: CreateTagInput!): Tag!
   createUser(input: CreateUser!): User!
   login(input: LoginInput!): LoginOutput!
+  updateTag(input: UpdateTagInput!): Tag!
 }
 
 type OutputSearchTag {
@@ -89,6 +90,7 @@ type Query {
 """The role of user"""
 enum Role {
   ADMIN @deprecated(reason: "This is admin")
+  CREATOR
   USER @deprecated(reason: "This is user")
 }
 
@@ -188,6 +190,11 @@ enum TagType {
   SYSTEM
 }
 
+input UpdateTagInput {
+  data: CreateTagInput!
+  tagId: String!
+}
+
 type User {
   avatar: String!
   createdAt: String!
@@ -202,6 +209,7 @@ type User {
   roles: [Role!]!
   status: UserStatus!
   updatedAt: String!
+  username: String!
 }
 
 """The status of user"""

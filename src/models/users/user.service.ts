@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-errors';
 import { ConfigService } from '@nestjs/config';
-import { LoginInput, LoginOutput } from './dto/login-user-dto';
+import { LoginInput, LoginOutput, QueryFindUser } from './dto/login-user-dto';
 import { CreateUser } from './dto/create-user-dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
@@ -10,12 +10,14 @@ import * as jwt from 'jsonwebtoken';
 import { User } from './dto/user-dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { MSG_SYSTEM } from 'src/common/valid_message';
+import { HashService } from 'src/hash/hash.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(USER_NAME) public userModel: Model<UserDocument>,
     private configService: ConfigService,
+    private hashService: HashService,
     private eventEmitter: EventEmitter2
   ) {}
 
@@ -31,24 +33,23 @@ export class UserService {
     return data;
   }
 
-  async login(LoginInput: LoginInput): Promise<LoginOutput> {
-    let user = await this.findOne(LoginInput.credential);
+  async login(loginInput: LoginInput): Promise<LoginOutput> {
+    let user = await this.findOne(loginInput.credential);
     if (!user) {
       throw new AuthenticationError(MSG_SYSTEM.MSG_LOGIN_ERROR);
     }
-    return { user, token: this.createToken(user) };
+    const isMatchPassword = await this.hashService.matchBcrypt(loginInput.password, user.password);
+    if (isMatchPassword) {
+      return { user, token: this.createToken(user) };
+    } else {
+      throw new AuthenticationError(MSG_SYSTEM.MSG_LOGIN_ERROR);
+    }
   }
 
-  // async list(): Promise<User[]> {
-  //     return this.userModel.find();
-  // }
-
-  // async initDataByUser(): Promise<User[]> {
-  //     this.eventEmitter.emit(EVENT_ITEM.CREATE, {});
-  //     return this.userModel.find();
-  // }
-
-  async findOne(email: string): Promise<User> {
-    return this.userModel.findOne({ email });
+  async findOne(credential: string): Promise<User> {
+    const query: QueryFindUser = { username: {}, email: {} };
+    query.email.$eq = credential;
+    query.username.$eq = credential;
+    return this.userModel.findOne({ $or: [{ username: query.username }, { email: query.email }] });
   }
 }

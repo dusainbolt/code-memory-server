@@ -7,6 +7,9 @@ export class UserModel {
   @Prop({ unique: true, required: true })
   email: string;
 
+  @Prop({ unique: true })
+  username: string;
+
   @Prop({ required: true })
   firstName: string;
 

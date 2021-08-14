@@ -5,18 +5,21 @@ import { InitUser, User } from './users/dto/user-dto';
 import { SeoHomeService } from './seo-home/seo-home.service';
 import { UserService } from './users/user.service';
 import { Gender, Role } from './users/dto/user-enum';
+import { HashService } from 'src/hash/hash.service';
 
 @Resolver(() => null)
 export class ModelResolver {
-  constructor(private userService: UserService, private seoHomeService: SeoHomeService) {}
+  constructor(private userService: UserService, private hashService: HashService, private seoHomeService: SeoHomeService) {}
 
   async initUser(): Promise<User> {
+    const password = await this.hashService.hashBcrypt('du@dev1234');
     const data: InitUser = {
-      email: 'demo@gmail.com',
+      email: 'dulh181199@gmail.com',
+      username: 'dusainbolt',
       firstName: 'Du',
       lastName: 'Le',
       avatar: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
-      password: '123456',
+      password: password,
       roles: [Role.ADMIN],
       gender: Gender.MALE,
       phone: '84328111597',
@@ -68,7 +71,7 @@ export class ModelResolver {
     const users = await this.userService.userModel.find();
     if (!users.length) {
       const oneUser = await this.initUser();
-      const seoHome = await this.initSeoHome(oneUser.id);
+      await this.initSeoHome(oneUser.id);
       return 'Init Data Success';
     }
     return 'User is exits';

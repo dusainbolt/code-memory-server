@@ -5,7 +5,7 @@ import { TagStatus, TagType } from './TagEnum';
 
 @InputType()
 export class CreateTagInput {
-  @Length(10, 256, { message: lengthMessage })
+  @Length(3, 256, { message: lengthMessage })
   @Field()
   title: string;
 
@@ -15,9 +15,18 @@ export class CreateTagInput {
   @Field()
   thumbnail: string;
 
-  @Field(() => TagType, { defaultValue: TagType.ADDITION })
+  @Field(() => TagType, { defaultValue: TagType.SYSTEM })
   tagType: TagType;
 
   @Field(() => TagStatus) // it's very important
   status: TagStatus;
+}
+
+@InputType()
+export class UpdateTagInput {
+  @Field(() => CreateTagInput)
+  data: CreateTagInput;
+
+  @Field()
+  tagId: string;
 }

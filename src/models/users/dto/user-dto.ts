@@ -13,6 +13,9 @@ export class User {
   email: string;
 
   @Field()
+  username: string;
+
+  @Field()
   firstName: string;
 
   @Field()
@@ -50,6 +53,9 @@ export class User {
 export class InitUser {
   @IsEmail()
   email: string;
+
+  @Field()
+  username: string;
 
   @Length(1, 25, { message: lengthMessage })
   firstName: string;
