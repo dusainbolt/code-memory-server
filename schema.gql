@@ -34,8 +34,8 @@ input CreateBlogInput {
 
 input CreateTagInput {
   description: String!
-  status: Int!
-  tagType: Float = 1
+  status: TagStatus!
+  tagType: TagType = ADDITION
   thumbnail: String!
   title: String!
 }
@@ -73,7 +73,6 @@ type Mutation {
   createTag(input: CreateTagInput!): Tag!
   createUser(input: CreateUser!): User!
   login(input: LoginInput!): LoginOutput!
-  updateTag(input: CreateTagInput!): Tag!
 }
 
 type OutputSearchTag {
@@ -179,14 +178,14 @@ type Tag {
 
 """The TagStatus."""
 enum TagStatus {
-  ACTIVE @deprecated(reason: "This is type of tag show")
-  HIDE @deprecated(reason: "This is type of tag hide")
+  ACTIVE
+  HIDE
 }
 
 """The TagType."""
 enum TagType {
-  ADDITION @deprecated(reason: "This is tag addition")
-  SYSTEM @deprecated(reason: "This is tag system note special in blog")
+  ADDITION
+  SYSTEM
 }
 
 type User {

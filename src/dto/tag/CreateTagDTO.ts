@@ -15,9 +15,9 @@ export class CreateTagInput {
   @Field()
   thumbnail: string;
 
-  @Field({ defaultValue: TagType.ADDITION })
+  @Field(() => TagType, { defaultValue: TagType.ADDITION })
   tagType: TagType;
 
-  @Field(() => Int) // it's very important
+  @Field(() => TagStatus) // it's very important
   status: TagStatus;
 }

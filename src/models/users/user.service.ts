@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import { User } from './dto/user-dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { MSG_LOGIN_ERROR } from 'src/common/valid_message';
+import { MSG_SYSTEM } from 'src/common/valid_message';
 
 @Injectable()
 export class UserService {
@@ -34,7 +34,7 @@ export class UserService {
   async login(LoginInput: LoginInput): Promise<LoginOutput> {
     let user = await this.findOne(LoginInput.credential);
     if (!user) {
-      throw new AuthenticationError(MSG_LOGIN_ERROR);
+      throw new AuthenticationError(MSG_SYSTEM.MSG_LOGIN_ERROR);
     }
     return { user, token: this.createToken(user) };
   }
