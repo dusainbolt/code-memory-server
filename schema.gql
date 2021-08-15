@@ -35,7 +35,6 @@ input CreateBlogInput {
 input CreateTagInput {
   description: String!
   status: TagStatus!
-  tagType: TagType = SYSTEM
   thumbnail: String!
   title: String!
 }
@@ -96,8 +95,10 @@ enum Role {
 
 input SearchTagInput {
   key: String!
-  limit: Int!
-  offset: Int!
+  limit: Int = null
+  offset: Int = null
+  orderBy: String = ""
+  sortBy: Int = null
   status: [TagStatus!]!
 }
 

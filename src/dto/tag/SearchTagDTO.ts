@@ -11,11 +11,17 @@ export class SearchTagInput {
   @Field(() => [TagStatus])
   status?: TagStatus[];
 
-  @Field(() => Int)
+  @Field(() => Int, { defaultValue: null })
   offset?: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { defaultValue: null })
   limit?: number;
+
+  @Field(() => Int, { defaultValue: null })
+  sortBy?: number;
+
+  @Field({ defaultValue: '' })
+  orderBy?: string;
 }
 @ObjectType()
 export class QuerySearchTag {

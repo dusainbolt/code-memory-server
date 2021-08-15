@@ -35,7 +35,6 @@ export class TagResolver {
   @ResolveField()
   async userCreate(@Parent() tagResolve: TagDocument) {
     await tagResolve.populate({ path: 'createBy', model: USER_NAME }).execPopulate();
-    console.log(tagResolve.createBy);
     return tagResolve.createBy;
   }
 }

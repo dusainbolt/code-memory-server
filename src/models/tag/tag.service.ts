@@ -5,7 +5,7 @@ import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
-import { convertToSlug, removeEmpty } from 'src/common/functions';
+import { convertToSlug, getParamsList, removeEmpty } from 'src/common/functions';
 import { User } from '../users/dto/user-dto';
 
 @Injectable()
@@ -34,18 +34,24 @@ export class TagService {
 
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {
     const query: QuerySearchTag = { title: {}, status: {} };
+    const queryList = getParamsList(searchTagInput);
+    console.log('==============================>', queryList);
     // Handle condition with key
-    if (!!searchTagInput?.key) {
+    if (!!searchTagInput.key) {
       query.title.$regex = new RegExp(searchTagInput.key.trim(), 'i');
     }
     // Handle condition with status
-    if (!!searchTagInput?.status?.length) {
+    if (!!searchTagInput.status?.length) {
       query.status.$in = searchTagInput.status;
     }
     // Handle remove not condition filed
     const queryConvert = removeEmpty(query);
     // Query data
-    const dataTags = await this.tagModel.find(queryConvert).skip(searchTagInput.offset).limit(searchTagInput.limit);
+    const dataTags = await this.tagModel
+      .find(queryConvert)
+      .skip(queryList.offset)
+      .limit(queryList.limit)
+      .sort({ [queryList.orderBy]: queryList.sortBy });
     // Query total
     const total = await this.tagModel.countDocuments(queryConvert);
     // Return result

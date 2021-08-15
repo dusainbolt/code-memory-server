@@ -6,10 +6,19 @@ import { SeoHomeService } from './seo-home/seo-home.service';
 import { UserService } from './users/user.service';
 import { Gender, Role } from './users/dto/user-enum';
 import { HashService } from 'src/hash/hash.service';
+import { Tag } from 'src/dto/tag/TagDTO';
+import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
+import { convertToSlug } from 'src/common/functions';
+import { TagService } from './tag/tag.service';
 
 @Resolver(() => null)
 export class ModelResolver {
-  constructor(private userService: UserService, private hashService: HashService, private seoHomeService: SeoHomeService) {}
+  constructor(
+    private userService: UserService,
+    private hashService: HashService,
+    private tagService: TagService,
+    private seoHomeService: SeoHomeService
+  ) {}
 
   async initUser(): Promise<User> {
     const password = await this.hashService.hashBcrypt('du@dev1234');
@@ -29,7 +38,7 @@ export class ModelResolver {
     return user.save();
   }
 
-  async initSeoHome(id: MongooseSchema.Types.ObjectId): Promise<SeoHomeDTO> {
+  async initSeoHome(id: string): Promise<SeoHomeDTO> {
     const data: SeoHomeInitDTO = {
       owner: id,
       appName: 'CodeMemory',
@@ -66,12 +75,29 @@ export class ModelResolver {
     return seoHome.save();
   }
 
+  async initTag(id: string): Promise<Tag[]> {
+    const dataInit: Tag[] = [];
+    for (let i = 1; i <= 20; i++) {
+      const title = `Lập Trình Viên ${i}`;
+      dataInit.push({
+        createBy: id,
+        title,
+        description: `Người phát triển phần mềm ứng dụng ${i}`,
+        slug: convertToSlug(title),
+        status: TagStatus.ACTIVE,
+        tagType: TagType.SYSTEM,
+        thumbnail: 'https://i.pinimg.com/736x/ec/14/7c/ec147c4c53abfe86df2bc7e70c0181ff.jpg',
+      });
+    }
+    return this.tagService.tagModel.insertMany(dataInit);
+  }
   @Query(() => String)
   async initData(): Promise<string> {
     const users = await this.userService.userModel.find();
     if (!users.length) {
       const oneUser = await this.initUser();
       await this.initSeoHome(oneUser.id);
+      await this.initTag(oneUser.id);
       return 'Init Data Success';
     }
     return 'User is exits';

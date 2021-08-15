@@ -1,3 +1,6 @@
+import { QUERY_LIST } from './contant';
+import { SortPaginate } from './type';
+
 export const removeBreakLine = (string: String): String => {
   return string.replace(/(\r\n|\n|\r)/gm, '').trim();
 };
@@ -18,6 +21,16 @@ export const removeEmpty = (obj: Object) => {
     }
   });
   return newObj;
+};
+
+export const getParamsList = (params: any): SortPaginate => {
+  const limit = params?.limit || QUERY_LIST.LIMIT;
+  return {
+    limit,
+    offset: !!params?.offset ? params.offset * limit : QUERY_LIST.OFFSET,
+    orderBy: params?.orderBy && params?.sortBy ? params?.orderBy : QUERY_LIST.ORDER_BY,
+    sortBy: params?.sortBy || QUERY_LIST.DESC,
+  };
 };
 
 export const convertToSlug = (title: string) => {
