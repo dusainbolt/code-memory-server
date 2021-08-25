@@ -50,6 +50,10 @@ input CreateUser {
   password: String!
 }
 
+input EntireTagInput {
+  status: [TagStatus!]!
+}
+
 """The gender of user"""
 enum Gender {
   FEMALE @deprecated(reason: "This is female")
@@ -81,6 +85,7 @@ type OutputSearchTag {
 }
 
 type Query {
+  entireTags(input: EntireTagInput!): [Tag!]!
   initData: String!
   listTags(input: SearchTagInput!): OutputSearchTag!
   seoHome: SeoHomeDTO!
@@ -94,7 +99,7 @@ enum Role {
 }
 
 input SearchTagInput {
-  key: String!
+  key: String = null
   limit: Int = null
   offset: Int = null
   orderBy: String = ""

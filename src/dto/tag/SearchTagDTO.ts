@@ -5,7 +5,7 @@ import { Tag } from './TagDTO';
 
 @InputType()
 export class SearchTagInput {
-  @Field()
+  @Field({ defaultValue: null })
   key?: string;
 
   @Field(() => [TagStatus])

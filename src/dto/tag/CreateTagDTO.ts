@@ -1,7 +1,7 @@
-import { InputType, Field, Int } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 import { Length } from 'class-validator';
 import { lengthMessage } from 'src/common/valid_message';
-import { TagStatus, TagType } from './TagEnum';
+import { TagStatus } from './TagEnum';
 
 @InputType()
 export class CreateTagInput {

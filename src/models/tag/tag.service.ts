@@ -7,6 +7,7 @@ import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
 import { convertToSlug, getParamsList, removeEmpty } from 'src/common/functions';
 import { User } from '../users/dto/user-dto';
+import { EntireTagInput } from 'src/dto/tag/GetTagDetailDTO';
 
 @Injectable()
 export class TagService {
@@ -30,6 +31,10 @@ export class TagService {
     const tagDataUpdate = await this.tagModel.findByIdAndUpdate(updateTagInput.tagId, { ...tagData, slug });
     // Return result
     return tagDataUpdate;
+  }
+
+  async entire(entireTagInput: EntireTagInput): Promise<Tag[]> {
+    return this.tagModel.find({ status: { $in: entireTagInput.status } });
   }
 
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {
