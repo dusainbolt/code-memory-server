@@ -54,6 +54,10 @@ input EntireTagInput {
   status: [TagStatus!]!
 }
 
+input FindTagBySlugInput {
+  slug: String!
+}
+
 """The gender of user"""
 enum Gender {
   FEMALE @deprecated(reason: "This is female")
@@ -86,6 +90,7 @@ type OutputSearchTag {
 
 type Query {
   entireTags(input: EntireTagInput!): [Tag!]!
+  findTagBySlug(input: FindTagBySlugInput!): Tag!
   initData: String!
   listTags(input: SearchTagInput!): OutputSearchTag!
   seoHome: SeoHomeDTO!

@@ -6,7 +6,7 @@ import { User } from 'src/models/users/dto/user-dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private hashService: HashService) {}
+  constructor(private userService: UserService, private hashService: HashService) { }
 
   async validateUser(id: string): Promise<any> {
     return await this.userService.userModel.findById(id);

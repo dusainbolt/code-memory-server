@@ -11,7 +11,7 @@ import { EntireTagInput } from 'src/dto/tag/GetTagDetailDTO';
 
 @Injectable()
 export class TagService {
-  constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) {}
+  constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) { }
 
   async create(createTagInput: CreateTagInput, user: User): Promise<Tag> {
     // Convert slug
@@ -35,6 +35,10 @@ export class TagService {
 
   async entire(entireTagInput: EntireTagInput): Promise<Tag[]> {
     return this.tagModel.find({ status: { $in: entireTagInput.status } });
+  }
+
+  async findOneBySlug(slug: string): Promise<Tag> {
+    return this.tagModel.findOne({ slug });
   }
 
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {
