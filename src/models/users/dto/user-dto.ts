@@ -63,7 +63,7 @@ export class InitUser {
   lastName: string;
 
   @Field()
-  avatar: string;
+  avatar?: string;
 
   @Field()
   password: string;

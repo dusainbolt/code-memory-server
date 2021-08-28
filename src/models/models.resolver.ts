@@ -18,7 +18,7 @@ export class ModelResolver {
     private hashService: HashService,
     private tagService: TagService,
     private seoHomeService: SeoHomeService
-  ) {}
+  ) { }
 
   async initUser(): Promise<User> {
     const password = await this.hashService.hashBcrypt('du@dev1234');
@@ -32,6 +32,23 @@ export class ModelResolver {
       roles: [Role.ADMIN],
       gender: Gender.MALE,
       phone: '84328111597',
+      facebook: 'https://www.facebook.com/dusainbolt/',
+    };
+    const user = new this.userService.userModel(data);
+    return user.save();
+  }
+
+  async initUserPartSecond(): Promise<User> {
+    const password = await this.hashService.hashBcrypt('12345678');
+    const data: InitUser = {
+      email: 'phuongceo13@gmail.com',
+      username: 'phuongduc',
+      firstName: 'Phương',
+      lastName: 'Đúc',
+      password: password,
+      roles: [Role.ADMIN],
+      gender: Gender.MALE,
+      phone: '',
       facebook: 'https://www.facebook.com/dusainbolt/',
     };
     const user = new this.userService.userModel(data);
@@ -98,6 +115,7 @@ export class ModelResolver {
       const oneUser = await this.initUser();
       await this.initSeoHome(oneUser.id);
       await this.initTag(oneUser.id);
+      await this.initUserPartSecond();
       return 'Init Data Success';
     }
     return 'User is exits';
