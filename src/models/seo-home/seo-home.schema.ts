@@ -1,33 +1,59 @@
+import { SeoHomeStatus } from './../../dto/seoHome/SeoHomeEnum';
+import { SeoHomeHistory } from '../../dto/seoHome/SeoHomeDTO';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { SeoContact, SeoMeta, SeoSocial } from './dto/seo-home.dto';
 @Schema({ timestamps: true })
 export class SeoHome {
   @Prop()
-  owner: MongooseSchema.Types.ObjectId;
+  title: string;
 
   @Prop()
-  appName: string;
+  description: string;
 
   @Prop()
-  keyWord: string;
+  domain: string;
 
   @Prop()
-  author: string;
+  siteName: string;
 
   @Prop()
-  publisher: string;
+  facebookAppId: string;
 
   @Prop()
-  contact: SeoContact;
+  languageAlternates: string;
 
   @Prop()
-  social: SeoSocial;
+  faviconUrlICO: string;
 
   @Prop()
-  meta: SeoMeta;
+  faviconUrlJPG: string;
+
+  @Prop()
+  searchBoxUrl: string;
+
+  @Prop()
+  logo400x400: string;
+
+  @Prop()
+  logo800x600: string;
+
+  @Prop()
+  logo1280x1280: string;
+
+  @Prop()
+  logoAlt: string;
+
+  @Prop({
+    type: [{ type: { type: String }, data: { type: String }, language: { type: String } }],
+    default: []
+  }) history: SeoHomeHistory[]
+
+  @Prop({ type: Number, enum: SeoHomeStatus, required: true })
+  status: SeoHomeStatus;
 }
 
 export type SeoHomeDocument = SeoHome & Document;
+
+export const SEO_HOME_NAME = 'SeoHome';
 
 export const SeoHomeSchema = SchemaFactory.createForClass(SeoHome);

@@ -1,6 +1,7 @@
+import { SeoHomeStatus } from './../dto/seoHome/SeoHomeEnum';
 import { Resolver, Query } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
-import { SeoHomeDTO, SeoHomeInitDTO } from './seo-home/dto/seo-home.dto';
+import { SeoHomeDTO } from '../dto/seoHome/SeoHomeDTO';
 import { InitUser, User } from './users/dto/user-dto';
 import { SeoHomeService } from './seo-home/seo-home.service';
 import { UserService } from './users/user.service';
@@ -55,38 +56,23 @@ export class ModelResolver {
     return user.save();
   }
 
-  async initSeoHome(id: string): Promise<SeoHomeDTO> {
-    const data: SeoHomeInitDTO = {
-      owner: id,
-      appName: 'CodeMemory',
-      keyWord:
-        'CodeMemory, CodeMemory Blog, CodeMemory diễn đàn, CodeMemory khóa học, CodeMemory Dịch vụ, Kiến thức, Lập trình, làm website, làm ứng dụng',
-      author: 'Lê Huy Du',
-      publisher: 'Lê Huy Du',
-      contact: {
-        address: '219 Trung Kính, Cầu Giấy, Hà Nội',
-        email: 'codememory.hotro@gmail.com',
-        phone: '+8432811197',
-      },
-      social: {
-        youtube: 'https://www.youtube.com/channel/UCUPwDA86_PRWPDYvvOlj8IQ',
-        facebook: 'https://www.facebook.com/dusainbolt',
-        facebookPage: 'https://www.facebook.com/sainboltapp',
-        skype: 'https://join.skype.com/invite/kP2kfn0Wu06U',
-        twitter: 'https://join.skype.com/invite/kP2kfn0Wu06U',
-      },
-      meta: {
-        title: 'Trang chủ CodeMemory - Điểm đến của sự chia sẻ, học hỏi, trao đổi trong lĩnh vực lập trình',
-        description:
-          'Nền tàng chia sẻ blog, khóa học, diễn đàn. Giúp mở ra cái nhìn tổng quan, Đốt cháy niềm đam mê, khơi gợi sự sáng tạo trong chúng ta',
-        imageUrl: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
-        domain: 'https://du-sainbolt.web.app/',
-        jsonType: 'Organization',
-        logoUrl: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
-        logoWidth: 1213,
-        logoHeight: 231,
-        facebookPageId: 'https://www.facebook.com/dusainbolt',
-      },
+  async initSeoHome(): Promise<SeoHomeDTO> {
+    const data: SeoHomeDTO = {
+      description: "SEO description",
+      title: "SEO title",
+      domain: "codememory.io",
+      facebookAppId: "102681978817056",
+      faviconUrlICO: "https://du-sainbolt.web.app/favicon.png",
+      faviconUrlJPG: "https://du-sainbolt.web.app/favicon.png",
+      history: [],
+      languageAlternates: "en",
+      logo1280x1280: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
+      logo400x400: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
+      logo800x600: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
+      logoAlt: "Logo of CodeMemory",
+      searchBoxUrl: "codememory.io/search",
+      siteName: "CodeMemory",
+      status: SeoHomeStatus.ACTIVE,
     };
     const seoHome = new this.seoHomeService.seoHomeModel(data);
     return seoHome.save();
@@ -94,7 +80,7 @@ export class ModelResolver {
 
   async initTag(id: string): Promise<Tag[]> {
     const dataInit: Tag[] = [];
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 15; i++) {
       const title = `Lập Trình Viên ${i}`;
       dataInit.push({
         createBy: id,
@@ -108,16 +94,28 @@ export class ModelResolver {
     }
     return this.tagService.tagModel.insertMany(dataInit);
   }
+
   @Query(() => String)
   async initData(): Promise<string> {
     const users = await this.userService.userModel.find();
     if (!users.length) {
+      // Init data user
       const oneUser = await this.initUser();
-      await this.initSeoHome(oneUser.id);
-      await this.initTag(oneUser.id);
+      // Init data user second
       await this.initUserPartSecond();
-      return 'Init Data Success';
+      // init data Tag
+      const tags = await this.tagService.tagModel.find();
+      if (!tags.length) {
+        await this.initTag(oneUser.id);
+      }
+      // init data SeoHome
+      const seoHomes = await this.seoHomeService.seoHomeModel.find();
+      if (!seoHomes.length) {
+        await this.initSeoHome();
+      }
+      return "Init data success";
     }
+
     return 'User is exits';
   }
 }

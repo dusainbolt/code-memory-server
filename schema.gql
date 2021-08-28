@@ -112,68 +112,41 @@ input SearchTagInput {
   status: [TagStatus!]!
 }
 
-type SeoContact {
-  address: String!
-  email: String!
-  phone: String!
-}
-
-input SeoContactInput {
-  address: String!
-  email: String!
-  phone: String!
-}
-
 type SeoHomeDTO {
-  appName: String!
-  author: String!
-  contact: SeoContact!
+  description: String!
+  domain: String!
+  facebookAppId: String!
+  faviconUrlICO: String!
+  faviconUrlJPG: String!
+  history: [SeoHomeHistory!]!
   id: ID!
-  keyWord: String!
-  meta: SeoMeta!
-  owner: String!
-  publisher: String!
-  social: SeoSocial!
-}
-
-type SeoMeta {
-  description: String!
-  domain: String!
-  facebookPageId: String!
-  imageUrl: String!
-  jsonType: String!
-  logoHeight: Float!
-  logoUrl: String!
-  logoWidth: Float!
+  languageAlternates: String!
+  logo400x400: String!
+  logo800x600: String!
+  logo1280x1280: String!
+  logoAlt: String!
+  searchBoxUrl: String!
+  siteName: String!
+  status: SeoHomeStatus!
   title: String!
 }
 
-input SeoMetaInput {
-  description: String!
-  domain: String!
-  facebookPageId: String!
-  imageUrl: String!
-  jsonType: String!
-  logoHeight: Float!
-  logoUrl: String!
-  logoWidth: Float!
-  title: String!
+type SeoHomeHistory {
+  newValue: String!
+  oldValue: String!
+  type: String!
 }
 
-type SeoSocial {
-  facebook: String!
-  facebookPage: String!
-  skype: String!
-  twitter: String!
-  youtube: String!
+input SeoHomeHistoryInput {
+  newValue: String!
+  oldValue: String!
+  type: String!
 }
 
-input SeoSocialInput {
-  facebook: String!
-  facebookPage: String!
-  skype: String!
-  twitter: String!
-  youtube: String!
+"""The SeoHomeStatus."""
+enum SeoHomeStatus {
+  ACTIVE
+  INACTIVE
 }
 
 type Tag {
