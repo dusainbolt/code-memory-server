@@ -1,9 +1,9 @@
 import { SeoHomeStatus } from './../../dto/seoHome/SeoHomeEnum';
-import { SeoHomeHistory } from '../../dto/seoHome/SeoHomeDTO';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document } from 'mongoose';
+import { SeoHomeHistory } from 'src/dto/seoHome/SeoHomeDTO';
 @Schema({ timestamps: true })
-export class SeoHome {
+export class SeoHomeModel {
   @Prop()
   title: string;
 
@@ -52,8 +52,8 @@ export class SeoHome {
   status: SeoHomeStatus;
 }
 
-export type SeoHomeDocument = SeoHome & Document;
+export type SeoHomeDocument = SeoHomeModel & Document;
 
 export const SEO_HOME_NAME = 'SeoHome';
 
-export const SeoHomeSchema = SchemaFactory.createForClass(SeoHome);
+export const SeoHomeSchema = SchemaFactory.createForClass(SeoHomeModel);

@@ -15,7 +15,7 @@ export class SeoHomeHistory {
 }
 
 @ObjectType()
-export class SeoHomeDTO {
+export class SeoHome {
   @Field(() => ID)
   readonly id?: MongooseSchema.Types.ObjectId;
 

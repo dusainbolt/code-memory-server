@@ -1,7 +1,5 @@
 import { SeoHomeStatus } from './../dto/seoHome/SeoHomeEnum';
 import { Resolver, Query } from '@nestjs/graphql';
-import { Schema as MongooseSchema } from 'mongoose';
-import { SeoHomeDTO } from '../dto/seoHome/SeoHomeDTO';
 import { InitUser, User } from './users/dto/user-dto';
 import { SeoHomeService } from './seo-home/seo-home.service';
 import { UserService } from './users/user.service';
@@ -11,6 +9,7 @@ import { Tag } from 'src/dto/tag/TagDTO';
 import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
 import { convertToSlug } from 'src/common/functions';
 import { TagService } from './tag/tag.service';
+import { SeoHome } from 'src/dto/seoHome/SeoHomeDTO';
 
 @Resolver(() => null)
 export class ModelResolver {
@@ -56,8 +55,8 @@ export class ModelResolver {
     return user.save();
   }
 
-  async initSeoHome(): Promise<SeoHomeDTO> {
-    const data: SeoHomeDTO = {
+  async initSeoHome(): Promise<SeoHome> {
+    const data: SeoHome = {
       description: "SEO description",
       title: "SEO title",
       domain: "codememory.io",

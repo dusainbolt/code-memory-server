@@ -93,7 +93,7 @@ type Query {
   findTagBySlug(input: FindTagBySlugInput!): Tag!
   initData: String!
   listTags(input: SearchTagInput!): OutputSearchTag!
-  seoHome: SeoHomeDTO!
+  seoHome: SeoHome!
 }
 
 """The role of user"""
@@ -112,7 +112,7 @@ input SearchTagInput {
   status: [TagStatus!]!
 }
 
-type SeoHomeDTO {
+type SeoHome {
   description: String!
   domain: String!
   facebookAppId: String!
