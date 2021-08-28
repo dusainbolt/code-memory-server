@@ -97,23 +97,32 @@ export class ModelResolver {
 
   @Query(() => String)
   async initData(): Promise<string> {
+    // Init data user
+    let user: User = null;
     const users = await this.userService.userModel.find();
     if (!users.length) {
-      // Init data user
-      const oneUser = await this.initUser();
+      user = await this.initUser();
       // Init data user second
       await this.initUserPartSecond();
+
+    } else {
+      user = users[0];
+    }
+    // If valid user handle create data
+    if (!!user.id) {
       // init data Tag
       const tags = await this.tagService.tagModel.find();
       if (!tags.length) {
-        await this.initTag(oneUser.id);
+        await this.initTag(user.id);
       }
       // init data SeoHome
       const seoHomes = await this.seoHomeService.seoHomeModel.find();
       if (!seoHomes.length) {
         await this.initSeoHome();
       }
+
       return "Init data success";
+
     }
 
     return 'User is exits';
