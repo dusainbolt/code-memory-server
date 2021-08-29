@@ -1,4 +1,4 @@
-import { SeoHomeStatus } from './../dto/seoHome/SeoHomeEnum';
+import { SeoHomeStatus } from '../dto/seoHome/SeoHomeEnum';
 import { Resolver, Query } from '@nestjs/graphql';
 import { InitUser, User } from './users/dto/user-dto';
 import { SeoHomeService } from './seo-home/seo-home.service';
@@ -55,7 +55,7 @@ export class ModelResolver {
     return user.save();
   }
 
-  async initSeoHome(): Promise<SeoHome> {
+  async initSeoHome(id: string): Promise<SeoHome> {
     const data: SeoHome = {
       description: "SEO description",
       title: "SEO title",
@@ -76,6 +76,7 @@ export class ModelResolver {
       },
       history: [],
       languageAlternates: "en",
+      createBy: id,
       searchBoxUrl: "codememory.io/search",
       siteName: "CodeMemory",
       status: SeoHomeStatus.ACTIVE,
@@ -124,7 +125,7 @@ export class ModelResolver {
       // init data SeoHome
       const seoHomes = await this.seoHomeService.seoHomeModel.find();
       if (!seoHomes.length) {
-        await this.initSeoHome();
+        await this.initSeoHome(user.id);
       }
 
       return "Init data success";

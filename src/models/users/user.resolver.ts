@@ -9,10 +9,10 @@ import { CreateUser } from './dto/create-user-dto';
 export class UserResolver {
   private readonly logger = new Logger(UserResolver.name);
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Mutation(returns => User)
-  async createUser(@Args('input') input: CreateUser): Promise<User> {
+  async userCreate(@Args('input') input: CreateUser): Promise<User> {
     // this.logger.debug(`createUser => input: ${JSON.stringify(input)}`);
     return this.userService.create(input);
   }
@@ -23,7 +23,7 @@ export class UserResolver {
   // }
 
   @Mutation(returns => LoginOutput)
-  async login(@Args('input') input: LoginInput): Promise<LoginOutput> {
+  async userLogin(@Args('input') input: LoginInput): Promise<LoginOutput> {
     // this.logger.debug(`login => input: ${JSON.stringify(input)}`);
     return this.userService.login(input);
   }

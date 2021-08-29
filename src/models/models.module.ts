@@ -3,14 +3,13 @@ import { Module } from '@nestjs/common';
 import { ModelResolver } from './models.resolver';
 import { BlogModule } from 'src/models/blog/blog.module';
 import { SeoHomeModule } from './seo-home/seo-home.module';
-// import { TagModule } from './tag/tag.module';
+import { CompanyModule } from './company/company.module';
 import { TagModule } from './tag/tag.module';
 import { HashService } from 'src/hash/hash.service';
-// import { TagModule } from './tag/tag.module';
 
 export const EVENT_INIT_DATA_BY_USER = 'EVENT_INIT_DATA_BY_USER';
 @Module({
-  imports: [UsersModule, SeoHomeModule, BlogModule, TagModule],
+  imports: [UsersModule, SeoHomeModule, BlogModule, TagModule, CompanyModule],
   providers: [ModelResolver, HashService],
 })
-export class ModelsModule {}
+export class ModelsModule { }

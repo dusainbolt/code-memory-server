@@ -20,7 +20,7 @@ export class TagModel {
   @Prop({ type: Number, enum: TagStatus, required: true })
   status: number;
 
-  @Prop({ type: Number, enum: TagType, required: true, default: TagType.ADDITION })
+  @Prop({ type: Number, enum: TagType, required: true, default: TagType.SYSTEM })
   tagType: number;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME, required: true })

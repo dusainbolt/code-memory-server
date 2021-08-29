@@ -1,6 +1,7 @@
-import { SeoHomeStatus } from './SeoHomeEnum';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
+import { User } from 'src/models/users/dto/user-dto';
+import { SeoHomeStatus } from './SeoHomeEnum';
 
 @ObjectType()
 @InputType('SeoHomeHistoryInput')
@@ -30,10 +31,9 @@ export class SeoHomeImage {
 
   logo800x600: string;
   @Field({ nullable: true })
-
   logo1280x1280: string;
-  @Field({ nullable: true })
 
+  @Field({ nullable: true })
   logoAlt: string;
 }
 
@@ -88,4 +88,10 @@ export class SeoHome {
 
   @Field(() => SeoHomeStatus)
   status: SeoHomeStatus;
+
+  @Field()
+  createBy: string;
+
+  @Field({ nullable: true })
+  userCreate?: User;
 }

@@ -25,11 +25,45 @@ input BlogContentInput {
   type: Float!
 }
 
+type Company {
+  companyType: CompanyType!
+  createBy: String!
+  createdAt: String!
+  id: ID!
+  nameEN: String!
+  nameVN: String!
+  status: CompanyStatus!
+  thumbnail: String!
+  updatedAt: String!
+  userCreate: User!
+}
+
+"""The CompanyStatus."""
+enum CompanyStatus {
+  ACTIVE
+  INACTIVE
+}
+
+"""The CompanyType."""
+enum CompanyType {
+  CERTIFICATE
+  COMPANY
+  UNIVERSITY
+}
+
 input CreateBlogInput {
   content: [BlogContentInput!]!
   createBy: String!
   description: String!
   title: String!
+}
+
+input CreateCompanyInput {
+  companyType: CompanyType!
+  nameEN: String = null
+  nameVN: String = null
+  status: CompanyStatus!
+  thumbnail: String!
 }
 
 input CreateTagInput {
@@ -76,11 +110,18 @@ type LoginOutput {
 }
 
 type Mutation {
-  createBlog(input: CreateBlogInput!): Blog!
-  createTag(input: CreateTagInput!): Tag!
-  createUser(input: CreateUser!): User!
-  login(input: LoginInput!): LoginOutput!
-  updateTag(input: UpdateTagInput!): Tag!
+  blogCreate(input: CreateBlogInput!): Blog!
+  companyCreate(input: CreateCompanyInput!): Company!
+  companyUpdate(input: UpdateCompanyInput!): Company!
+  tagCreate(input: CreateTagInput!): Tag!
+  tagUpdate(input: UpdateTagInput!): Tag!
+  userCreate(input: CreateUser!): User!
+  userLogin(input: LoginInput!): LoginOutput!
+}
+
+type OutputSearchCompany {
+  dataCompanies: [Company!]!
+  total: Int!
 }
 
 type OutputSearchTag {
@@ -89,11 +130,12 @@ type OutputSearchTag {
 }
 
 type Query {
-  entireTags(input: EntireTagInput!): [Tag!]!
-  findTagBySlug(input: FindTagBySlugInput!): Tag!
+  companyList(input: SearchCompanyInput!): OutputSearchCompany!
   initData: String!
-  listTags(input: SearchTagInput!): OutputSearchTag!
   seoHome: SeoHome!
+  tagEntire(input: EntireTagInput!): [Tag!]!
+  tagFindBySlug(input: FindTagBySlugInput!): Tag!
+  tagList(input: SearchTagInput!): OutputSearchTag!
 }
 
 """The role of user"""
@@ -101,6 +143,16 @@ enum Role {
   ADMIN @deprecated(reason: "This is admin")
   CREATOR
   USER @deprecated(reason: "This is user")
+}
+
+input SearchCompanyInput {
+  key: String = null
+  limit: Int = null
+  offset: Int = null
+  orderBy: String = ""
+  sortBy: Int = null
+  status: [CompanyStatus!]!
+  type: [CompanyType!]!
 }
 
 input SearchTagInput {
@@ -113,6 +165,7 @@ input SearchTagInput {
 }
 
 type SeoHome {
+  createBy: String!
   description: String
   domain: String
   history: [SeoHomeHistory!]!
@@ -124,6 +177,7 @@ type SeoHome {
   social: SeoHomeSocial!
   status: SeoHomeStatus!
   title: String
+  userCreate: User
 }
 
 type SeoHomeHistory {
@@ -200,6 +254,11 @@ enum TagStatus {
 enum TagType {
   ADDITION
   SYSTEM
+}
+
+input UpdateCompanyInput {
+  companyId: String!
+  data: CreateCompanyInput!
 }
 
 input UpdateTagInput {

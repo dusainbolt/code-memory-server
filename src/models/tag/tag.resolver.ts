@@ -15,28 +15,28 @@ export class TagResolver {
 
   @Roles([Role.ADMIN])
   @Mutation(() => Tag)
-  async createTag(@Args('input') input: CreateTagInput, @Context(USER_KEY) user: User): Promise<Tag> {
+  async tagCreate(@Args('input') input: CreateTagInput, @Context(USER_KEY) user: User): Promise<Tag> {
     return this.tagService.create(input, user);
   }
 
   @Roles([Role.ADMIN])
   @Mutation(() => Tag)
-  async updateTag(@Args('input') input: UpdateTagInput): Promise<Tag> {
+  async tagUpdate(@Args('input') input: UpdateTagInput): Promise<Tag> {
     return this.tagService.update(input);
   }
 
   @Query(() => OutputSearchTag)
-  async listTags(@Args('input') input: SearchTagInput): Promise<OutputSearchTag> {
+  async tagList(@Args('input') input: SearchTagInput): Promise<OutputSearchTag> {
     return this.tagService.list(input);
   }
 
   @Query(() => Tag)
-  async findTagBySlug(@Args('input') input: FindTagBySlugInput): Promise<Tag> {
+  async tagFindBySlug(@Args('input') input: FindTagBySlugInput): Promise<Tag> {
     return this.tagService.findOneBySlug(input.slug);
   }
 
   @Query(() => [Tag])
-  async entireTags(@Args('input') input: EntireTagInput): Promise<Tag[]> {
+  async tagEntire(@Args('input') input: EntireTagInput): Promise<Tag[]> {
     return this.tagService.entire(input);
   }
 

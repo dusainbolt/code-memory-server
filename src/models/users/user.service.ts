@@ -12,7 +12,7 @@ import { HashService } from 'src/hash/hash.service';
 // import * as mongoose from 'mongoose';
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(USER_NAME) public userModel: Model<UserDocument>, private hashService: HashService, private eventEmitter: EventEmitter2) {}
+  constructor(@InjectModel(USER_NAME) public userModel: Model<UserDocument>, private hashService: HashService, private eventEmitter: EventEmitter2) { }
 
   createToken({ id, email, firstName, lastName, roles }: User) {
     return this.hashService.signJWT({ id, email, firstName, lastName, roles });

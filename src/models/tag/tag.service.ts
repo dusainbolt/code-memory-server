@@ -44,7 +44,6 @@ export class TagService {
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {
     const query: QuerySearchTag = { title: {}, status: {} };
     const queryList = getParamsList(searchTagInput);
-    console.log('==============================>', queryList);
     // Handle condition with key
     if (!!searchTagInput.key) {
       query.title.$regex = new RegExp(searchTagInput.key.trim(), 'i');
