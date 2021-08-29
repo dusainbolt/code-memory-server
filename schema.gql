@@ -113,34 +113,61 @@ input SearchTagInput {
 }
 
 type SeoHome {
-  description: String!
-  domain: String!
-  facebookAppId: String!
-  faviconUrlICO: String!
-  faviconUrlJPG: String!
+  description: String
+  domain: String
   history: [SeoHomeHistory!]!
   id: ID!
-  languageAlternates: String!
-  logo400x400: String!
-  logo800x600: String!
-  logo1280x1280: String!
-  logoAlt: String!
-  searchBoxUrl: String!
-  siteName: String!
+  image: SeoHomeImage!
+  languageAlternates: String
+  searchBoxUrl: String
+  siteName: String
+  social: SeoHomeSocial!
   status: SeoHomeStatus!
-  title: String!
+  title: String
 }
 
 type SeoHomeHistory {
-  newValue: String!
-  oldValue: String!
-  type: String!
+  newValue: String
+  oldValue: String
+  type: String
 }
 
 input SeoHomeHistoryInput {
-  newValue: String!
-  oldValue: String!
-  type: String!
+  newValue: String
+  oldValue: String
+  type: String
+}
+
+type SeoHomeImage {
+  faviconUrlICO: String
+  faviconUrlJPG: String
+  logo400x400: String
+  logo800x600: String
+  logo1280x1280: String
+  logoAlt: String
+}
+
+input SeoHomeImageInput {
+  faviconUrlICO: String
+  faviconUrlJPG: String
+  logo400x400: String
+  logo800x600: String
+  logo1280x1280: String
+  logoAlt: String
+}
+
+type SeoHomeSocial {
+  facebookAppId: String
+  facebookPageUrl: String
+  twitterUrl: String
+  youtubeUrl: String
+}
+
+input SeoHomeSocialInput {
+  facebookAppId: String
+  facebookPageUrl: String
+  twitterUrl: String
+  youtubeUrl: String
 }
 
 """The SeoHomeStatus."""

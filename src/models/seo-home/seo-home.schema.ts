@@ -1,7 +1,8 @@
+import { SeoHomeSocial } from './../../dto/seoHome/SeoHomeDTO';
 import { SeoHomeStatus } from './../../dto/seoHome/SeoHomeEnum';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { SeoHomeHistory } from 'src/dto/seoHome/SeoHomeDTO';
+import { SeoHomeHistory, SeoHomeImage } from 'src/dto/seoHome/SeoHomeDTO';
 @Schema({ timestamps: true })
 export class SeoHomeModel {
   @Prop()
@@ -17,31 +18,22 @@ export class SeoHomeModel {
   siteName: string;
 
   @Prop()
-  facebookAppId: string;
-
-  @Prop()
   languageAlternates: string;
-
-  @Prop()
-  faviconUrlICO: string;
-
-  @Prop()
-  faviconUrlJPG: string;
 
   @Prop()
   searchBoxUrl: string;
 
-  @Prop()
-  logo400x400: string;
+  @Prop({
+    type: { facebookAppId: { type: String }, facebookPageUrl: { type: String }, youtubeUrl: { type: String }, twitterUrl: { type: String } },
+    default: {}
+  }) social: SeoHomeSocial;
 
-  @Prop()
-  logo800x600: string;
 
-  @Prop()
-  logo1280x1280: string;
+  @Prop({
+    type: { faviconUrlICO: { type: String }, faviconUrlJPG: { type: String }, logo400x400: { type: String }, logo800x600: { type: String }, logo1280x1280: { type: String }, logoAlt: { type: String } },
+    default: {}
+  }) image: SeoHomeImage;
 
-  @Prop()
-  logoAlt: string;
 
   @Prop({
     type: [{ type: { type: String }, data: { type: String }, language: { type: String } }],
