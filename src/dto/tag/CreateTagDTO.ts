@@ -15,9 +15,6 @@ export class CreateTagInput {
   @Field()
   thumbnail: string;
 
-  // @Field(() => TagType, { defaultValue: TagType.SYSTEM })
-  // tagType: TagType;
-
   @Field(() => TagStatus) // it's very important
   status: TagStatus;
 }

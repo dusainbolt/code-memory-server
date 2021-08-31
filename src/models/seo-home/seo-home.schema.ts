@@ -24,6 +24,9 @@ export class SeoHomeModel {
   @Prop()
   searchBoxUrl: string;
 
+  @Prop()
+  facebookChatPlugin: string;
+
   @Prop({
     type: { facebookAppId: { type: String }, facebookPageUrl: { type: String }, youtubeUrl: { type: String }, twitterUrl: { type: String } },
     default: {}

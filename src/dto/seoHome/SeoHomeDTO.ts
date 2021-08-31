@@ -77,6 +77,9 @@ export class SeoHome {
   @Field({ nullable: true })
   searchBoxUrl: string;
 
+  @Field({ nullable: true })
+  facebookChatPlugin: string;
+
   @Field(() => SeoHomeSocial)
   social: SeoHomeSocial;
 

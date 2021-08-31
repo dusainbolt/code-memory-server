@@ -1,18 +1,18 @@
 import { InputType, Field, Int, ObjectType } from '@nestjs/graphql';
-import { CompanyStatus, CompanyType } from './CompanyEnum';
+import { WorkStatus, WorkType } from './WorkEnum';
 import { Condition } from 'mongodb';
-import { Company } from './CompanyDTO';
+import { Work } from './WorkDTO';
 
 @InputType()
-export class SearchCompanyInput {
+export class SearchWorkInput {
   @Field({ defaultValue: null })
   key?: string;
 
-  @Field(() => [CompanyStatus])
-  status?: CompanyStatus[];
+  @Field(() => [WorkStatus])
+  status?: WorkStatus[];
 
-  @Field(() => [CompanyType])
-  type?: CompanyType[];
+  @Field(() => [WorkType])
+  type?: WorkType[];
 
   @Field(() => Int, { defaultValue: null })
   offset?: number;
@@ -28,19 +28,18 @@ export class SearchCompanyInput {
 }
 
 @ObjectType()
-export class QuerySearchCompany {
+export class QuerySearchWork {
   $or?: any;
-  // nameEN?: Condition<any>;
 
-  companyType?: Condition<any>;
+  workType?: Condition<any>;
 
   status?: Condition<any>;
 }
 
 @ObjectType()
-export class OutputSearchCompany {
-  @Field(() => [Company])
-  dataCompanies: Company[];
+export class OutputSearchWork {
+  @Field(() => [Work])
+  dataWorks: Work[];
 
   @Field(() => Int)
   total?: number;

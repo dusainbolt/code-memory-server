@@ -1,3 +1,4 @@
+import { QUERY_LIST } from './../../common/contant';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, _FilterQuery } from 'mongoose';
@@ -33,8 +34,12 @@ export class TagService {
     return tagDataUpdate;
   }
 
-  async entire(entireTagInput: EntireTagInput): Promise<Tag[]> {
-    return this.tagModel.find({ status: { $in: entireTagInput.status } });
+  async entire({ status, limit }: EntireTagInput): Promise<Tag[]> {
+    if (!!limit) {
+      return this.tagModel.find({ status: { $in: status } }).limit(limit).sort({ createdAt: QUERY_LIST.DESC });
+    } else {
+      return this.tagModel.find({ status: { $in: status } }).sort({ createdAt: QUERY_LIST.DESC });
+    }
   }
 
   async findOneBySlug(slug: string): Promise<Tag> {

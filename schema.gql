@@ -25,32 +25,6 @@ input BlogContentInput {
   type: Float!
 }
 
-type Company {
-  companyType: CompanyType!
-  createBy: String!
-  createdAt: String!
-  id: ID!
-  nameEN: String!
-  nameVN: String!
-  status: CompanyStatus!
-  thumbnail: String!
-  updatedAt: String!
-  userCreate: User!
-}
-
-"""The CompanyStatus."""
-enum CompanyStatus {
-  ACTIVE
-  INACTIVE
-}
-
-"""The CompanyType."""
-enum CompanyType {
-  CERTIFICATE
-  COMPANY
-  UNIVERSITY
-}
-
 input CreateBlogInput {
   content: [BlogContentInput!]!
   createBy: String!
@@ -58,12 +32,17 @@ input CreateBlogInput {
   title: String!
 }
 
-input CreateCompanyInput {
-  companyType: CompanyType!
-  nameEN: String = null
-  nameVN: String = null
-  status: CompanyStatus!
-  thumbnail: String!
+input CreateSeoHomeInput {
+  description: String
+  domain: String
+  facebookChatPlugin: String
+  image: SeoHomeImageInput!
+  languageAlternates: String
+  searchBoxUrl: String
+  siteName: String
+  social: SeoHomeSocialInput!
+  status: SeoHomeStatus!
+  title: String
 }
 
 input CreateTagInput {
@@ -84,7 +63,21 @@ input CreateUser {
   password: String!
 }
 
+input CreateWorkInput {
+  descriptionEN: String!
+  descriptionVN: String!
+  endTime: String!
+  nameEN: String!
+  nameVN: String!
+  position: String!
+  startTime: String!
+  status: WorkStatus!
+  thumbnail: String!
+  workType: WorkType!
+}
+
 input EntireTagInput {
+  limit: Int = null
   status: [TagStatus!]!
 }
 
@@ -111,17 +104,13 @@ type LoginOutput {
 
 type Mutation {
   blogCreate(input: CreateBlogInput!): Blog!
-  companyCreate(input: CreateCompanyInput!): Company!
-  companyUpdate(input: UpdateCompanyInput!): Company!
+  seoHomeCreate(input: CreateSeoHomeInput!): SeoHome!
   tagCreate(input: CreateTagInput!): Tag!
   tagUpdate(input: UpdateTagInput!): Tag!
   userCreate(input: CreateUser!): User!
   userLogin(input: LoginInput!): LoginOutput!
-}
-
-type OutputSearchCompany {
-  dataCompanies: [Company!]!
-  total: Int!
+  workCreate(input: CreateWorkInput!): Work!
+  workUpdate(input: UpdateWorkInput!): Work!
 }
 
 type OutputSearchTag {
@@ -129,13 +118,18 @@ type OutputSearchTag {
   total: Int!
 }
 
+type OutputSearchWork {
+  dataWorks: [Work!]!
+  total: Int!
+}
+
 type Query {
-  companyList(input: SearchCompanyInput!): OutputSearchCompany!
   initData: String!
   seoHome: SeoHome!
   tagEntire(input: EntireTagInput!): [Tag!]!
   tagFindBySlug(input: FindTagBySlugInput!): Tag!
   tagList(input: SearchTagInput!): OutputSearchTag!
+  workList(input: SearchWorkInput!): OutputSearchWork!
 }
 
 """The role of user"""
@@ -143,16 +137,6 @@ enum Role {
   ADMIN @deprecated(reason: "This is admin")
   CREATOR
   USER @deprecated(reason: "This is user")
-}
-
-input SearchCompanyInput {
-  key: String = null
-  limit: Int = null
-  offset: Int = null
-  orderBy: String = ""
-  sortBy: Int = null
-  status: [CompanyStatus!]!
-  type: [CompanyType!]!
 }
 
 input SearchTagInput {
@@ -164,10 +148,21 @@ input SearchTagInput {
   status: [TagStatus!]!
 }
 
+input SearchWorkInput {
+  key: String = null
+  limit: Int = null
+  offset: Int = null
+  orderBy: String = ""
+  sortBy: Int = null
+  status: [WorkStatus!]!
+  type: [WorkType!]!
+}
+
 type SeoHome {
   createBy: String!
   description: String
   domain: String
+  facebookChatPlugin: String
   history: [SeoHomeHistory!]!
   id: ID!
   image: SeoHomeImage!
@@ -256,14 +251,14 @@ enum TagType {
   SYSTEM
 }
 
-input UpdateCompanyInput {
-  companyId: String!
-  data: CreateCompanyInput!
-}
-
 input UpdateTagInput {
   data: CreateTagInput!
   tagId: String!
+}
+
+input UpdateWorkInput {
+  data: CreateWorkInput!
+  workId: String!
 }
 
 type User {
@@ -289,4 +284,35 @@ enum UserStatus {
   BLOCK @deprecated(reason: "This is block")
   INACTIVE @deprecated(reason: "This is inactive")
   PAUSE @deprecated(reason: "This is pause")
+}
+
+type Work {
+  createBy: String
+  createdAt: String
+  descriptionEN: String
+  descriptionVN: String
+  endTime: String
+  id: ID!
+  nameEN: String
+  nameVN: String
+  position: String
+  startTime: String
+  status: WorkStatus
+  thumbnail: String
+  updatedAt: String
+  userCreate: User
+  workType: WorkType
+}
+
+"""The WorkStatus."""
+enum WorkStatus {
+  ACTIVE
+  INACTIVE
+}
+
+"""The WorkType."""
+enum WorkType {
+  CERTIFICATE
+  LEARN
+  WORK
 }

@@ -75,6 +75,7 @@ export class ModelResolver {
         youtubeUrl: null,
       },
       history: [],
+      facebookChatPlugin: "",
       languageAlternates: "en",
       createBy: id,
       searchBoxUrl: "codememory.io/search",
