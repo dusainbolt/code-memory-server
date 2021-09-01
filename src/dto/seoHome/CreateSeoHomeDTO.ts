@@ -1,7 +1,5 @@
-import { HistoryField, SeoHomeImage, SeoHomeSocial } from './SeoHomeDTO';
+import { SeoHomeImage, SeoHomeSocial } from './SeoHomeDTO';
 import { InputType, Field } from '@nestjs/graphql';
-import { SeoHomeStatus } from './SeoHomeEnum';
-
 @InputType()
 export class CreateSeoHomeInput {
 
@@ -31,8 +29,5 @@ export class CreateSeoHomeInput {
 
   @Field(() => SeoHomeImage)
   image: SeoHomeImage;
-
-  @Field(() => SeoHomeStatus)
-  status: SeoHomeStatus;
 
 }

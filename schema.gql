@@ -41,7 +41,6 @@ input CreateSeoHomeInput {
   searchBoxUrl: String
   siteName: String
   social: SeoHomeSocialInput!
-  status: SeoHomeStatus!
   title: String
 }
 
@@ -182,7 +181,6 @@ type SeoHome {
   searchBoxUrl: String
   siteName: String
   social: SeoHomeSocial!
-  status: SeoHomeStatus!
   title: String
   userCreate: User
 }
@@ -217,12 +215,6 @@ input SeoHomeSocialInput {
   facebookPageUrl: String
   twitterUrl: String
   youtubeUrl: String
-}
-
-"""The SeoHomeStatus."""
-enum SeoHomeStatus {
-  ACTIVE
-  INACTIVE
 }
 
 type Tag {

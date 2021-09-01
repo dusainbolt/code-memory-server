@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { HistoryField, SeoHomeImage } from 'src/dto/seoHome/SeoHomeDTO';
 import { USER_NAME } from '../users/user.schema';
-import { SeoHomeStatus } from 'src/dto/seoHome/SeoHomeEnum';
 @Schema({ timestamps: true })
 export class SeoHomeModel {
   @Prop()
@@ -43,10 +42,6 @@ export class SeoHomeModel {
     type: [{ key: { type: String }, newValue: { type: String }, oldValue: { type: String } }],
     default: []
   }) history: HistoryField[]
-
-  @Prop({ type: Number, enum: SeoHomeStatus, required: true })
-  status: SeoHomeStatus;
-
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME, required: true })
   createBy: string;

@@ -1,8 +1,6 @@
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/models/users/dto/user-dto';
-import { SeoHomeStatus } from './SeoHomeEnum';
-
 @ObjectType()
 @InputType('HistoryFieldInput')
 export class HistoryField {
@@ -88,9 +86,6 @@ export class SeoHome {
 
   @Field(() => [HistoryField])
   history: HistoryField[]
-
-  @Field(() => SeoHomeStatus)
-  status: SeoHomeStatus;
 
   @Field()
   createBy: string;

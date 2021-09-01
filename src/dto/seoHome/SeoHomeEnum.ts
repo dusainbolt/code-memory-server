@@ -1,11 +1,11 @@
-import { registerEnumType } from '@nestjs/graphql';
+// import { registerEnumType } from '@nestjs/graphql';
 
-export enum SeoHomeStatus {
-  ACTIVE,
-  INACTIVE,
-}
+// export enum SeoHomeStatus {
+//   ACTIVE,
+//   INACTIVE,
+// }
 
-registerEnumType(SeoHomeStatus, {
-  name: 'SeoHomeStatus',
-  description: 'The SeoHomeStatus.',
-});
+// registerEnumType(SeoHomeStatus, {
+//   name: 'SeoHomeStatus',
+//   description: 'The SeoHomeStatus.',
+// });

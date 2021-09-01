@@ -1,4 +1,3 @@
-import { SeoHomeStatus } from '../dto/seoHome/SeoHomeEnum';
 import { Resolver, Query } from '@nestjs/graphql';
 import { InitUser, User } from './users/dto/user-dto';
 import { SeoHomeService } from './seo-home/seo-home.service';
@@ -19,6 +18,8 @@ export class ModelResolver {
     private tagService: TagService,
     private seoHomeService: SeoHomeService
   ) { }
+
+
 
   async initUser(): Promise<User> {
     const password = await this.hashService.hashBcrypt('du@dev1234');
@@ -80,7 +81,6 @@ export class ModelResolver {
       createBy: id,
       searchBoxUrl: "codememory.io/search",
       siteName: "CodeMemory",
-      status: SeoHomeStatus.ACTIVE,
     };
     const seoHome = new this.seoHomeService.seoHomeModel(data);
     return seoHome.save();

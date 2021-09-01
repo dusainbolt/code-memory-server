@@ -2,7 +2,6 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/models/users/dto/user-dto';
 import { WorkStatus, WorkType } from './WorkEnum';
-
 @ObjectType()
 export class Work {
   @Field(() => ID)
