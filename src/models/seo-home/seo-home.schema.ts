@@ -1,7 +1,7 @@
 import { SeoHomeSocial } from './../../dto/seoHome/SeoHomeDTO';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { SeoHomeHistory, SeoHomeImage } from 'src/dto/seoHome/SeoHomeDTO';
+import { HistoryField, SeoHomeImage } from 'src/dto/seoHome/SeoHomeDTO';
 import { USER_NAME } from '../users/user.schema';
 import { SeoHomeStatus } from 'src/dto/seoHome/SeoHomeEnum';
 @Schema({ timestamps: true })
@@ -40,9 +40,9 @@ export class SeoHomeModel {
 
 
   @Prop({
-    type: [{ type: { type: String }, data: { type: String }, language: { type: String } }],
+    type: [{ key: { type: String }, newValue: { type: String }, oldValue: { type: String } }],
     default: []
-  }) history: SeoHomeHistory[]
+  }) history: HistoryField[]
 
   @Prop({ type: Number, enum: SeoHomeStatus, required: true })
   status: SeoHomeStatus;

@@ -1,4 +1,4 @@
-import { SeoHomeHistory, SeoHomeImage, SeoHomeSocial } from './SeoHomeDTO';
+import { HistoryField, SeoHomeImage, SeoHomeSocial } from './SeoHomeDTO';
 import { InputType, Field } from '@nestjs/graphql';
 import { SeoHomeStatus } from './SeoHomeEnum';
 

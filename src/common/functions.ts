@@ -1,3 +1,4 @@
+import { HistoryField } from './../dto/seoHome/SeoHomeDTO';
 import { QUERY_LIST } from './contant';
 import { SortPaginate } from './type';
 
@@ -10,6 +11,37 @@ function isEmpty(obj) {
     if (obj.hasOwnProperty(key)) return false;
   }
   return true;
+}
+
+export const convertMongoObject = (mongoObj: any) => {
+  return JSON.parse(JSON.stringify(mongoObj))
+}
+
+export const getDiffObject = (objectRoot: any, objectCompare: any) => {
+  let result: HistoryField[] = [];
+  const ignoreKey = ["_id", "createBy", "createdAt", "updatedAt", "history"];
+  // check object root = invalid
+  if (!!!objectRoot) {
+    return [];
+  }
+  for (const [key, value] of Object.entries(objectRoot)) {
+    // ignore key
+    if (ignoreKey.includes(key)) {
+      continue;
+    }
+    // handle string field
+    if (typeof value === 'string') {
+      value.toString() !== objectCompare[key].toString() && result.push({
+        key,
+        newValue: objectCompare[key],
+        oldValue: value
+      })
+    } else if (typeof value === "object") {
+      result = result.concat(getDiffObject(value, objectCompare[key]))
+    }
+  }
+
+  return result;
 }
 
 export const removeEmpty = (obj: Object) => {

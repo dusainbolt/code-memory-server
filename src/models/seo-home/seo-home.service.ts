@@ -1,10 +1,12 @@
+import { convertMongoObject } from './../../common/functions';
 import { CreateSeoHomeInput } from './../../dto/seoHome/CreateSeoHomeDTO';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { SeoHomeDocument, SEO_HOME_NAME } from './seo-home.schema';
 import { Model } from 'mongoose';
-import { SeoHome } from 'src/dto/seoHome/SeoHomeDTO';
+import { SeoHome, HistoryField } from 'src/dto/seoHome/SeoHomeDTO';
 import { User } from '../users/dto/user-dto';
+import { getDiffObject } from 'src/common/functions';
 
 @Injectable()
 export class SeoHomeService {
@@ -14,8 +16,11 @@ export class SeoHomeService {
     }
 
     async create(createSeoHomeInput: CreateSeoHomeInput, user: User): Promise<SeoHome> {
+        const seoHomeLast = convertMongoObject((await this.getSeoHome()))
+        // Get diff field to history
+        const history = getDiffObject(seoHomeLast, createSeoHomeInput);
         // Create Tag
-        const seoHome = new this.seoHomeModel({ ...createSeoHomeInput, createBy: user.id });
+        const seoHome = new this.seoHomeModel({ ...createSeoHomeInput, createBy: user.id, history });
         const seoHomeData = await seoHome.save();
         // Return result
         return seoHomeData;

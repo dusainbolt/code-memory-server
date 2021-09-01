@@ -4,10 +4,10 @@ import { User } from 'src/models/users/dto/user-dto';
 import { SeoHomeStatus } from './SeoHomeEnum';
 
 @ObjectType()
-@InputType('SeoHomeHistoryInput')
-export class SeoHomeHistory {
+@InputType('HistoryFieldInput')
+export class HistoryField {
   @Field({ nullable: true })
-  type: string;
+  key: string;
 
   @Field({ nullable: true })
   newValue: string;
@@ -86,8 +86,8 @@ export class SeoHome {
   @Field(() => SeoHomeImage)
   image: SeoHomeImage;
 
-  @Field(() => [SeoHomeHistory])
-  history: SeoHomeHistory[]
+  @Field(() => [HistoryField])
+  history: HistoryField[]
 
   @Field(() => SeoHomeStatus)
   status: SeoHomeStatus;

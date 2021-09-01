@@ -92,6 +92,18 @@ enum Gender {
   OTHER @deprecated(reason: "This is ...")
 }
 
+type HistoryField {
+  key: String
+  newValue: String
+  oldValue: String
+}
+
+input HistoryFieldInput {
+  key: String
+  newValue: String
+  oldValue: String
+}
+
 input LoginInput {
   credential: String!
   password: String!
@@ -163,7 +175,7 @@ type SeoHome {
   description: String
   domain: String
   facebookChatPlugin: String
-  history: [SeoHomeHistory!]!
+  history: [HistoryField!]!
   id: ID!
   image: SeoHomeImage!
   languageAlternates: String
@@ -173,18 +185,6 @@ type SeoHome {
   status: SeoHomeStatus!
   title: String
   userCreate: User
-}
-
-type SeoHomeHistory {
-  newValue: String
-  oldValue: String
-  type: String
-}
-
-input SeoHomeHistoryInput {
-  newValue: String
-  oldValue: String
-  type: String
 }
 
 type SeoHomeImage {
