@@ -31,6 +31,7 @@ export const getDiffObject = (objectRoot: any, objectCompare: any) => {
     }
     // handle string field
     if (typeof value === 'string') {
+      // console.log(key, objectCompare[key]);
       value.toString() !== objectCompare[key].toString() && result.push({
         key,
         newValue: objectCompare[key],

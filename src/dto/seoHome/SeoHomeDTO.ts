@@ -19,17 +19,18 @@ export class HistoryField {
 export class SeoHomeImage {
   @Field({ nullable: true })
   faviconUrlICO: string;
-  @Field({ nullable: true })
 
+  @Field({ nullable: true })
   faviconUrlJPG: string;
-  @Field({ nullable: true })
 
+  @Field({ nullable: true })
   logo400x400: string;
-  @Field({ nullable: true })
 
-  logo800x600: string;
   @Field({ nullable: true })
-  logo1280x1280: string;
+  logo800x600: string;
+
+  @Field({ nullable: true })
+  logo1280x720: string;
 
   @Field({ nullable: true })
   logoAlt: string;

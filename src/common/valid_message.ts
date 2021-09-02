@@ -13,4 +13,5 @@ export const lengthMessage = (args: ValidationArguments) => {
 export const MSG_SYSTEM = {
   MSG_LOGIN_ERROR: `${PREFIX_CODE_SYSTEM}_2`,
   TAG_NOT_ALLOW_TYPE: `${PREFIX_CODE_SYSTEM}_3`,
+  UPDATE_NOT_DIFF: `${PREFIX_CODE_SYSTEM}_4`,
 };

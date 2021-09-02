@@ -190,7 +190,7 @@ type SeoHomeImage {
   faviconUrlJPG: String
   logo400x400: String
   logo800x600: String
-  logo1280x1280: String
+  logo1280x720: String
   logoAlt: String
 }
 
@@ -199,7 +199,7 @@ input SeoHomeImageInput {
   faviconUrlJPG: String
   logo400x400: String
   logo800x600: String
-  logo1280x1280: String
+  logo1280x720: String
   logoAlt: String
 }
 

@@ -64,7 +64,7 @@ export class ModelResolver {
       image: {
         faviconUrlICO: "https://du-sainbolt.web.app/favicon.png",
         faviconUrlJPG: "https://du-sainbolt.web.app/favicon.png",
-        logo1280x1280: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
+        logo1280x720: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
         logo400x400: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
         logo800x600: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
         logoAlt: "Logo of CodeMemory",

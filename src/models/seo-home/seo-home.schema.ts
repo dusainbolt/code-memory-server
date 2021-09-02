@@ -33,7 +33,7 @@ export class SeoHomeModel {
 
 
   @Prop({
-    type: { faviconUrlICO: { type: String }, faviconUrlJPG: { type: String }, logo400x400: { type: String }, logo800x600: { type: String }, logo1280x1280: { type: String }, logoAlt: { type: String } },
+    type: { faviconUrlICO: { type: String }, faviconUrlJPG: { type: String }, logo400x400: { type: String }, logo800x600: { type: String }, logo1280x720: { type: String }, logoAlt: { type: String } },
     default: {}
   }) image: SeoHomeImage;
 
