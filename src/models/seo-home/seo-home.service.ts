@@ -1,3 +1,4 @@
+import { QUERY_LIST } from './../../common/contant';
 import { MSG_SYSTEM } from 'src/common/valid_message';
 import { GraphQLError } from 'graphql';
 import { convertMongoObject } from './../../common/functions';
@@ -29,5 +30,9 @@ export class SeoHomeService {
         const seoHomeData = await seoHome.save();
         // Return result
         return seoHomeData;
+    }
+
+    async entire(): Promise<SeoHome[]> {
+        return this.seoHomeModel.find().sort({ createdAt: QUERY_LIST.DESC });
     }
 }

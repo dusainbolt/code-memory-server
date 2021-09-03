@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { HistoryField, SeoHomeImage } from 'src/dto/seoHome/SeoHomeDTO';
 import { USER_NAME } from '../users/user.schema';
-@Schema({ timestamps: true })
+@Schema({ timestamps: { updatedAt: false } })
 export class SeoHomeModel {
   @Prop()
   title: string;
@@ -25,6 +25,9 @@ export class SeoHomeModel {
 
   @Prop()
   facebookChatPlugin: string;
+
+  @Prop()
+  reason: string;
 
   @Prop({
     type: { facebookAppId: { type: String }, facebookPageUrl: { type: String }, youtubeUrl: { type: String }, twitterUrl: { type: String } },

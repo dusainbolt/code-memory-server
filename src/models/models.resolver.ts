@@ -79,6 +79,7 @@ export class ModelResolver {
       facebookChatPlugin: "",
       languageAlternates: "en",
       createBy: id,
+      reason: "",
       searchBoxUrl: "codememory.io/search",
       siteName: "CodeMemory",
     };

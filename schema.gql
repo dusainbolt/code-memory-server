@@ -38,6 +38,7 @@ input CreateSeoHomeInput {
   facebookChatPlugin: String
   image: SeoHomeImageInput!
   languageAlternates: String
+  reason: String
   searchBoxUrl: String
   siteName: String
   social: SeoHomeSocialInput!
@@ -137,6 +138,7 @@ type OutputSearchWork {
 type Query {
   initData: String!
   seoHome: SeoHome!
+  seoHomeEntire: [SeoHome!]!
   tagEntire(input: EntireTagInput!): [Tag!]!
   tagFindBySlug(input: FindTagBySlugInput!): Tag!
   tagList(input: SearchTagInput!): OutputSearchTag!
@@ -171,6 +173,7 @@ input SearchWorkInput {
 
 type SeoHome {
   createBy: String!
+  createdAt: String!
   description: String
   domain: String
   facebookChatPlugin: String
@@ -178,6 +181,7 @@ type SeoHome {
   id: ID!
   image: SeoHomeImage!
   languageAlternates: String
+  reason: String
   searchBoxUrl: String
   siteName: String
   social: SeoHomeSocial!

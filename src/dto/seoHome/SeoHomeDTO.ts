@@ -88,8 +88,14 @@ export class SeoHome {
   @Field(() => [HistoryField])
   history: HistoryField[]
 
+  @Field({ nullable: true })
+  reason: string;
+
   @Field()
   createBy: string;
+
+  @Field()
+  createdAt?: string;
 
   @Field({ nullable: true })
   userCreate?: User;

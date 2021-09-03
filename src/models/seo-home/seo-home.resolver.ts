@@ -20,4 +20,10 @@ export class SeoHomeResolver {
     return this.seoHomeService.create(input, user);
   }
 
+  @Roles([Role.ADMIN])
+  @Query(() => [SeoHome])
+  async seoHomeEntire(): Promise<SeoHome[]> {
+    return this.seoHomeService.entire();
+  }
+
 }

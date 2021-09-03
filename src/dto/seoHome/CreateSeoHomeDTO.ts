@@ -24,6 +24,9 @@ export class CreateSeoHomeInput {
   @Field({ nullable: true })
   facebookChatPlugin: string;
 
+  @Field({ nullable: true })
+  reason: string;
+
   @Field(() => SeoHomeSocial)
   social: SeoHomeSocial;
 

@@ -19,7 +19,7 @@ export const convertMongoObject = (mongoObj: any) => {
 
 export const getDiffObject = (objectRoot: any, objectCompare: any) => {
   let result: HistoryField[] = [];
-  const ignoreKey = ["_id", "createBy", "createdAt", "updatedAt", "history"];
+  const ignoreKey = ["_id", "createBy", "createdAt", "updatedAt", "history", "reason"];
   // check object root = invalid
   if (!!!objectRoot) {
     return [];
