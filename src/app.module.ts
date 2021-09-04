@@ -19,9 +19,6 @@ import { createUsersLoader } from './models/users/user.loader';
       isGlobal: true,
       load: [environment],
     }),
-    // GraphQLModule.forRoot({
-
-    // }),
     MongooseModule.forRoot(process.env.MONGO_DB_URL, {
       useNewUrlParser: true,
       useFindAndModify: true,

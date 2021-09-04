@@ -1,7 +1,8 @@
+import { Condition } from 'mongodb';
 import { QUERY_LIST } from './../../common/contant';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, _FilterQuery } from 'mongoose';
+import { FilterQuery, Model, _FilterQuery } from 'mongoose';
 import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
@@ -47,26 +48,24 @@ export class TagService {
   }
 
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {
-    const query: QuerySearchTag = { title: {}, status: {} };
+    const query: QuerySearchTag = {};
     const queryList = getParamsList(searchTagInput);
     // Handle condition with key
     if (!!searchTagInput.key) {
-      query.title.$regex = new RegExp(searchTagInput.key.trim(), 'i');
+      query.title = { $regex: new RegExp(searchTagInput.key.trim(), 'i') };
     }
     // Handle condition with status
-    if (!!searchTagInput.status?.length) {
-      query.status.$in = searchTagInput.status;
+    if (!!searchTagInput.status.length) {
+      query.status = { $in: searchTagInput.status };
     }
-    // Handle remove not condition filed
-    const queryConvert = removeEmpty(query);
     // Query data
     const dataTags = await this.tagModel
-      .find(queryConvert)
+      .find(query as any)
       .skip(queryList.offset)
       .limit(queryList.limit)
       .sort({ [queryList.orderBy]: queryList.sortBy });
     // Query total
-    const total = await this.tagModel.countDocuments(queryConvert);
+    const total = await this.tagModel.countDocuments(query as any);
     // Return result
     return { dataTags, total };
   }

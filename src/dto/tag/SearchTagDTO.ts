@@ -2,6 +2,7 @@ import { InputType, Field, Int, ObjectType } from '@nestjs/graphql';
 import { TagStatus } from './TagEnum';
 import { Condition } from 'mongodb';
 import { Tag } from './TagDTO';
+import { FilterQuery } from 'mongoose';
 
 @InputType()
 export class SearchTagInput {
@@ -23,12 +24,12 @@ export class SearchTagInput {
   @Field({ defaultValue: '' })
   orderBy?: string;
 }
-@ObjectType()
-export class QuerySearchTag {
-  title?: Condition<any>;
 
-  status?: Condition<any>;
-}
+export type QuerySearchTag = FilterQuery<{
+  title?: Condition<string>;
+
+  status?: Condition<TagStatus[]>;
+}>
 
 @ObjectType()
 export class OutputSearchTag {

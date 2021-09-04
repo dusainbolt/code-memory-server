@@ -32,6 +32,18 @@ input CreateBlogInput {
   title: String!
 }
 
+input CreateProjectInput {
+  descriptionEN: String!
+  descriptionVN: String!
+  endTime: String!
+  name: String!
+  nameEN: String!
+  size: Int!
+  startTime: String!
+  status: ProjectStatus!
+  techs: [String!]!
+}
+
 input CreateSeoHomeInput {
   description: String
   descriptionEN: String
@@ -117,6 +129,8 @@ type LoginOutput {
 
 type Mutation {
   blogCreate(input: CreateBlogInput!): Blog!
+  projectCreate(input: CreateProjectInput!): Project!
+  projectUpdate(input: UpdateProjectInput!): Project!
   seoHomeCreate(input: CreateSeoHomeInput!): SeoHome!
   tagCreate(input: CreateTagInput!): Tag!
   tagUpdate(input: UpdateTagInput!): Tag!
@@ -124,6 +138,11 @@ type Mutation {
   userLogin(input: LoginInput!): LoginOutput!
   workCreate(input: CreateWorkInput!): Work!
   workUpdate(input: UpdateWorkInput!): Work!
+}
+
+type OutputSearchProject {
+  dataProjects: [Project!]!
+  total: Int!
 }
 
 type OutputSearchTag {
@@ -136,8 +155,32 @@ type OutputSearchWork {
   total: Int!
 }
 
+type Project {
+  createBy: String
+  createdAt: String
+  description: String
+  descriptionEN: String
+  endTime: String
+  id: ID!
+  name: String
+  nameEN: String
+  size: Float
+  startTime: String
+  status: ProjectStatus
+  techs: [String!]!
+  updatedAt: String
+  userCreate: User
+}
+
+"""The ProjectStatus."""
+enum ProjectStatus {
+  ACTIVE
+  INACTIVE
+}
+
 type Query {
   initData: String!
+  projectList(input: SearchProjectInput!): OutputSearchProject!
   seoHome: SeoHome!
   seoHomeEntire: [SeoHome!]!
   tagEntire(input: EntireTagInput!): [Tag!]!
@@ -151,6 +194,15 @@ enum Role {
   ADMIN @deprecated(reason: "This is admin")
   CREATOR
   USER @deprecated(reason: "This is user")
+}
+
+input SearchProjectInput {
+  key: String = null
+  limit: Int = null
+  offset: Int = null
+  orderBy: String = ""
+  sortBy: Int = null
+  status: [ProjectStatus!]!
 }
 
 input SearchTagInput {
@@ -249,6 +301,11 @@ enum TagStatus {
 enum TagType {
   ADDITION
   SYSTEM
+}
+
+input UpdateProjectInput {
+  data: CreateProjectInput!
+  projectId: String!
 }
 
 input UpdateTagInput {

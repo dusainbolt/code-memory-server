@@ -6,7 +6,6 @@ import { OutputSearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { User } from '../users/dto/user-dto';
 import { Role } from '../users/dto/user-enum';
-import { USER_NAME } from '../users/user.schema';
 import { TagDocument } from './tag.schema';
 import { TagService } from './tag.service';
 import * as DataLoader from 'dataloader';

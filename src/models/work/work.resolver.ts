@@ -7,8 +7,7 @@ import { User } from '../users/dto/user-dto';
 import { Role } from '../users/dto/user-enum';
 import { CreateWorkInput, UpdateWorkInput } from 'src/dto/work/CreateWorkDTO';
 import { WorkDocument } from './work.schema';
-import { USER_NAME } from '../users/user.schema';
-
+import * as DataLoader from 'dataloader';
 @Resolver(() => Work)
 export class WorkResolver {
   constructor(private readonly workService: WorkService) { }
@@ -31,8 +30,8 @@ export class WorkResolver {
   }
 
   @ResolveField()
-  async userCreate(@Parent() workResolve: WorkDocument) {
-    await workResolve.populate({ path: 'createBy', model: USER_NAME }).execPopulate();
-    return workResolve.createBy;
+  async userCreate(@Parent() workResolve: WorkDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>,
+  ) {
+    return usersLoader.load(workResolve.createBy);
   }
 }

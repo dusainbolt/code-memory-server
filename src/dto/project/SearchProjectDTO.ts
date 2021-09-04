@@ -1,19 +1,16 @@
+import { ProjectStatus } from './ProjectEnum';
+import { Project } from './ProjectDTO';
 import { InputType, Field, Int, ObjectType } from '@nestjs/graphql';
-import { WorkStatus, WorkType } from './WorkEnum';
 import { Condition } from 'mongodb';
-import { Work } from './WorkDTO';
 import { FilterQuery } from 'mongoose';
 
 @InputType()
-export class SearchWorkInput {
+export class SearchProjectInput {
   @Field({ defaultValue: null })
   key?: string;
 
-  @Field(() => [WorkStatus])
-  status?: WorkStatus[];
-
-  @Field(() => [WorkType])
-  type?: WorkType[];
+  @Field(() => [ProjectStatus])
+  status?: ProjectStatus[];
 
   @Field(() => Int, { defaultValue: null })
   offset?: number;
@@ -28,15 +25,15 @@ export class SearchWorkInput {
   orderBy?: string;
 }
 
-export type QuerySearchWork = FilterQuery<{
-  workType?: Condition<WorkType[]>;
 
-  status?: Condition<WorkStatus[]>;
+export type QuerySearchProject = FilterQuery<{
+  status?: Condition<ProjectStatus[]>;
 }>
+
 @ObjectType()
-export class OutputSearchWork {
-  @Field(() => [Work])
-  dataWorks: Work[];
+export class OutputSearchProject {
+  @Field(() => [Project])
+  dataProjects: Project[];
 
   @Field(() => Int)
   total?: number;

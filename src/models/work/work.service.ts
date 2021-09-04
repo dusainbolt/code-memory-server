@@ -28,32 +28,30 @@ export class WorkService {
     return workDataUpdate;
   }
 
-  async list(searchTagInput: SearchWorkInput): Promise<OutputSearchWork> {
-    const query: QuerySearchWork = { status: {}, workType: {} };
-    const queryList = getParamsList(searchTagInput);
+  async list(searchWorkInput: SearchWorkInput): Promise<OutputSearchWork> {
+    const query: QuerySearchWork = {};
+    const queryList = getParamsList(searchWorkInput);
     // Handle condition with key
-    if (!!searchTagInput.key) {
-      const regExpKey = new RegExp(searchTagInput.key.trim(), 'i');
+    if (!!searchWorkInput.key) {
+      const regExpKey = new RegExp(searchWorkInput.key.trim(), 'i');
       query.$or = [{ nameEN: { $regex: regExpKey } }, { nameVN: { $regex: regExpKey } }];
     }
     // Handle condition with status
-    if (!!searchTagInput.status?.length) {
-      query.status.$in = searchTagInput.status;
+    if (!!searchWorkInput.status?.length) {
+      query.status = { $in: searchWorkInput.status };
     }
     // Handle condition with type
-    if (!!searchTagInput.type?.length) {
-      query.workType.$in = searchTagInput.type;
+    if (!!searchWorkInput.type?.length) {
+      query.workType = { $in: searchWorkInput.type };
     }
-    // Handle remove not condition filed
-    const queryConvert = removeEmpty(query);
     // Query data
     const dataWorks = await this.workModel
-      .find(queryConvert)
+      .find(query as any)
       .skip(queryList.offset)
       .limit(queryList.limit)
       .sort({ [queryList.orderBy]: queryList.sortBy });
     // Query total
-    const total = await this.workModel.countDocuments(queryConvert);
+    const total = await this.workModel.countDocuments(query as any);
     // Return result
     return { dataWorks, total };
   }
