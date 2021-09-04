@@ -1,3 +1,4 @@
+import { UsersModule } from './models/users/user.module';
 import { PluginModule } from './plugins/plugin.module';
 import { AuthModule } from './auth/auth.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -10,26 +11,17 @@ import { LogsModule } from './logs/logs.module';
 import { ConfigModule } from '@nestjs/config';
 import { environment } from './environment';
 import { HashModule } from './hash/hash.module';
+import { UserService } from './models/users/user.service';
+import { createUsersLoader } from './models/users/user.loader';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [environment],
     }),
-    GraphQLModule.forRoot({
-      playground: process.env.NODE_ENV !== 'production',
-      installSubscriptionHandlers: true,
-      sortSchema: true,
-      fieldResolverEnhancers: ['guards'],
-      autoSchemaFile: 'schema.gql',
-      cors: {
-        origin: '*',
-        credentials: true,
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: true,
-        optionsSuccessStatus: 204,
-      },
-    }),
+    // GraphQLModule.forRoot({
+
+    // }),
     MongooseModule.forRoot(process.env.MONGO_DB_URL, {
       useNewUrlParser: true,
       useFindAndModify: true,
@@ -39,13 +31,34 @@ import { HashModule } from './hash/hash.module';
     ScheduleModule.forRoot(),
     PluginModule,
     ModelsModule,
+    GraphQLModule.forRootAsync({
+      imports: [UsersModule],
+      useFactory: (userService: UserService) => ({
+        playground: process.env.NODE_ENV !== 'production',
+        installSubscriptionHandlers: true,
+        sortSchema: true,
+        fieldResolverEnhancers: ['guards'],
+        autoSchemaFile: 'schema.gql',
+        cors: {
+          origin: '*',
+          credentials: true,
+          methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+          preflightContinue: true,
+          optionsSuccessStatus: 204,
+        },
+        context: () => ({
+          usersLoader: createUsersLoader(userService),
+        }),
+      }),
+      inject: [UserService],
+    }),
     // TasksModule,
     LogsModule,
     AuthModule,
     HashModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
 
 // ____Exception filter
 // providers: [

@@ -9,6 +9,8 @@ import { Role } from '../users/dto/user-enum';
 import { USER_NAME } from '../users/user.schema';
 import { TagDocument } from './tag.schema';
 import { TagService } from './tag.service';
+import * as DataLoader from 'dataloader';
+
 @Resolver(() => Tag)
 export class TagResolver {
   constructor(private readonly tagService: TagService) { }
@@ -41,8 +43,8 @@ export class TagResolver {
   }
 
   @ResolveField()
-  async userCreate(@Parent() tagResolve: TagDocument) {
-    await tagResolve.populate({ path: 'createBy', model: USER_NAME }).execPopulate();
-    return tagResolve.createBy;
+  async userCreate(@Parent() tagResolve: TagDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>,
+  ) {
+    return usersLoader.load(tagResolve.createBy);
   }
 }

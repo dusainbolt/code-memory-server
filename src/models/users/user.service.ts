@@ -38,6 +38,10 @@ export class UserService {
     }
   }
 
+  async findByIds(ids: string[]): Promise<User[]> {
+    return this.userModel.find({ '_id': { $in: ids } });
+  }
+
   async findOne(credential: string): Promise<User> {
     const query: QueryFindUser = { username: {}, email: {}, _id: {} };
     query.email.$eq = credential;

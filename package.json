@@ -41,6 +41,7 @@
     "class-validator": "0.13.1",
     "cron": "^1.8.2",
     "crypto-js": "^4.0.0",
+    "dataloader": "^2.0.0",
     "dayjs": "^1.10.5",
     "fs": "^0.0.1-security",
     "graphql": "15.5.0",

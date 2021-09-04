@@ -11,7 +11,7 @@ export const USER_KEY = 'user';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector, private authService: AuthService) {}
+  constructor(private reflector: Reflector, private authService: AuthService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [context.getHandler(), context.getClass()]);
