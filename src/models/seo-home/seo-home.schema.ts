@@ -12,13 +12,16 @@ export class SeoHomeModel {
   description: string;
 
   @Prop()
+  titleEN: string;
+
+  @Prop()
+  descriptionEN: string;
+
+  @Prop()
   domain: string;
 
   @Prop()
   siteName: string;
-
-  @Prop()
-  languageAlternates: string;
 
   @Prop()
   searchBoxUrl: string;
@@ -36,7 +39,7 @@ export class SeoHomeModel {
 
 
   @Prop({
-    type: { faviconUrlICO: { type: String }, faviconUrlJPG: { type: String }, logo400x400: { type: String }, logo800x600: { type: String }, logo1280x720: { type: String }, logoAlt: { type: String } },
+    type: { faviconUrlICO: { type: String }, faviconUrlJPG: { type: String }, logo400x400: { type: String }, logo800x600: { type: String }, logo1280x720: { type: String }, logoAlt: { type: String }, logoAltEN: { type: String } },
     default: {}
   }) image: SeoHomeImage;
 

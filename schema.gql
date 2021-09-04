@@ -34,15 +34,16 @@ input CreateBlogInput {
 
 input CreateSeoHomeInput {
   description: String
+  descriptionEN: String
   domain: String
   facebookChatPlugin: String
   image: SeoHomeImageInput!
-  languageAlternates: String
   reason: String
   searchBoxUrl: String
   siteName: String
   social: SeoHomeSocialInput!
   title: String
+  titleEN: String
 }
 
 input CreateTagInput {
@@ -175,17 +176,18 @@ type SeoHome {
   createBy: String!
   createdAt: String!
   description: String
+  descriptionEN: String
   domain: String
   facebookChatPlugin: String
   history: [HistoryField!]!
   id: ID!
   image: SeoHomeImage!
-  languageAlternates: String
   reason: String
   searchBoxUrl: String
   siteName: String
   social: SeoHomeSocial!
   title: String
+  titleEN: String
   userCreate: User
 }
 
@@ -196,6 +198,7 @@ type SeoHomeImage {
   logo800x600: String
   logo1280x720: String
   logoAlt: String
+  logoAltEN: String
 }
 
 input SeoHomeImageInput {
@@ -205,6 +208,7 @@ input SeoHomeImageInput {
   logo800x600: String
   logo1280x720: String
   logoAlt: String
+  logoAltEN: String
 }
 
 type SeoHomeSocial {

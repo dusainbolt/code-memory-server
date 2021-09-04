@@ -58,8 +58,10 @@ export class ModelResolver {
 
   async initSeoHome(id: string): Promise<SeoHome> {
     const data: SeoHome = {
-      description: "SEO description",
-      title: "SEO title",
+      description: "SEO mo ta",
+      title: "SEO Tiee de",
+      titleEN: "Seo title",
+      descriptionEN: "Seo description",
       domain: "codememory.io",
       image: {
         faviconUrlICO: "https://du-sainbolt.web.app/favicon.png",
@@ -67,7 +69,8 @@ export class ModelResolver {
         logo1280x720: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
         logo400x400: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
         logo800x600: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
-        logoAlt: "Logo of CodeMemory",
+        logoAlt: "Ảnh Logo của CodeMemory",
+        logoAltEN: "Logo image of CodeMemory"
       },
       social: {
         facebookAppId: "102681978817056",
@@ -77,7 +80,6 @@ export class ModelResolver {
       },
       history: [],
       facebookChatPlugin: "",
-      languageAlternates: "en",
       createBy: id,
       reason: "",
       searchBoxUrl: "codememory.io/search",

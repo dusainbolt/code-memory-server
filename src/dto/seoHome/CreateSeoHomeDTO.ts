@@ -10,13 +10,16 @@ export class CreateSeoHomeInput {
   description: string;
 
   @Field({ nullable: true })
+  titleEN: string;
+
+  @Field({ nullable: true })
+  descriptionEN: string;
+
+  @Field({ nullable: true })
   domain: string;
 
   @Field({ nullable: true })
   siteName: string;
-
-  @Field({ nullable: true })
-  languageAlternates: string;
 
   @Field({ nullable: true })
   searchBoxUrl: string;
