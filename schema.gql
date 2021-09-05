@@ -168,6 +168,7 @@ type Project {
   startTime: String
   status: ProjectStatus
   techs: [String!]!
+  techsData: [Tag!]!
   updatedAt: String
   userCreate: User
 }
@@ -191,9 +192,9 @@ type Query {
 
 """The role of user"""
 enum Role {
-  ADMIN @deprecated(reason: "This is admin")
+  ADMIN
   CREATOR
-  USER @deprecated(reason: "This is user")
+  USER
 }
 
 input SearchProjectInput {

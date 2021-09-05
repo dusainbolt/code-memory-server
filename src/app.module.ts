@@ -1,3 +1,5 @@
+import { TagService } from './models/tag/tag.service';
+import { TagModule } from './models/tag/tag.module';
 import { UsersModule } from './models/users/user.module';
 import { PluginModule } from './plugins/plugin.module';
 import { AuthModule } from './auth/auth.module';
@@ -13,6 +15,7 @@ import { environment } from './environment';
 import { HashModule } from './hash/hash.module';
 import { UserService } from './models/users/user.service';
 import { createUsersLoader } from './models/users/user.loader';
+import { createTagsLoader } from './models/tag/tag.loader';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,7 +24,7 @@ import { createUsersLoader } from './models/users/user.loader';
     }),
     MongooseModule.forRoot(process.env.MONGO_DB_URL, {
       useNewUrlParser: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
       useCreateIndex: true,
     }),
     EventEmitterModule.forRoot(),
@@ -29,8 +32,8 @@ import { createUsersLoader } from './models/users/user.loader';
     PluginModule,
     ModelsModule,
     GraphQLModule.forRootAsync({
-      imports: [UsersModule],
-      useFactory: (userService: UserService) => ({
+      imports: [UsersModule, TagModule],
+      useFactory: (userService: UserService, tagService: TagService) => ({
         playground: process.env.NODE_ENV !== 'production',
         installSubscriptionHandlers: true,
         sortSchema: true,
@@ -45,9 +48,10 @@ import { createUsersLoader } from './models/users/user.loader';
         },
         context: () => ({
           usersLoader: createUsersLoader(userService),
+          tagsLoader: createTagsLoader(tagService),
         }),
       }),
-      inject: [UserService],
+      inject: [UserService, TagService],
     }),
     // TasksModule,
     LogsModule,

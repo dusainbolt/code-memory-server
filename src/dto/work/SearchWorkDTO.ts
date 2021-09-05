@@ -32,6 +32,8 @@ export type QuerySearchWork = FilterQuery<{
   workType?: Condition<WorkType[]>;
 
   status?: Condition<WorkStatus[]>;
+
+  createBy?: Condition<string>;
 }>
 @ObjectType()
 export class OutputSearchWork {

@@ -28,7 +28,7 @@ export class ProjectService {
     return projectDataUpdate;
   }
 
-  async list(searchProject: SearchProjectInput): Promise<OutputSearchProject> {
+  async list(searchProject: SearchProjectInput, userId: string = ""): Promise<OutputSearchProject> {
     const query: QuerySearchProject = {};
     const queryList = getParamsList(searchProject);
     // Handle condition with key
@@ -39,6 +39,9 @@ export class ProjectService {
     // Handle condition with status
     if (!!searchProject.status?.length) {
       query.status = { $in: searchProject.status };
+    }
+    if (!!userId) {
+      query._id = { $in: [userId] }
     }
     // Query data
     const dataProjects = await this.projectModel

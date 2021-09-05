@@ -9,14 +9,6 @@ export enum Role {
 registerEnumType(Role, {
   name: 'Role',
   description: 'The role of user',
-  valuesMap: {
-    USER: {
-      deprecationReason: 'This is user',
-    },
-    ADMIN: {
-      deprecationReason: 'This is admin',
-    },
-  },
 });
 
 export enum UserStatus {

@@ -26,14 +26,21 @@ export class ProjectResolver {
     return this.projectService.update(input);
   }
 
+  @Roles([Role.ADMIN])
   @Query(() => OutputSearchProject)
-  async projectList(@Args('input') input: SearchProjectInput): Promise<OutputSearchProject> {
-    return this.projectService.list(input);
+  async projectList(@Args('input') input: SearchProjectInput, @Context(USER_KEY) user: User): Promise<OutputSearchProject> {
+    return this.projectService.list(input, user.id);
   }
 
   @ResolveField()
   async userCreate(@Parent() projectResolve: ProjectDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>,
   ) {
     return usersLoader.load(projectResolve.createBy);
+  }
+
+  @ResolveField()
+  async techsData(@Parent() projectResolve: ProjectDocument, @Context('tagsLoader') tagsLoader: DataLoader<string[], User>,
+  ) {
+    return tagsLoader.loadMany(projectResolve.techs as any);
   }
 }

@@ -24,9 +24,10 @@ export class WorkResolver {
     return this.workService.update(input);
   }
 
+  @Roles([Role.ADMIN])
   @Query(() => OutputSearchWork)
-  async workList(@Args('input') input: SearchWorkInput): Promise<OutputSearchWork> {
-    return this.workService.list(input);
+  async workList(@Args('input') input: SearchWorkInput, @Context(USER_KEY) user: User): Promise<OutputSearchWork> {
+    return this.workService.list(input, user.id);
   }
 
   @ResolveField()

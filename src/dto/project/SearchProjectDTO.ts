@@ -28,6 +28,7 @@ export class SearchProjectInput {
 
 export type QuerySearchProject = FilterQuery<{
   status?: Condition<ProjectStatus[]>;
+  createBy?: Condition<string>;
 }>
 
 @ObjectType()

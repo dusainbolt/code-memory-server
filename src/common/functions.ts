@@ -97,3 +97,22 @@ export function mapFromArray<T>(
 
   return map;
 }
+
+export function removeDuplicateLoader(arr: any[]) {
+  return arr.reduce((unique, item) => {
+    console.log(
+      typeof item,
+      // a. Item
+      item,
+      // b. Final Array (Accumulator)
+      unique,
+      // c. Condition (Remember it only get pushed if this returns `false`)
+      unique.indexOf(item),
+      // d. Reducer Function Result
+      unique.includes(item) ? unique : [...unique, item],
+    );
+
+    return unique.includes(item) ? unique : [...unique, item];
+  }, []); // 👈 The initial value of our Accumulator is an empty array
+
+}

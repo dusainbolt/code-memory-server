@@ -1,3 +1,4 @@
+import { Tag } from './../tag/TagDTO';
 import { ProjectStatus } from './ProjectEnum';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
@@ -25,6 +26,9 @@ export class Project {
 
   @Field(() => [String])
   techs: string[];
+
+  @Field(() => [Tag])
+  techsData?: Tag[];
 
   @Field({ nullable: true })
   startTime: string;

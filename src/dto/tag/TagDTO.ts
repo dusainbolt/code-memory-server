@@ -6,7 +6,7 @@ import { TagStatus, TagType } from './TagEnum';
 @ObjectType()
 export class Tag {
   @Field(() => ID)
-  readonly id?: MongooseSchema.Types.ObjectId;
+  readonly id?: string;
 
   @Field()
   title: string;

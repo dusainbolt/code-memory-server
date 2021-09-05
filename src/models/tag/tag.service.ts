@@ -35,6 +35,10 @@ export class TagService {
     return tagDataUpdate;
   }
 
+  async findByIds(ids: string[]): Promise<Tag[]> {
+    return this.tagModel.find({ '_id': { $in: ids } });
+  }
+
   async entire({ status, limit }: EntireTagInput): Promise<Tag[]> {
     if (!!limit) {
       return this.tagModel.find({ status: { $in: status } }).limit(limit).sort({ createdAt: QUERY_LIST.DESC });

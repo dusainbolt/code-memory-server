@@ -28,7 +28,7 @@ export class WorkService {
     return workDataUpdate;
   }
 
-  async list(searchWorkInput: SearchWorkInput): Promise<OutputSearchWork> {
+  async list(searchWorkInput: SearchWorkInput, userId: string = ""): Promise<OutputSearchWork> {
     const query: QuerySearchWork = {};
     const queryList = getParamsList(searchWorkInput);
     // Handle condition with key
@@ -43,6 +43,9 @@ export class WorkService {
     // Handle condition with type
     if (!!searchWorkInput.type?.length) {
       query.workType = { $in: searchWorkInput.type };
+    }
+    if (!!userId) {
+      query.createBy = { $in: [userId] };
     }
     // Query data
     const dataWorks = await this.workModel
