@@ -1,3 +1,4 @@
+import { StorageModule } from './storage/storage.module';
 import { TagService } from './models/tag/tag.service';
 import { TagModule } from './models/tag/tag.module';
 import { UsersModule } from './models/users/user.module';
@@ -57,6 +58,7 @@ import { createTagsLoader } from './models/tag/tag.loader';
     LogsModule,
     AuthModule,
     HashModule,
+    StorageModule,
   ],
 })
 export class AppModule { }

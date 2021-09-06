@@ -1,25 +1,27 @@
-import { Condition } from 'mongodb';
+import { S3Service } from './../../storage/s3.service';
 import { QUERY_LIST } from './../../common/contant';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model, _FilterQuery } from 'mongoose';
+import {  Model, _FilterQuery } from 'mongoose';
 import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
-import { convertToSlug, getParamsList, removeEmpty } from 'src/common/functions';
+import { convertToSlug, getParamsList } from 'src/common/functions';
 import { User } from '../users/dto/user-dto';
 import { EntireTagInput } from 'src/dto/tag/GetTagDetailDTO';
 
 @Injectable()
 export class TagService {
-  constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) { }
+  constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>, private s3Service: S3Service) { }
 
   async create(createTagInput: CreateTagInput, user: User): Promise<Tag> {
     // Convert slug
     const slug = convertToSlug(createTagInput.title);
     // Create Tag
     const tag = new this.tagModel({ ...createTagInput, slug, createBy: user.id });
+    console.log(await this.s3Service.renameObject());
+
     const tagData = await tag.save();
     // Return result
     return tagData;
