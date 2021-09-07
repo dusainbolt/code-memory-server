@@ -8,3 +8,14 @@ export const QUERY_LIST = {
   LIMIT: 10,
   OFFSET: 0,
 };
+
+export const ENV_STORAGE = {
+  local: "test",
+  production: "prd",
+}
+
+export const S3_STORAGE = {
+  TAG: "tag",
+  WORK: "work",
+  META: "meta",
+}

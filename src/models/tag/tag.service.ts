@@ -2,7 +2,7 @@ import { S3Service } from './../../storage/s3.service';
 import { QUERY_LIST } from './../../common/contant';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import {  Model, _FilterQuery } from 'mongoose';
+import { Model, _FilterQuery } from 'mongoose';
 import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
@@ -20,7 +20,6 @@ export class TagService {
     const slug = convertToSlug(createTagInput.title);
     // Create Tag
     const tag = new this.tagModel({ ...createTagInput, slug, createBy: user.id });
-    console.log(await this.s3Service.renameObject());
 
     const tagData = await tag.save();
     // Return result
