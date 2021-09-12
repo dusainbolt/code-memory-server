@@ -29,6 +29,7 @@ export class ProjectResolver {
   @Roles([Role.ADMIN])
   @Query(() => OutputSearchProject)
   async projectList(@Args('input') input: SearchProjectInput, @Context(USER_KEY) user: User): Promise<OutputSearchProject> {
+    console.log("12412421421412421241");
     return this.projectService.list(input, user.id);
   }
 
