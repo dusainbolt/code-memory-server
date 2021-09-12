@@ -12,7 +12,7 @@ export class CreateProjectInput {
   nameEN: string;
 
   @Field()
-  descriptionVN: string;
+  description: string;
 
   @Field()
   descriptionEN: string;
@@ -20,7 +20,7 @@ export class CreateProjectInput {
   @Field(() => Int)
   size: number;
 
-  // @IsMongoId({each: true})
+  @IsMongoId({ each: true })
   @Field(() => [String])
   techs: string[];
 
