@@ -40,8 +40,9 @@ export class ProjectService {
     if (!!searchProject.status?.length) {
       query.status = { $in: searchProject.status };
     }
+
     if (!!userId) {
-      query._id = { $in: [userId] }
+      query.createBy = { $in: [userId] }
     }
     // Query data
     const dataProjects = await this.projectModel
