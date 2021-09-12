@@ -31,4 +31,6 @@ export type TagDocument = TagModel & Document;
 
 export const TAG_NAME = 'Tag';
 
+export const TAG_OTHER_NAME = "tags"
+
 export const TagSchema = SchemaFactory.createForClass(TagModel);

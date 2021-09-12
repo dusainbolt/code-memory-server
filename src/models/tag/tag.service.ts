@@ -1,15 +1,14 @@
-import { Condition } from 'mongodb';
 import { QUERY_LIST } from './../../common/contant';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model, _FilterQuery } from 'mongoose';
+import { Model, _FilterQuery } from 'mongoose';
 import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
-import { convertToSlug, getParamsList, removeEmpty } from 'src/common/functions';
 import { User } from '../users/dto/user-dto';
 import { EntireTagInput } from 'src/dto/tag/GetTagDetailDTO';
+import { helperService } from 'src/common/HelperService';
 
 @Injectable()
 export class TagService {
@@ -17,7 +16,7 @@ export class TagService {
 
   async create(createTagInput: CreateTagInput, user: User): Promise<Tag> {
     // Convert slug
-    const slug = convertToSlug(createTagInput.title);
+    const slug = helperService.convertToSlug(createTagInput.title);
     // Create Tag
     const tag = new this.tagModel({ ...createTagInput, slug, createBy: user.id });
     const tagData = await tag.save();
@@ -28,7 +27,7 @@ export class TagService {
   async update(updateTagInput: UpdateTagInput): Promise<Tag> {
     const tagData = updateTagInput.data;
     // Convert slug
-    const slug = convertToSlug(tagData.title);
+    const slug = helperService.convertToSlug(tagData.title);
     // update Tag
     const tagDataUpdate = await this.tagModel.findByIdAndUpdate(updateTagInput.tagId, { ...tagData, slug });
     // Return result
@@ -53,7 +52,7 @@ export class TagService {
 
   async list(searchTagInput: SearchTagInput): Promise<OutputSearchTag> {
     const query: QuerySearchTag = {};
-    const queryList = getParamsList(searchTagInput);
+    const queryList = helperService.getParamsList(searchTagInput);
     // Handle condition with key
     if (!!searchTagInput.key) {
       query.title = { $regex: new RegExp(searchTagInput.key.trim(), 'i') };

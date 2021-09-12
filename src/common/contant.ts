@@ -8,3 +8,7 @@ export const QUERY_LIST = {
   LIMIT: 10,
   OFFSET: 0,
 };
+
+export const EVENT = {
+  CHANGE_USER_SKILL: 'CHANGE_USER_SKILL',
+};

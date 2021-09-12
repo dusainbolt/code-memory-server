@@ -18,24 +18,24 @@ export enum UserStatus {
   BLOCK,
 }
 
+
+
 registerEnumType(UserStatus, {
   name: 'UserStatus',
   description: 'The status of user',
-  valuesMap: {
-    ACTIVE: {
-      deprecationReason: 'This is active',
-    },
-    INACTIVE: {
-      deprecationReason: 'This is inactive',
-    },
-    PAUSE: {
-      deprecationReason: 'This is pause',
-    },
-    BLOCK: {
-      deprecationReason: 'This is block',
-    },
-  },
 });
+
+
+export enum UserSkillStatus {
+  ACTIVE,
+  INACTIVE,
+}
+
+registerEnumType(UserSkillStatus, {
+  name: 'UserSkillStatus',
+  description: 'The skill status of user',
+});
+
 
 export enum Gender {
   MALE,
@@ -46,15 +46,4 @@ export enum Gender {
 registerEnumType(Gender, {
   name: 'Gender',
   description: 'The gender of user',
-  valuesMap: {
-    MALE: {
-      deprecationReason: 'This is male',
-    },
-    FEMALE: {
-      deprecationReason: 'This is female',
-    },
-    OTHER: {
-      deprecationReason: 'This is ...',
-    },
-  },
 });
