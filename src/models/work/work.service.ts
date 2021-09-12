@@ -1,4 +1,3 @@
-import { getParamsList, removeEmpty } from '../../common/functions';
 import { SearchWorkInput, OutputSearchWork, QuerySearchWork } from '../../dto/work/SearchWorkDTO';
 import { WorkDocument, WORK_NAME } from './work.schema';
 import { Injectable } from '@nestjs/common';
@@ -7,7 +6,7 @@ import { Model } from 'mongoose';
 import { Work } from 'src/dto/work/WorkDTO';
 import { User } from '../users/dto/user-dto';
 import { CreateWorkInput, UpdateWorkInput } from 'src/dto/work/CreateWorkDTO';
-
+import { helperService } from 'src/common/HelperService';
 @Injectable()
 export class WorkService {
   constructor(@InjectModel(WORK_NAME) public workModel: Model<WorkDocument>) { }
@@ -30,7 +29,7 @@ export class WorkService {
 
   async list(searchWorkInput: SearchWorkInput, userId: string = ""): Promise<OutputSearchWork> {
     const query: QuerySearchWork = {};
-    const queryList = getParamsList(searchWorkInput);
+    const queryList = helperService.getParamsList(searchWorkInput);
     // Handle condition with key
     if (!!searchWorkInput.key) {
       const regExpKey = new RegExp(searchWorkInput.key.trim(), 'i');

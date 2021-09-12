@@ -1,36 +1,52 @@
 import { lengthMessage } from './../../../common/valid_message';
-import { IsEmail, Length, MaxLength } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
-import { Gender, Role, UserStatus } from './user-enum';
+import { Gender, Role, UserStatus, UserSkillStatus } from './user-enum';
+
+@ObjectType()
+@InputType('UserSkillsInput')
+export class UserSkills {
+  @Field({ nullable: true })
+  skillId: string;
+
+  @Field({ nullable: true })
+  percent: number;
+
+  @Field({ nullable: true })
+  status: UserSkillStatus;
+}
 
 @ObjectType()
 export class User {
   @Field(() => ID)
   id?: string;
 
-  @Field()
+  @Field({ nullable: true })
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   username: string;
 
-  @Field()
+  @Field({ nullable: true })
   firstName: string;
 
-  @Field()
+  @Field({ nullable: true })
   password: string;
 
-  @Field()
+  @Field({ nullable: true })
   lastName: string;
 
-  @Field()
+  @Field({ nullable: true })
   avatar: string;
 
-  @Field()
+  @Field({ nullable: true })
   phone: string;
 
-  @Field()
+  @Field({ nullable: true })
   facebook: string;
+
+  @Field(() => [UserSkills])
+  skills: UserSkills[];
 
   @Field(() => Gender)
   gender: Gender;
@@ -41,10 +57,10 @@ export class User {
   @Field(() => UserStatus)
   status: UserStatus;
 
-  @Field()
+  @Field({ nullable: true })
   createdAt?: string;
 
-  @Field()
+  @Field({ nullable: true })
   updatedAt?: string;
 }
 

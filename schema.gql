@@ -100,9 +100,9 @@ input FindTagBySlugInput {
 
 """The gender of user"""
 enum Gender {
-  FEMALE @deprecated(reason: "This is female")
-  MALE @deprecated(reason: "This is male")
-  OTHER @deprecated(reason: "This is ...")
+  FEMALE
+  MALE
+  OTHER
 }
 
 type HistoryField {
@@ -320,28 +320,41 @@ input UpdateWorkInput {
 }
 
 type User {
-  avatar: String!
-  createdAt: String!
-  email: String!
-  facebook: String!
-  firstName: String!
+  avatar: String
+  createdAt: String
+  email: String
+  facebook: String
+  firstName: String
   gender: Gender!
   id: ID!
-  lastName: String!
-  password: String!
-  phone: String!
+  lastName: String
+  password: String
+  phone: String
   roles: [Role!]!
+  skills: [UserSkills!]!
   status: UserStatus!
-  updatedAt: String!
-  username: String!
+  updatedAt: String
+  username: String
+}
+
+type UserSkills {
+  percent: Float
+  skillId: String
+  status: Float
+}
+
+input UserSkillsInput {
+  percent: Float
+  skillId: String
+  status: Float
 }
 
 """The status of user"""
 enum UserStatus {
-  ACTIVE @deprecated(reason: "This is active")
-  BLOCK @deprecated(reason: "This is block")
-  INACTIVE @deprecated(reason: "This is inactive")
-  PAUSE @deprecated(reason: "This is pause")
+  ACTIVE
+  BLOCK
+  INACTIVE
+  PAUSE
 }
 
 type Work {

@@ -8,4 +8,3 @@ export type SortPaginate = {
 export const schemaString = (defaultVal: any = null) => {
   return { type: String, default: defaultVal };
 };
-

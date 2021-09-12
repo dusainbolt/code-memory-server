@@ -6,10 +6,9 @@ import { Gender, Role } from './users/dto/user-enum';
 import { HashService } from 'src/hash/hash.service';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
-import { convertToSlug } from 'src/common/functions';
 import { TagService } from './tag/tag.service';
 import { SeoHome } from 'src/dto/seoHome/SeoHomeDTO';
-
+import { helperService } from 'src/common/HelperService';
 @Resolver(() => null)
 export class ModelResolver {
   constructor(
@@ -18,8 +17,6 @@ export class ModelResolver {
     private tagService: TagService,
     private seoHomeService: SeoHomeService
   ) { }
-
-
 
   async initUser(): Promise<User> {
     const password = await this.hashService.hashBcrypt('du@dev1234');
@@ -97,7 +94,7 @@ export class ModelResolver {
         createBy: id,
         title,
         description: `Người phát triển phần mềm ứng dụng ${i}`,
-        slug: convertToSlug(title),
+        slug: helperService.convertToSlug(title),
         status: TagStatus.ACTIVE,
         tagType: TagType.SYSTEM,
         thumbnail: 'https://i.pinimg.com/736x/ec/14/7c/ec147c4c53abfe86df2bc7e70c0181ff.jpg',
