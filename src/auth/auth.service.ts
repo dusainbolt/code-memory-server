@@ -1,31 +1,32 @@
-import { ConfigService } from '@nestjs/config';
-import { UsersService } from '../models/users/users.service';
+import { UserService } from '../models/users/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
+import { HashService } from 'src/hash/hash.service';
+import { UserHashToken } from 'src/models/users/dto/user-hash-token';
+import { User } from 'src/models/users/dto/user-dto';
 
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService, private configService: ConfigService) {}
+  constructor(private userService: UserService, private hashService: HashService) { }
 
-    async validateUser(username: string, pass: string): Promise<any> {
-        const user = await this.usersService.findOne(username);
-        if (user && user.password === pass) {
-            const { password, ...result } = user;
-            return result;
-        }
-        return null;
-    }
+  async validateUser(id: string): Promise<any> {
+    return await this.userService.userModel.findById(id);
+    // Feature to do handle with check password
+  }
 
-    validateToken(auth: string) {
-        if (auth.split(' ')[0] !== 'Bearer') {
-            throw new UnauthorizedException();
-        }
-        const token = auth.split(' ')[1];
-        try {
-            const secret = this.configService.get('JWT_SECRET');
-            return jwt.verify(token, secret);
-        } catch (err) {
-            throw new UnauthorizedException();
-        }
+  async validateToken(auth: string) {
+    if (auth?.split(' ')[0] !== 'Bearer') {
+      throw new UnauthorizedException();
     }
+    const token = auth.split(' ')[1];
+    try {
+      const userHashToken = this.hashService.verifyJWT(token) as UserHashToken;
+      const user: User = await this.validateUser(userHashToken.id);
+      if (!!!user.id) {
+        throw new UnauthorizedException();
+      }
+      return user;
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
+  }
 }

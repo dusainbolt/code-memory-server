@@ -1,59 +1,60 @@
+import { SeoHomeSocial } from './../../dto/seoHome/SeoHomeDTO';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { SeoContact, SeoMeta, SeoSocial } from './dto/seo-home.dto';
-// export class SeoContact {
-//     address: string;
-//     email: string;
-//     phone: string;
-// }
+import { HistoryField, SeoHomeImage } from 'src/dto/seoHome/SeoHomeDTO';
+import { USER_NAME } from '../users/user.schema';
+@Schema({ timestamps: { updatedAt: false } })
+export class SeoHomeModel {
+  @Prop()
+  title: string;
 
-// export class SeoMeta {
-//     title: string;
-//     description: string;
-//     imageUrl: string;
-//     domain: string;
-//     jsonType: string;
-//     logoUrl: string;
-//     logoWidth: number;
-//     logoHeight: number;
-//     facebookPageId: string;
-// }
+  @Prop()
+  description: string;
 
-// export class SeoSocial {
-//     youtube: string;
-//     facebook: string;
-//     facebookPage: string;
-//     skype: string;
-//     twitter: string;
-// }
+  @Prop()
+  titleEN: string;
 
-@Schema({ timestamps: true })
-export class SeoHome {
-    @Prop()
-    owner: MongooseSchema.Types.ObjectId;
+  @Prop()
+  descriptionEN: string;
 
-    @Prop()
-    appName: string;
+  @Prop()
+  domain: string;
 
-    @Prop()
-    keyWord: string;
+  @Prop()
+  siteName: string;
 
-    @Prop()
-    author: string;
+  @Prop()
+  searchBoxUrl: string;
 
-    @Prop()
-    publisher: string;
+  @Prop()
+  facebookChatPlugin: string;
 
-    @Prop()
-    contact: SeoContact;
+  @Prop()
+  reason: string;
 
-    @Prop()
-    social: SeoSocial;
+  @Prop({
+    type: { facebookAppId: { type: String }, facebookPageUrl: { type: String }, youtubeUrl: { type: String }, twitterUrl: { type: String } },
+    default: {}
+  }) social: SeoHomeSocial;
 
-    @Prop()
-    meta: SeoMeta;
+
+  @Prop({
+    type: { faviconUrlICO: { type: String }, faviconUrlJPG: { type: String }, logo400x400: { type: String }, logo800x600: { type: String }, logo1280x720: { type: String }, logoAlt: { type: String }, logoAltEN: { type: String } },
+    default: {}
+  }) image: SeoHomeImage;
+
+
+  @Prop({
+    type: [{ key: { type: String }, newValue: { type: String }, oldValue: { type: String } }],
+    default: []
+  }) history: HistoryField[]
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME, required: true })
+  createBy: string;
 }
 
-export type SeoHomeDocument = SeoHome & Document;
+export type SeoHomeDocument = SeoHomeModel & Document;
 
-export const SeoHomeSchema = SchemaFactory.createForClass(SeoHome);
+export const SEO_HOME_NAME = 'SeoHome';
+
+export const SeoHomeSchema = SchemaFactory.createForClass(SeoHomeModel);

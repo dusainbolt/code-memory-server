@@ -1,13 +1,13 @@
 import { Role } from './user-enum';
 
 export class UserHashToken {
-    id: string;
+  id: string;
 
-    fullName: string;
+  firstName: string;
 
-    userName: string;
+  lastName: string;
 
-    email: string;
+  email: string;
 
-    role: Role;
+  roles: Role[];
 }
