@@ -3,11 +3,11 @@ import { Roles, USER_KEY } from './../../auth/roles.guard';
 import { SeoHomeService } from './seo-home.service';
 import { Resolver, Query, Mutation, Context, Args } from '@nestjs/graphql';
 import { SeoHome } from 'src/dto/seoHome/SeoHomeDTO';
-import { Role } from '../users/dto/user-enum';
-import { User } from '../users/dto/user-dto';
+import { Role } from '../../dto/user/UserEnum';
+import { User } from '../../dto/user/UserDTO';
 @Resolver()
 export class SeoHomeResolver {
-  constructor(private readonly seoHomeService: SeoHomeService) { }
+  constructor(private readonly seoHomeService: SeoHomeService) {}
 
   @Query(() => SeoHome)
   async seoHome(): Promise<SeoHome> {
@@ -25,5 +25,4 @@ export class SeoHomeResolver {
   async seoHomeEntire(): Promise<SeoHome[]> {
     return this.seoHomeService.entire();
   }
-
 }

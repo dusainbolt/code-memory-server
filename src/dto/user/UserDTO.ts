@@ -1,36 +1,40 @@
-import { lengthMessage } from './../../../common/valid_message';
-import { IsEmail, Length, MaxLength } from 'class-validator';
+import { lengthMessage } from '../../common/valid_message';
+import { IsEmail, Length } from 'class-validator';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
-import { Gender, Role, UserStatus } from './user-enum';
+import { Gender, Role, UserStatus } from './UserEnum';
+import { UserSkill } from './SkillUserDTO';
 
 @ObjectType()
 export class User {
   @Field(() => ID)
   id?: string;
 
-  @Field()
+  @Field({ nullable: true })
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   username: string;
 
-  @Field()
+  @Field({ nullable: true })
   firstName: string;
 
-  @Field()
+  @Field({ nullable: true })
   password: string;
 
-  @Field()
+  @Field({ nullable: true })
   lastName: string;
 
-  @Field()
+  @Field({ nullable: true })
   avatar: string;
 
-  @Field()
+  @Field({ nullable: true })
   phone: string;
 
-  @Field()
+  @Field({ nullable: true })
   facebook: string;
+
+  @Field(() => [UserSkill])
+  skills: UserSkill[];
 
   @Field(() => Gender)
   gender: Gender;
@@ -41,10 +45,10 @@ export class User {
   @Field(() => UserStatus)
   status: UserStatus;
 
-  @Field()
+  @Field({ nullable: true })
   createdAt?: string;
 
-  @Field()
+  @Field({ nullable: true })
   updatedAt?: string;
 }
 
@@ -79,4 +83,22 @@ export class InitUser {
 
   @Field(() => [Number])
   roles: number[];
+}
+
+@InputType()
+export class FindUserInput {
+  @Field()
+  credential: string;
+}
+
+export class UserHashToken {
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  roles: Role[];
 }

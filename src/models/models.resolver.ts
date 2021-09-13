@@ -1,15 +1,14 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { InitUser, User } from './users/dto/user-dto';
+import { InitUser, User } from '../dto/user/UserDTO';
 import { SeoHomeService } from './seo-home/seo-home.service';
 import { UserService } from './users/user.service';
-import { Gender, Role } from './users/dto/user-enum';
+import { Gender, Role } from '../dto/user/UserEnum';
 import { HashService } from 'src/hash/hash.service';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagStatus, TagType } from 'src/dto/tag/TagEnum';
-import { convertToSlug } from 'src/common/functions';
 import { TagService } from './tag/tag.service';
 import { SeoHome } from 'src/dto/seoHome/SeoHomeDTO';
-
+import { helperService } from 'src/common/HelperService';
 @Resolver(() => null)
 export class ModelResolver {
   constructor(
@@ -17,9 +16,7 @@ export class ModelResolver {
     private hashService: HashService,
     private tagService: TagService,
     private seoHomeService: SeoHomeService
-  ) { }
-
-
+  ) {}
 
   async initUser(): Promise<User> {
     const password = await this.hashService.hashBcrypt('du@dev1234');
@@ -28,7 +25,8 @@ export class ModelResolver {
       username: 'dusainbolt',
       firstName: 'Du',
       lastName: 'Le',
-      avatar: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+      avatar:
+        'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
       password: password,
       roles: [Role.ADMIN],
       gender: Gender.MALE,
@@ -58,32 +56,35 @@ export class ModelResolver {
 
   async initSeoHome(id: string): Promise<SeoHome> {
     const data: SeoHome = {
-      description: "SEO mo ta",
-      title: "SEO Tiee de",
-      titleEN: "Seo title",
-      descriptionEN: "Seo description",
-      domain: "codememory.io",
+      description: 'SEO mo ta',
+      title: 'SEO Tiee de',
+      titleEN: 'Seo title',
+      descriptionEN: 'Seo description',
+      domain: 'codememory.io',
       image: {
-        faviconUrlICO: "https://du-sainbolt.web.app/favicon.png",
-        faviconUrlJPG: "https://du-sainbolt.web.app/favicon.png",
-        logo1280x720: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
-        logo400x400: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
-        logo800x600: "https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png",
-        logoAlt: "Ảnh Logo của CodeMemory",
-        logoAltEN: "Logo image of CodeMemory"
+        faviconUrlICO: 'https://du-sainbolt.web.app/favicon.png',
+        faviconUrlJPG: 'https://du-sainbolt.web.app/favicon.png',
+        logo1280x720:
+          'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+        logo400x400:
+          'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+        logo800x600:
+          'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+        logoAlt: 'Ảnh Logo của CodeMemory',
+        logoAltEN: 'Logo image of CodeMemory',
       },
       social: {
-        facebookAppId: "102681978817056",
+        facebookAppId: '102681978817056',
         facebookPageUrl: null,
         twitterUrl: null,
         youtubeUrl: null,
       },
       history: [],
-      facebookChatPlugin: "",
+      facebookChatPlugin: '',
       createBy: id,
-      reason: "",
-      searchBoxUrl: "codememory.io/search",
-      siteName: "CodeMemory",
+      reason: '',
+      searchBoxUrl: 'codememory.io/search',
+      siteName: 'CodeMemory',
     };
     const seoHome = new this.seoHomeService.seoHomeModel(data);
     return seoHome.save();
@@ -97,7 +98,7 @@ export class ModelResolver {
         createBy: id,
         title,
         description: `Người phát triển phần mềm ứng dụng ${i}`,
-        slug: convertToSlug(title),
+        slug: helperService.convertToSlug(title),
         status: TagStatus.ACTIVE,
         tagType: TagType.SYSTEM,
         thumbnail: 'https://i.pinimg.com/736x/ec/14/7c/ec147c4c53abfe86df2bc7e70c0181ff.jpg',
@@ -115,7 +116,6 @@ export class ModelResolver {
       user = await this.initUser();
       // Init data user second
       await this.initUserPartSecond();
-
     } else {
       user = users[0];
     }
@@ -132,8 +132,7 @@ export class ModelResolver {
         await this.initSeoHome(user.id);
       }
 
-      return "Init data success";
-
+      return 'Init data success';
     }
 
     return 'User is exits';

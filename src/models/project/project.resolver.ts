@@ -6,13 +6,13 @@ import { CreateProjectInput, UpdateProjectInput } from './../../dto/project/Crea
 import { USER_KEY } from './../../auth/roles.guard';
 import { Project } from './../../dto/project/ProjectDTO';
 import { Resolver, Mutation, Args, Parent, ResolveField, Context, Query } from '@nestjs/graphql';
-import { User } from '../users/dto/user-dto';
-import { Role } from '../users/dto/user-enum';
+import { User } from '../../dto/user/UserDTO';
+import { Role } from '../../dto/user/UserEnum';
 import * as DataLoader from 'dataloader';
 
 @Resolver(Project)
 export class ProjectResolver {
-  constructor(private readonly projectService: ProjectService) { }
+  constructor(private readonly projectService: ProjectService) {}
 
   @Roles([Role.ADMIN])
   @Mutation(() => Project)
@@ -22,24 +22,31 @@ export class ProjectResolver {
 
   @Roles([Role.ADMIN])
   @Mutation(() => Project)
-  async projectUpdate(@Args('input') input: UpdateProjectInput): Promise<Project> {
-    return this.projectService.update(input);
+  async projectUpdate(@Args('input') input: UpdateProjectInput, @Context(USER_KEY) user: User): Promise<Project> {
+    return this.projectService.update(input, user);
   }
 
   @Roles([Role.ADMIN])
   @Query(() => OutputSearchProject)
-  async projectList(@Args('input') input: SearchProjectInput, @Context(USER_KEY) user: User): Promise<OutputSearchProject> {
+  async projectList(
+    @Args('input') input: SearchProjectInput,
+    @Context(USER_KEY) user: User
+  ): Promise<OutputSearchProject> {
     return this.projectService.list(input, user.id);
   }
 
   @ResolveField()
-  async userCreate(@Parent() projectResolve: ProjectDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>,
+  async userCreate(
+    @Parent() projectResolve: ProjectDocument,
+    @Context('usersLoader') usersLoader: DataLoader<string, User>
   ) {
     return usersLoader.load(projectResolve.createBy);
   }
 
   @ResolveField()
-  async techsData(@Parent() projectResolve: ProjectDocument, @Context('tagsLoader') tagsLoader: DataLoader<string[], User>,
+  async techsData(
+    @Parent() projectResolve: ProjectDocument,
+    @Context('tagsLoader') tagsLoader: DataLoader<string[], User>
   ) {
     return tagsLoader.loadMany(projectResolve.techs as any);
   }

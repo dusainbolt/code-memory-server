@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddUserSkillInput {
+  percent: Float
+  status: UserSkillStatus
+  tagId: String
+}
+
 type Blog {
   content: [BlogContent!]!
   createBy: String!
@@ -98,11 +104,15 @@ input FindTagBySlugInput {
   slug: String!
 }
 
+input FindUserInput {
+  credential: String!
+}
+
 """The gender of user"""
 enum Gender {
-  FEMALE @deprecated(reason: "This is female")
-  MALE @deprecated(reason: "This is male")
-  OTHER @deprecated(reason: "This is ...")
+  FEMALE
+  MALE
+  OTHER
 }
 
 type HistoryField {
@@ -134,8 +144,10 @@ type Mutation {
   seoHomeCreate(input: CreateSeoHomeInput!): SeoHome!
   tagCreate(input: CreateTagInput!): Tag!
   tagUpdate(input: UpdateTagInput!): Tag!
+  userAddSkill(input: AddUserSkillInput!): Boolean!
   userCreate(input: CreateUser!): User!
   userLogin(input: LoginInput!): LoginOutput!
+  userUpdateSkill(input: UpdateUserSkill!): Boolean!
   workCreate(input: CreateWorkInput!): Work!
   workUpdate(input: UpdateWorkInput!): Work!
 }
@@ -187,6 +199,7 @@ type Query {
   tagEntire(input: EntireTagInput!): [Tag!]!
   tagFindBySlug(input: FindTagBySlugInput!): Tag!
   tagList(input: SearchTagInput!): OutputSearchTag!
+  userSkills(input: FindUserInput!): [UserSkillData!]!
   workList(input: SearchWorkInput!): OutputSearchWork!
 }
 
@@ -314,34 +327,57 @@ input UpdateTagInput {
   tagId: String!
 }
 
+input UpdateUserSkill {
+  data: [AddUserSkillInput!]!
+}
+
 input UpdateWorkInput {
   data: CreateWorkInput!
   workId: String!
 }
 
 type User {
-  avatar: String!
-  createdAt: String!
-  email: String!
-  facebook: String!
-  firstName: String!
+  avatar: String
+  createdAt: String
+  email: String
+  facebook: String
+  firstName: String
   gender: Gender!
   id: ID!
-  lastName: String!
-  password: String!
-  phone: String!
+  lastName: String
+  password: String
+  phone: String
   roles: [Role!]!
+  skills: [UserSkill!]!
   status: UserStatus!
-  updatedAt: String!
-  username: String!
+  updatedAt: String
+  username: String
+}
+
+type UserSkill {
+  percent: Float
+  status: UserSkillStatus
+  tagId: String
+}
+
+type UserSkillData {
+  percent: Float
+  status: UserSkillStatus
+  tagData: Tag
+}
+
+"""The skill status of user"""
+enum UserSkillStatus {
+  ACTIVE
+  INACTIVE
 }
 
 """The status of user"""
 enum UserStatus {
-  ACTIVE @deprecated(reason: "This is active")
-  BLOCK @deprecated(reason: "This is block")
-  INACTIVE @deprecated(reason: "This is inactive")
-  PAUSE @deprecated(reason: "This is pause")
+  ACTIVE
+  BLOCK
+  INACTIVE
+  PAUSE
 }
 
 type Work {

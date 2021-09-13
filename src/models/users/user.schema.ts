@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Gender, Role, UserStatus } from './dto/user-enum';
+import { Document, Schema as MongooseSchema } from 'mongoose';
+import { UserSkill } from 'src/dto/user/SkillUserDTO';
+import { Gender, Role, UserStatus, UserSkillStatus } from '../../dto/user/UserEnum';
 
 @Schema({ timestamps: true })
 export class UserModel {
@@ -30,6 +31,18 @@ export class UserModel {
 
   @Prop()
   facebook: string;
+
+  @Prop([
+    {
+      tagId: {
+        type: MongooseSchema.Types.ObjectId,
+        ref: 'tags',
+      },
+      percent: { type: Number },
+      status: { type: Number, enum: UserSkillStatus },
+    },
+  ])
+  skills: UserSkill[];
 
   @Prop({ type: [], default: [Role.USER] })
   roles: [Role];
