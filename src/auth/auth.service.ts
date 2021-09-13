@@ -1,12 +1,11 @@
 import { UserService } from '../models/users/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { HashService } from 'src/hash/hash.service';
-import { UserHashToken } from 'src/models/users/dto/user-hash-token';
-import { User } from 'src/models/users/dto/user-dto';
+import { User, UserHashToken } from 'src/dto/user/UserDTO';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private hashService: HashService) { }
+  constructor(private userService: UserService, private hashService: HashService) {}
 
   async validateUser(id: string): Promise<any> {
     return await this.userService.userModel.findById(id);

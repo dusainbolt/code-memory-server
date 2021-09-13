@@ -4,12 +4,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Work } from 'src/dto/work/WorkDTO';
-import { User } from '../users/dto/user-dto';
+import { User } from '../../dto/user/UserDTO';
 import { CreateWorkInput, UpdateWorkInput } from 'src/dto/work/CreateWorkDTO';
 import { helperService } from 'src/common/HelperService';
 @Injectable()
 export class WorkService {
-  constructor(@InjectModel(WORK_NAME) public workModel: Model<WorkDocument>) { }
+  constructor(@InjectModel(WORK_NAME) public workModel: Model<WorkDocument>) {}
 
   async create(createWorkInput: CreateWorkInput, user: User): Promise<Work> {
     // Create work
@@ -27,7 +27,7 @@ export class WorkService {
     return workDataUpdate;
   }
 
-  async list(searchWorkInput: SearchWorkInput, userId: string = ""): Promise<OutputSearchWork> {
+  async list(searchWorkInput: SearchWorkInput, userId: string = ''): Promise<OutputSearchWork> {
     const query: QuerySearchWork = {};
     const queryList = helperService.getParamsList(searchWorkInput);
     // Handle condition with key

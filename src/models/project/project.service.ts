@@ -1,15 +1,12 @@
 import { EVENT } from './../../common/contant';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { UserDocument } from './../users/user.schema';
-import { UserSkillStatus } from './../users/dto/user-enum';
-import { UserSkills } from './../users/dto/user-dto';
 import { OutputSearchProject, SearchProjectInput, QuerySearchProject } from './../../dto/project/SearchProjectDTO';
 import { Project } from './../../dto/project/ProjectDTO';
 import { CreateProjectInput, UpdateProjectInput } from './../../dto/project/CreateProjectDTO';
 import { PROJECT_NAME, ProjectDocument } from './project.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../users/dto/user-dto';
+import { User } from '../../dto/user/UserDTO';
 import { Model } from 'mongoose';
 import { helperService } from 'src/common/HelperService';
 

@@ -6,8 +6,8 @@ import { CreateProjectInput, UpdateProjectInput } from './../../dto/project/Crea
 import { USER_KEY } from './../../auth/roles.guard';
 import { Project } from './../../dto/project/ProjectDTO';
 import { Resolver, Mutation, Args, Parent, ResolveField, Context, Query } from '@nestjs/graphql';
-import { User } from '../users/dto/user-dto';
-import { Role } from '../users/dto/user-enum';
+import { User } from '../../dto/user/UserDTO';
+import { Role } from '../../dto/user/UserEnum';
 import * as DataLoader from 'dataloader';
 
 @Resolver(Project)

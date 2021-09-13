@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddUserSkillInput {
+  percent: Float
+  status: UserSkillStatus
+  tagId: String
+}
+
 type Blog {
   content: [BlogContent!]!
   createBy: String!
@@ -98,6 +104,10 @@ input FindTagBySlugInput {
   slug: String!
 }
 
+input FindUserInput {
+  credential: String!
+}
+
 """The gender of user"""
 enum Gender {
   FEMALE
@@ -134,8 +144,10 @@ type Mutation {
   seoHomeCreate(input: CreateSeoHomeInput!): SeoHome!
   tagCreate(input: CreateTagInput!): Tag!
   tagUpdate(input: UpdateTagInput!): Tag!
+  userAddSkill(input: AddUserSkillInput!): Boolean!
   userCreate(input: CreateUser!): User!
   userLogin(input: LoginInput!): LoginOutput!
+  userUpdateSkill(input: UpdateUserSkill!): Boolean!
   workCreate(input: CreateWorkInput!): Work!
   workUpdate(input: UpdateWorkInput!): Work!
 }
@@ -187,6 +199,7 @@ type Query {
   tagEntire(input: EntireTagInput!): [Tag!]!
   tagFindBySlug(input: FindTagBySlugInput!): Tag!
   tagList(input: SearchTagInput!): OutputSearchTag!
+  userSkills(input: FindUserInput!): [UserSkillData!]!
   workList(input: SearchWorkInput!): OutputSearchWork!
 }
 
@@ -314,6 +327,10 @@ input UpdateTagInput {
   tagId: String!
 }
 
+input UpdateUserSkill {
+  data: [AddUserSkillInput!]!
+}
+
 input UpdateWorkInput {
   data: CreateWorkInput!
   workId: String!
@@ -331,22 +348,28 @@ type User {
   password: String
   phone: String
   roles: [Role!]!
-  skills: [UserSkills!]!
+  skills: [UserSkill!]!
   status: UserStatus!
   updatedAt: String
   username: String
 }
 
-type UserSkills {
+type UserSkill {
   percent: Float
-  skillId: String
-  status: Float
+  status: UserSkillStatus
+  tagId: String
 }
 
-input UserSkillsInput {
+type UserSkillData {
   percent: Float
-  skillId: String
-  status: Float
+  status: UserSkillStatus
+  tagData: Tag
+}
+
+"""The skill status of user"""
+enum UserSkillStatus {
+  ACTIVE
+  INACTIVE
 }
 
 """The status of user"""

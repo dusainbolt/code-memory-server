@@ -1,20 +1,8 @@
-import { lengthMessage } from './../../../common/valid_message';
+import { lengthMessage } from '../../common/valid_message';
 import { IsEmail, Length } from 'class-validator';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
-import { Gender, Role, UserStatus, UserSkillStatus } from './user-enum';
-
-@ObjectType()
-@InputType('UserSkillsInput')
-export class UserSkills {
-  @Field({ nullable: true })
-  skillId: string;
-
-  @Field({ nullable: true })
-  percent: number;
-
-  @Field({ nullable: true })
-  status: UserSkillStatus;
-}
+import { Gender, Role, UserStatus } from './UserEnum';
+import { UserSkill } from './SkillUserDTO';
 
 @ObjectType()
 export class User {
@@ -45,8 +33,8 @@ export class User {
   @Field({ nullable: true })
   facebook: string;
 
-  @Field(() => [UserSkills])
-  skills: UserSkills[];
+  @Field(() => [UserSkill])
+  skills: UserSkill[];
 
   @Field(() => Gender)
   gender: Gender;
@@ -95,4 +83,22 @@ export class InitUser {
 
   @Field(() => [Number])
   roles: number[];
+}
+
+@InputType()
+export class FindUserInput {
+  @Field()
+  credential: string;
+}
+
+export class UserHashToken {
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  email: string;
+
+  roles: Role[];
 }

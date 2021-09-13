@@ -1,4 +1,3 @@
-import { UserHashToken } from './../models/users/dto/user-hash-token';
 import { ConfigService } from '@nestjs/config';
 import { HashService } from './../hash/hash.service';
 import { Logger } from '@nestjs/common';
@@ -7,6 +6,7 @@ import { ApolloServerPlugin, GraphQLRequestListener } from 'apollo-server-plugin
 import { AuthenticationError } from 'apollo-server-errors';
 import { ERROR_CODE_HASH } from 'src/common/valid_message';
 import { LOCAL, NODE_ENV } from 'src/common/contant';
+import { UserHashToken } from 'src/dto/user/UserDTO';
 
 export const DEC_START_REQUEST = 'START_AT:';
 export const DEC_GRAPHQL = 'ACTION:';
@@ -86,7 +86,9 @@ export class LoggingPlugin implements ApolloServerPlugin {
       willSendResponse(requestContext: any) {
         // handle log info when completed request
         const user: UserHashToken = requestContext.context.user;
-        new Logger().log(`${DEC_END_REQUEST} ${getInfoUserRequest(user) || ''} ${getDurationRequest(requestContext)}ms`);
+        new Logger().log(
+          `${DEC_END_REQUEST} ${getInfoUserRequest(user) || ''} ${getDurationRequest(requestContext)}ms`
+        );
       },
     };
   }

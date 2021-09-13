@@ -2,7 +2,7 @@ import { Tag } from './../tag/TagDTO';
 import { ProjectStatus } from './ProjectEnum';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Schema as MongooseSchema } from 'mongoose';
-import { User } from 'src/models/users/dto/user-dto';
+import { User } from 'src/dto/user/UserDTO';
 
 @ObjectType()
 export class Project {

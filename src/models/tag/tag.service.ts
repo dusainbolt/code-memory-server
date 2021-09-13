@@ -6,13 +6,13 @@ import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { OutputSearchTag, QuerySearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
 import { TagDocument, TAG_NAME } from './tag.schema';
-import { User } from '../users/dto/user-dto';
+import { User } from '../../dto/user/UserDTO';
 import { EntireTagInput } from 'src/dto/tag/GetTagDetailDTO';
 import { helperService } from 'src/common/HelperService';
 
 @Injectable()
 export class TagService {
-  constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) { }
+  constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) {}
 
   async create(createTagInput: CreateTagInput, user: User): Promise<Tag> {
     // Convert slug
@@ -35,12 +35,15 @@ export class TagService {
   }
 
   async findByIds(ids: string[]): Promise<Tag[]> {
-    return this.tagModel.find({ '_id': { $in: ids } });
+    return this.tagModel.find({ _id: { $in: ids } });
   }
 
   async entire({ status, limit }: EntireTagInput): Promise<Tag[]> {
     if (!!limit) {
-      return this.tagModel.find({ status: { $in: status } }).limit(limit).sort({ createdAt: QUERY_LIST.DESC });
+      return this.tagModel
+        .find({ status: { $in: status } })
+        .limit(limit)
+        .sort({ createdAt: QUERY_LIST.DESC });
     } else {
       return this.tagModel.find({ status: { $in: status } }).sort({ createdAt: QUERY_LIST.DESC });
     }

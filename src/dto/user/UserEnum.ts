@@ -18,13 +18,10 @@ export enum UserStatus {
   BLOCK,
 }
 
-
-
 registerEnumType(UserStatus, {
   name: 'UserStatus',
   description: 'The status of user',
 });
-
 
 export enum UserSkillStatus {
   ACTIVE,
@@ -35,7 +32,6 @@ registerEnumType(UserSkillStatus, {
   name: 'UserSkillStatus',
   description: 'The skill status of user',
 });
-
 
 export enum Gender {
   MALE,

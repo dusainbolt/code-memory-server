@@ -3,14 +3,14 @@ import { USER_KEY, Roles } from '../../auth/roles.guard';
 import { WorkService } from './work.service';
 import { Resolver, Mutation, Args, Context, ResolveField, Parent, Query } from '@nestjs/graphql';
 import { Work } from 'src/dto/work/WorkDTO';
-import { User } from '../users/dto/user-dto';
-import { Role } from '../users/dto/user-enum';
+import { User } from '../../dto/user/UserDTO';
+import { Role } from '../../dto/user/UserEnum';
 import { CreateWorkInput, UpdateWorkInput } from 'src/dto/work/CreateWorkDTO';
 import { WorkDocument } from './work.schema';
 import * as DataLoader from 'dataloader';
 @Resolver(() => Work)
 export class WorkResolver {
-  constructor(private readonly workService: WorkService) { }
+  constructor(private readonly workService: WorkService) {}
 
   @Roles([Role.ADMIN])
   @Mutation(() => Work)
@@ -31,8 +31,7 @@ export class WorkResolver {
   }
 
   @ResolveField()
-  async userCreate(@Parent() workResolve: WorkDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>,
-  ) {
+  async userCreate(@Parent() workResolve: WorkDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>) {
     return usersLoader.load(workResolve.createBy);
   }
 }

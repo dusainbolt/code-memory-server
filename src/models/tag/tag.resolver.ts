@@ -4,15 +4,15 @@ import { CreateTagInput, UpdateTagInput } from 'src/dto/tag/CreateTagDTO';
 import { EntireTagInput, FindTagBySlugInput } from 'src/dto/tag/GetTagDetailDTO';
 import { OutputSearchTag, SearchTagInput } from 'src/dto/tag/SearchTagDTO';
 import { Tag } from 'src/dto/tag/TagDTO';
-import { User } from '../users/dto/user-dto';
-import { Role } from '../users/dto/user-enum';
+import { User } from '../../dto/user/UserDTO';
+import { Role } from '../../dto/user/UserEnum';
 import { TagDocument } from './tag.schema';
 import { TagService } from './tag.service';
 import * as DataLoader from 'dataloader';
 
-@Resolver(() => Tag)
+@Resolver(Tag)
 export class TagResolver {
-  constructor(private readonly tagService: TagService) { }
+  constructor(private readonly tagService: TagService) {}
 
   @Roles([Role.ADMIN])
   @Mutation(() => Tag)
@@ -42,8 +42,7 @@ export class TagResolver {
   }
 
   @ResolveField()
-  async userCreate(@Parent() tagResolve: TagDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>,
-  ) {
+  async userCreate(@Parent() tagResolve: TagDocument, @Context('usersLoader') usersLoader: DataLoader<string, User>) {
     return usersLoader.load(tagResolve.createBy);
   }
 }

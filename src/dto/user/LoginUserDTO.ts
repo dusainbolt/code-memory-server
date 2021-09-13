@@ -1,5 +1,5 @@
 import { InputType, Field, ObjectType } from '@nestjs/graphql';
-import { User } from './user-dto';
+import { User } from './UserDTO';
 import { QuerySelector } from 'mongodb';
 
 @InputType()
@@ -23,6 +23,6 @@ export class LoginOutput {
 @ObjectType()
 export class QueryFindUser {
   email?: QuerySelector<any>;
-  _id?: QuerySelector<any>;
+  // _id?: QuerySelector<any>;
   username?: QuerySelector<any>;
 }
