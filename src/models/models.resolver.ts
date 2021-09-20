@@ -25,8 +25,7 @@ export class ModelResolver {
       username: 'dusainbolt',
       firstName: 'Du',
       lastName: 'Le',
-      avatar:
-        'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+      avatar: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
       password: password,
       roles: [Role.ADMIN],
       gender: Gender.MALE,
@@ -64,12 +63,9 @@ export class ModelResolver {
       image: {
         faviconUrlICO: 'https://du-sainbolt.web.app/favicon.png',
         faviconUrlJPG: 'https://du-sainbolt.web.app/favicon.png',
-        logo1280x720:
-          'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
-        logo400x400:
-          'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
-        logo800x600:
-          'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+        logo1280x720: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+        logo400x400: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
+        logo800x600: 'https://appdu-storage.s3-ap-southeast-1.amazonaws.com/118005360_928999227584443_8060562362571425079_o.png',
         logoAlt: 'Ảnh Logo của CodeMemory',
         logoAltEN: 'Logo image of CodeMemory',
       },
@@ -136,5 +132,26 @@ export class ModelResolver {
     }
 
     return 'User is exits';
+  }
+
+  @Query(() => String)
+  async initDataTagDemo(): Promise<string> {
+    const dataInit: Tag[] = [];
+    const user = await this.userService.findOne('dusainbolt');
+    for (let i = 1; i <= 20; i++) {
+      const title = `Tag ${21 - i}`;
+      dataInit.push({
+        createBy: user.id,
+        title,
+        description: `Mô tả Tag ${21 - i}`,
+        slug: helperService.convertToSlug(title),
+        status: TagStatus.ACTIVE,
+        tagType: TagType.SYSTEM,
+        thumbnail: 'https://cdn.hashnode.com/res/hashnode/image/upload/v1607082785538/EryuLRriM.png?w=200&h=200&fit=crop&crop=entropy&auto=compress',
+        createdAt: (new Date().getTime() + i).toString(),
+      });
+    }
+    await this.tagService.tagModel.insertMany(dataInit);
+    return 'Init data success';
   }
 }

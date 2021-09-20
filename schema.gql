@@ -193,6 +193,7 @@ enum ProjectStatus {
 
 type Query {
   initData: String!
+  initDataTagDemo: String!
   projectList(input: SearchProjectInput!): OutputSearchProject!
   seoHome: SeoHome!
   seoHomeEntire: [SeoHome!]!
