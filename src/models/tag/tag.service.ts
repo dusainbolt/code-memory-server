@@ -9,7 +9,6 @@ import { TagDocument, TAG_NAME } from './tag.schema';
 import { User } from '../../dto/user/UserDTO';
 import { EntireTagInput } from 'src/dto/tag/GetTagDetailDTO';
 import { helperService } from 'src/common/HelperService';
-
 @Injectable()
 export class TagService {
   constructor(@InjectModel(TAG_NAME) public tagModel: Model<TagDocument>) {}
@@ -25,11 +24,11 @@ export class TagService {
   }
 
   async update(updateTagInput: UpdateTagInput): Promise<Tag> {
-    const tagData = updateTagInput.data;
+    const { data, tagId } = updateTagInput;
     // Convert slug
-    const slug = helperService.convertToSlug(tagData.title);
+    const slug = helperService.convertToSlug(data.title);
     // update Tag
-    const tagDataUpdate = await this.tagModel.findByIdAndUpdate(updateTagInput.tagId, { ...tagData, slug });
+    const tagDataUpdate = await this.tagModel.findByIdAndUpdate(tagId, { ...data, slug });
     // Return result
     return tagDataUpdate;
   }

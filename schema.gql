@@ -32,9 +32,10 @@ input BlogContentInput {
 }
 
 input CreateBlogInput {
-  content: [BlogContentInput!]!
-  createBy: String!
+  contents: [BlogContentInput!]!
   description: String!
+  tags: [String!]!
+  thumbnail: String!
   title: String!
 }
 
@@ -139,6 +140,7 @@ type LoginOutput {
 
 type Mutation {
   blogCreate(input: CreateBlogInput!): Blog!
+  blogUpdate(input: UpdateBlogInput!): Blog!
   projectCreate(input: CreateProjectInput!): Project!
   projectUpdate(input: UpdateProjectInput!): Project!
   seoHomeCreate(input: CreateSeoHomeInput!): SeoHome!
@@ -316,6 +318,11 @@ enum TagStatus {
 enum TagType {
   ADDITION
   SYSTEM
+}
+
+input UpdateBlogInput {
+  blogId: String!
+  data: CreateBlogInput!
 }
 
 input UpdateProjectInput {

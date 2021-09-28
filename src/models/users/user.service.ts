@@ -1,4 +1,3 @@
-import { Tag } from 'src/dto/tag/TagDTO';
 import { UserSkillData } from './../../dto/user/SkillUserDTO';
 import { TAG_NAME } from './../tag/tag.schema';
 import { FindUserInput } from './../../dto/user/UserDTO';
@@ -21,11 +20,7 @@ import { helperService } from 'src/common/HelperService';
 import { UserSkill } from 'src/dto/user/SkillUserDTO';
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel(USER_NAME) public userModel: Model<UserDocument>,
-    private hashService: HashService,
-    private appLogger: AppLogger
-  ) {
+  constructor(@InjectModel(USER_NAME) public userModel: Model<UserDocument>, private hashService: HashService, private appLogger: AppLogger) {
     this.appLogger.setContext(UserService.name);
   }
 

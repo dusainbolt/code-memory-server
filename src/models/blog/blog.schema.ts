@@ -16,6 +16,9 @@ export class BlogModel {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME })
   createBy: string;
 
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: USER_NAME })
+  seriesId: string;
+
   @Prop({
     type: [{ type: { type: String }, data: { type: String }, language: { type: String } }],
     required: true,

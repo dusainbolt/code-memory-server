@@ -20,9 +20,9 @@ export class WorkService {
   }
 
   async update(updateWorkInput: UpdateWorkInput): Promise<Work> {
-    const workData = updateWorkInput.data;
+    const { data, workId } = updateWorkInput;
     // update work
-    const workDataUpdate = await this.workModel.findByIdAndUpdate(updateWorkInput.workId, workData);
+    const workDataUpdate = await this.workModel.findByIdAndUpdate(workId, data);
     // Return result
     return workDataUpdate;
   }
