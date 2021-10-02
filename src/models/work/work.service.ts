@@ -27,6 +27,10 @@ export class WorkService {
     return workDataUpdate;
   }
 
+  async findByIds(ids: string[]): Promise<Work[]> {
+    return this.workModel.find({ _id: { $in: ids } });
+  }
+
   async list(searchWorkInput: SearchWorkInput, userId: string = ''): Promise<OutputSearchWork> {
     const query: QuerySearchWork = {};
     const queryList = helperService.getParamsList(searchWorkInput);
@@ -53,7 +57,7 @@ export class WorkService {
       .limit(queryList.limit)
       .sort({ [queryList.orderBy]: queryList.sortBy });
     // Query total
-    const total = await this.workModel.countDocuments(query as any);
+    const total = searchWorkInput.count ? await this.workModel.countDocuments(query as any) : 0;
     // Return result
     return { dataWorks, total };
   }

@@ -23,13 +23,16 @@ export class SearchTagInput {
 
   @Field({ defaultValue: '' })
   orderBy?: string;
+
+  @Field({ defaultValue: true })
+  count?: boolean;
 }
 
 export type QuerySearchTag = FilterQuery<{
   title?: Condition<string>;
 
   status?: Condition<TagStatus[]>;
-}>
+}>;
 
 @ObjectType()
 export class OutputSearchTag {

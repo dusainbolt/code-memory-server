@@ -1,8 +1,6 @@
 import { ProjectStatus } from './ProjectEnum';
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { MinLength, MaxLength, isMongoId, IS_MONGO_ID, IsMongoId } from 'class-validator';
-import { isValidObjectId } from 'mongoose';
-
+import { IsMongoId } from 'class-validator';
 @InputType()
 export class CreateProjectInput {
   @Field()
@@ -24,6 +22,10 @@ export class CreateProjectInput {
   @Field(() => [String])
   techs: string[];
 
+  @IsMongoId({ each: true })
+  @Field(() => String)
+  workId: string;
+
   @Field()
   startTime: string;
 
@@ -32,7 +34,6 @@ export class CreateProjectInput {
 
   @Field(() => ProjectStatus)
   status: ProjectStatus;
-
 }
 
 @InputType()

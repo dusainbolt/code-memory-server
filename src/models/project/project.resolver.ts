@@ -1,3 +1,4 @@
+import { Tag } from './../../dto/tag/TagDTO';
 import { ProjectDocument } from './project.schema';
 import { ProjectService } from './project.service';
 import { OutputSearchProject, SearchProjectInput } from './../../dto/project/SearchProjectDTO';
@@ -9,6 +10,7 @@ import { Resolver, Mutation, Args, Parent, ResolveField, Context, Query } from '
 import { User } from '../../dto/user/UserDTO';
 import { Role } from '../../dto/user/UserEnum';
 import * as DataLoader from 'dataloader';
+import { Work } from 'src/dto/work/WorkDTO';
 
 @Resolver(Project)
 export class ProjectResolver {
@@ -44,9 +46,14 @@ export class ProjectResolver {
   }
 
   @ResolveField()
+  async work(@Parent() projectResolve: ProjectDocument, @Context('worksLoader') worksLoader: DataLoader<string, Work>) {
+    return worksLoader.load(projectResolve.workId);
+  }
+
+  @ResolveField()
   async techsData(
     @Parent() projectResolve: ProjectDocument,
-    @Context('tagsLoader') tagsLoader: DataLoader<string[], User>
+    @Context('tagsLoader') tagsLoader: DataLoader<string[], Tag>
   ) {
     return tagsLoader.loadMany(projectResolve.techs as any);
   }

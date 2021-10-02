@@ -1,11 +1,10 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/dto/user/UserDTO';
 import { WorkStatus, WorkType } from './WorkEnum';
 @ObjectType()
 export class Work {
   @Field(() => ID)
-  readonly id?: MongooseSchema.Types.ObjectId;
+  readonly id?: string;
 
   @Field({ nullable: true })
   nameVN: string;

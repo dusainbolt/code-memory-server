@@ -1,3 +1,5 @@
+import { WorkModule } from './models/work/work.module';
+import { WorkService } from './models/work/work.service';
 import { TagService } from './models/tag/tag.service';
 import { TagModule } from './models/tag/tag.module';
 import { UsersModule } from './models/users/user.module';
@@ -14,8 +16,7 @@ import { ConfigModule } from '@nestjs/config';
 import { environment } from './environment';
 import { HashModule } from './hash/hash.module';
 import { UserService } from './models/users/user.service';
-import { createUsersLoader } from './models/users/user.loader';
-import { createTagsLoader } from './models/tag/tag.loader';
+import { loaderService } from './models/loader.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -32,8 +33,8 @@ import { createTagsLoader } from './models/tag/tag.loader';
     PluginModule,
     ModelsModule,
     GraphQLModule.forRootAsync({
-      imports: [UsersModule, TagModule],
-      useFactory: (userService: UserService, tagService: TagService) => ({
+      imports: [UsersModule, TagModule, WorkModule],
+      useFactory: (userService: UserService, tagService: TagService, workService: WorkService) => ({
         playground: process.env.NODE_ENV !== 'production',
         installSubscriptionHandlers: true,
         sortSchema: true,
@@ -47,11 +48,12 @@ import { createTagsLoader } from './models/tag/tag.loader';
           optionsSuccessStatus: 204,
         },
         context: () => ({
-          usersLoader: createUsersLoader(userService),
-          tagsLoader: createTagsLoader(tagService),
+          usersLoader: loaderService.userLoader(userService),
+          tagsLoader: loaderService.tagLoader(tagService),
+          worksLoader: loaderService.workLoader(workService),
         }),
       }),
-      inject: [UserService, TagService],
+      inject: [UserService, TagService, WorkService],
     }),
     // TasksModule,
     LogsModule,
@@ -59,7 +61,7 @@ import { createTagsLoader } from './models/tag/tag.loader';
     HashModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
 
 // ____Exception filter
 // providers: [

@@ -26,6 +26,9 @@ export class SearchWorkInput {
 
   @Field({ defaultValue: '' })
   orderBy?: string;
+
+  @Field({ defaultValue: true })
+  count?: boolean;
 }
 
 export type QuerySearchWork = FilterQuery<{
@@ -34,7 +37,7 @@ export type QuerySearchWork = FilterQuery<{
   status?: Condition<WorkStatus[]>;
 
   createBy?: Condition<string>;
-}>
+}>;
 @ObjectType()
 export class OutputSearchWork {
   @Field(() => [Work])

@@ -7,7 +7,6 @@ import { WorkResolver } from './work.resolver';
 @Module({
   imports: [MongooseModule.forFeature([{ name: WORK_NAME, schema: WorkSchema }])],
   providers: [WorkService, WorkResolver],
-  exports: [WorkResolver],
-
+  exports: [WorkService],
 })
-export class WorkModule { }
+export class WorkModule {}

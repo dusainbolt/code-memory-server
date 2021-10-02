@@ -48,6 +48,7 @@ input CreateProjectInput {
   startTime: String!
   status: ProjectStatus!
   techs: [String!]!
+  workId: String!
 }
 
 input CreateSeoHomeInput {
@@ -183,6 +184,8 @@ type Project {
   techsData: [Tag!]!
   updatedAt: String
   userCreate: User
+  work: Work
+  workId: String
 }
 
 """The ProjectStatus."""
@@ -220,6 +223,7 @@ input SearchProjectInput {
 }
 
 input SearchTagInput {
+  count: Boolean = true
   key: String = null
   limit: Int = null
   offset: Int = null
@@ -229,6 +233,7 @@ input SearchTagInput {
 }
 
 input SearchWorkInput {
+  count: Boolean = true
   key: String = null
   limit: Int = null
   offset: Int = null

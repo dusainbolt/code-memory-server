@@ -71,7 +71,7 @@ export class TagService {
       .limit(queryList.limit)
       .sort({ [queryList.orderBy]: queryList.sortBy });
     // Query total
-    const total = await this.tagModel.countDocuments(query as any);
+    const total = searchTagInput.count ? await this.tagModel.countDocuments(query as any) : 0;
     // Return result
     return { dataTags, total };
   }
