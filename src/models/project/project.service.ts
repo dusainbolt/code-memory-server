@@ -12,10 +12,7 @@ import { helperService } from 'src/common/HelperService';
 
 @Injectable()
 export class ProjectService {
-  constructor(
-    @InjectModel(PROJECT_NAME) public projectModel: Model<ProjectDocument>,
-    private eventEmitter: EventEmitter2
-  ) {}
+  constructor(@InjectModel(PROJECT_NAME) public projectModel: Model<ProjectDocument>, private eventEmitter: EventEmitter2) {}
 
   async create(createProjectInput: CreateProjectInput, user: User): Promise<Project> {
     // Create project
@@ -28,11 +25,11 @@ export class ProjectService {
   }
 
   async update(updateProjectInput: UpdateProjectInput, user: User): Promise<Project> {
-    const projectData = updateProjectInput.data;
+    const { data, projectId } = updateProjectInput;
     // update project
-    const projectDataUpdate = await this.projectModel.findByIdAndUpdate(updateProjectInput.projectId, projectData);
+    const projectDataUpdate = await this.projectModel.findByIdAndUpdate(projectId, data);
     // Send event change user Skill
-    this.eventEmitter.emit(EVENT.CHANGE_USER_SKILL, { user, skillData: updateProjectInput.data.techs });
+    this.eventEmitter.emit(EVENT.CHANGE_USER_SKILL, { user, skillData: data.techs });
     // Return result
     return projectDataUpdate;
   }

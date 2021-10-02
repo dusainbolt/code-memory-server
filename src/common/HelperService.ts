@@ -1,7 +1,6 @@
 import { HistoryField } from './../dto/seoHome/SeoHomeDTO';
 import { QUERY_LIST } from './contant';
 import { SortPaginate } from './type';
-
 export class HelperService {
   removeBreakLine = (string: String): String => {
     return string.replace(/(\r\n|\n|\r)/gm, '').trim();
